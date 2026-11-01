@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/lumana-lumix-cloud-design-system-git-1b2e75e8-6731-4899-a6b5-0c0f64d44f4b/tokens/fonts.css">
+<link rel="stylesheet" href="_ds/lumana-lumix-cloud-design-system-git-1b2e75e8-6731-4899-a6b5-0c0f64d44f4b/tokens/colors.css">
+<link rel="stylesheet" href="_ds/lumana-lumix-cloud-design-system-git-1b2e75e8-6731-4899-a6b5-0c0f64d44f4b/tokens/dark.css">
+<link rel="stylesheet" href="_ds/lumana-lumix-cloud-design-system-git-1b2e75e8-6731-4899-a6b5-0c0f64d44f4b/tokens/typography.css">
+<link rel="stylesheet" href="_ds/lumana-lumix-cloud-design-system-git-1b2e75e8-6731-4899-a6b5-0c0f64d44f4b/tokens/spacing.css">
+<link rel="stylesheet" href="_ds/lumana-lumix-cloud-design-system-git-1b2e75e8-6731-4899-a6b5-0c0f64d44f4b/tokens/elevation.css">
+<link rel="stylesheet" href="_ds/lumana-lumix-cloud-design-system-git-1b2e75e8-6731-4899-a6b5-0c0f64d44f4b/tokens/icons.css">
+<link rel="stylesheet" href="_ds/lumana-lumix-cloud-design-system-git-1b2e75e8-6731-4899-a6b5-0c0f64d44f4b/tokens/base.css">
+<link rel="stylesheet" href="_ds/lumana-lumix-cloud-design-system-git-1b2e75e8-6731-4899-a6b5-0c0f64d44f4b/styles.css">
+<script src="_ds/lumana-lumix-cloud-design-system-git-1b2e75e8-6731-4899-a6b5-0c0f64d44f4b/_ds_bundle.js"></script>
+<style>html,body{height:100%;margin:0}a{color:var(--color-text-primary-default);text-decoration:none}a:hover{text-decoration:underline}</style>
+</helmet>
+<div class="{{ themeClass }}" style="display:flex;height:100vh;min-height:0;font-family:var(--font-sans);background:var(--color-elevation-surface-default);color:var(--color-text-default)">
+<x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Sidebar" items="{{ navItems }}" value="settings" logo-src="assets/logo-mark-alt.svg" hint-size="65px,100%"></x-import>
+
+<main style="flex:1;display:flex;flex-direction:column;min-width:0;min-height:0">
+<div style="display:flex;justify-content:space-between;align-items:center;flex-shrink:0;height:49px;padding:0 24px 0 32px;border-bottom:1px solid var(--color-border-default);font-size:var(--ui-font-xxm-size);line-height:var(--ui-font-xxm-height)">
+<div style="display:flex;align-items:center">
+<span>Organization settings</span>
+<span class="ui-icon-expand-arrow" style="font-size:12px;margin:0 16px;transform:rotate(-90deg);color:var(--color-icon-default)"></span>
+<span>Control Center</span>
+</div>
+<div style="display:flex;align-items:center;gap:12px">
+<span style="font-size:var(--ui-font-xs-size);color:var(--color-text-subtlest)">{{ saveHint }}</span>
+<x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Button" text="Save" type="primary" disabled="{{ saveDisabled }}" onClick="{{ save }}" hint-size="64px,32px"></x-import>
+</div>
+</div>
+
+<div style="flex:1;min-height:0;display:flex">
+<aside style="width:300px;flex-shrink:0;overflow-y:auto;border-right:1px solid var(--color-border-default);padding:12px 16px;box-sizing:border-box;display:flex;flex-direction:column;gap:2px;font-size:var(--ui-font-xm-size)">
+<div onClick="{{ toggleOrg }}" style="display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:4px;cursor:pointer" style-hover="background:var(--color-background-neutral-subtle)"><span class="ui-icon-organization" style="font-size:16px;color:var(--color-icon-default)"></span><span style="flex:1">Organization</span><span class="ui-icon-expand-arrow" style="font-size:12px;color:var(--color-icon-default);transform:{{ orgChevron }};transition:transform .3s"></span></div>
+<sc-if value="{{ orgOpen }}" hint-placeholder-val="{{ false }}">
+<div style="margin-left:18px;padding-left:16px;border-left:1px solid var(--color-border-default);display:flex;flex-direction:column;gap:2px">
+<sc-for list="{{ orgChildren }}" as="c" hint-placeholder-count="9"><div style="padding:8px 10px;border-radius:4px;cursor:pointer" style-hover="background:var(--color-background-neutral-subtle)">{{ c }}</div></sc-for>
+</div>
+</sc-if>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:4px" style-hover="background:var(--color-background-neutral-subtle)"><span class="ui-icon-users" style="font-size:16px;color:var(--color-icon-default)"></span>Users</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:4px" style-hover="background:var(--color-background-neutral-subtle)"><span class="ui-icon-share-arrow" style="font-size:16px;color:var(--color-icon-default)"></span>Sharing</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:4px" style-hover="background:var(--color-background-neutral-subtle)"><span class="ui-icon-list-view" style="font-size:16px;color:var(--color-icon-default)"></span>Audit logs</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:4px" style-hover="background:var(--color-background-neutral-subtle)"><span class="ui-icon-notifications" style="font-size:16px;color:var(--color-icon-default)"></span>Alert notification logs</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:4px" style-hover="background:var(--color-background-neutral-subtle)"><span class="ui-icon-key" style="font-size:16px;color:var(--color-icon-default)"></span>API keys</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:4px" style-hover="background:var(--color-background-neutral-subtle)"><span class="ui-icon-api" style="font-size:16px;color:var(--color-icon-default)"></span>OAuth2 Credentials</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:4px" style-hover="background:var(--color-background-neutral-subtle)"><span class="ui-icon-lock" style="font-size:16px;color:var(--color-icon-default)"></span>OAuth Providers</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:4px" style-hover="background:var(--color-background-neutral-subtle)"><span class="ui-icon-shield" style="font-size:16px;color:var(--color-icon-default)"></span>Roles &amp; Permissions</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:4px" style-hover="background:var(--color-background-neutral-subtle)"><span class="ui-icon-link" style="font-size:16px;color:var(--color-icon-default)"></span>Integrations</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:4px;background:var(--color-background-selected-active);color:var(--color-text-selected);font-weight:500"><span class="ui-icon-armed" style="font-size:16px;color:var(--color-text-selected)"></span>Control Center</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:4px" style-hover="background:var(--color-background-neutral-subtle)"><span class="ui-icon-login-firewall" style="font-size:16px;color:var(--color-icon-default)"></span>Login firewall</div>
+</aside>
+
+<div style="flex:1;min-width:0;overflow:auto;padding:28px 28px 64px;box-sizing:border-box">
+<div style="max-width:1100px;display:flex;flex-direction:column;gap:32px">
+
+<div style="display:flex;flex-direction:column;gap:4px">
+<div style="font-size:var(--ui-font-l-size);line-height:var(--ui-font-l-height);font-weight:500">Control Center</div>
+<div style="font-size:var(--ui-font-xm-size);line-height:var(--ui-font-xm-height);color:var(--color-text-subtlest)">Configure how this organization arms and reports events to the monitoring center</div>
+</div>
+
+<section style="display:flex;flex-direction:column;gap:16px;max-width:744px">
+<div style="display:flex;flex-direction:column;gap:2px">
+<div style="font-size:var(--ui-font-m-size);line-height:var(--ui-font-m-height);font-weight:500">Arm schedule</div>
+<div style="font-size:var(--ui-font-xs-size);line-height:var(--ui-font-xs-height);color:var(--color-text-subtlest)">The account is set to armed automatically during the selected schedule.</div>
+</div>
+<div style="display:flex;flex-direction:column;gap:8px">
+<div style="font-size:var(--ui-font-m-size);line-height:var(--ui-font-m-height);font-weight:500">Schedule</div>
+<x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Select" options="{{ armScheduleOpts }}" value="{{ armSchedule }}" onChange="{{ setArmSchedule }}" hint-size="100%,40px" style="width:100%"></x-import>
+<div style="display:flex;justify-content:space-between;gap:16px;font-size:var(--ui-font-xs-size);line-height:var(--ui-font-xs-height)">
+<span style="color:var(--color-text-subtlest)">{{ armSummary }}</span>
+<a href="#">Manage schedules</a>
+</div>
+</div>
+</section>
+
+<sc-if value="{{ showPhase2 }}" hint-placeholder-val="{{ true }}">
+<section style="display:flex;flex-direction:column;gap:16px;max-width:744px;padding-top:32px;border-top:1px solid var(--color-border-default)">
+<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:16px">
+<div style="display:flex;flex-direction:column;gap:2px">
+<div style="display:flex;align-items:center;gap:8px"><span style="font-size:var(--ui-font-m-size);line-height:var(--ui-font-m-height);font-weight:500">Custom arm types</span><x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Badge" tone="info" hint-size="56px,20px">Phase 2</x-import></div>
+<div style="font-size:var(--ui-font-xs-size);line-height:var(--ui-font-xs-height);color:var(--color-text-subtlest)">Create arm types such as Home or Away and attach a schedule to each one</div>
+</div>
+<x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Button" text="Add arm type" type="default" iconClass="ui-icon-plus" onClick="{{ addArmType }}" hint-size="128px,32px"></x-import>
+</div>
+<sc-if value="{{ hasArmTypes }}" hint-placeholder-val="{{ true }}">
+<div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.4fr) 32px;gap:8px 12px;align-items:center">
+<div style="font-size:var(--ui-font-s-size);line-height:var(--ui-font-s-height);font-weight:500;color:var(--color-text-subtle)">Name</div>
+<div style="font-size:var(--ui-font-s-size);line-height:var(--ui-font-s-height);font-weight:500;color:var(--color-text-subtle)">Schedule</div>
+<div></div>
+<sc-for list="{{ armTypes }}" as="t" hint-placeholder-count="2">
+<x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Input" value="{{ t.name }}" placeholder="Arm type name" invalid="{{ t.invalid }}" onChange="{{ t.onName }}" hint-size="100%,40px"></x-import>
+<x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Select" options="{{ scheduleOpts }}" value="{{ t.schedule }}" placeholder="Select schedule" onChange="{{ t.onSchedule }}" hint-size="100%,40px" style="width:100%"></x-import>
+<x-import component-from-global-scope="LumanaDesignSystem_1b2e75.IconButton" iconClass="ui-icon-delete" noBorder="{{ true }}" onClick="{{ t.onRemove }}" hint-size="32px,32px"></x-import>
+</sc-for>
+</div>
+</sc-if>
+<sc-if value="{{ noArmTypes }}" hint-placeholder-val="{{ false }}">
+<div style="padding:20px;border:1px dashed var(--color-border-default);border-radius:4px;font-size:var(--ui-font-xm-size);color:var(--color-text-subtlest);text-align:center">Arm types are the way to switch between arming profiles, each with its own schedule.</div>
+</sc-if>
+</section>
+</sc-if>
+
+<section style="display:flex;flex-direction:column;gap:16px;padding-top:32px;border-top:1px solid var(--color-border-default)">
+<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap">
+<div style="display:flex;flex-direction:column;gap:2px">
+<div style="font-size:var(--ui-font-m-size);line-height:var(--ui-font-m-height);font-weight:500">Contact ID mapping</div>
+<div style="font-size:var(--ui-font-xs-size);line-height:var(--ui-font-xs-height);color:var(--color-text-subtlest)">Match locations to accounts, sub-locations to partitions and devices to zones. Values can also be edited on each item's edit page.</div>
+</div>
+<div style="display:flex;gap:8px">
+<x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Button" text="Download CSV" type="default" iconClass="ui-icon-download" onClick="{{ downloadCsv }}" hint-size="136px,32px"></x-import>
+<x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Button" text="Upload CSV" type="default" iconClass="ui-icon-upload" onClick="{{ openCsv }}" hint-size="120px,32px"></x-import>
+</div>
+</div>
+<div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+<x-import component-from-global-scope="LumanaDesignSystem_1b2e75.SegmentTabs" tabs="{{ tabs }}" value="{{ tab }}" onChange="{{ setTab }}" hint-size="420px,32px"></x-import>
+<div style="display:flex;align-items:center;gap:8px">
+<x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Search" placeholder="Search by name or ID" value="{{ q }}" onChange="{{ setQ }}" hint-size="260px,40px" style="width:260px"></x-import>
+<x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Select" options="{{ filterOpts }}" value="{{ filter }}" onChange="{{ setFilter }}" hint-size="140px,40px" style="width:140px"></x-import>
+</div>
+</div>
+<div style="font-size:var(--ui-font-xs-size);line-height:var(--ui-font-xs-height);color:var(--color-text-subtlest)">{{ mappedSummary }}</div>
+<x-import component-from-global-scope="LumanaDesignSystem_1b2e75.DataTable" columns="{{ columns }}" rows="{{ rows }}" rowHeight="{{ 52 }}" hint-size="100%,320px"></x-import>
+<sc-if value="{{ noRows }}" hint-placeholder-val="{{ false }}">
+<div style="padding:24px;text-align:center;font-size:var(--ui-font-xm-size);color:var(--color-text-subtlest)">Try adjusting your search or filter.</div>
+</sc-if>
+</section>
+
+</div>
+</div>
+</div>
+</main>
+
+<input type="file" accept=".csv,text/csv" ref="{{ fileRef }}" onChange="{{ onFile }}" style="display:none">
+
+<div class="{{ themeClass }}" style="position:fixed;inset:0;z-index:20;display:{{ csvDisplay }};align-items:center;justify-content:center;background:rgba(16,24,40,.6);padding:24px;font-family:var(--font-sans)">
+<x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Modal" title="{{ csvTitle }}" width="{{ 560 }}" compact="{{ true }}" onClose="{{ closeCsv }}" hint-size="560px,360px">
+<div style="display:flex;flex-direction:column;gap:16px">
+<div style="display:{{ idleDisplay }};flex-direction:column;gap:16px">
+<div style="font-size:var(--ui-font-xm-size);line-height:var(--ui-font-xm-height);color:var(--color-text-subtle)">Rows are matched by Lumana ID. Other columns are ignored, and an empty value clears the mapping.</div>
+<div style="display:flex;flex-direction:column;gap:4px">
+<div style="font-size:var(--ui-font-s-size);line-height:var(--ui-font-s-height);font-weight:500;color:var(--color-text-subtle)">Required columns</div>
+<div style="font-size:var(--ui-font-xm-size);line-height:var(--ui-font-xm-height)">{{ csvCols }}</div>
+</div>
+<div onClick="{{ pickFile }}" onDragOver="{{ dragOver }}" onDrop="{{ dropFile }}" style="display:flex;flex-direction:column;align-items:center;gap:8px;padding:32px 16px;border:1px dashed var(--color-border-input-default);border-radius:4px;cursor:pointer;text-align:center" style-hover="background:var(--color-background-neutral-subtle)">
+<span class="ui-icon-upload" style="font-size:24px;color:var(--color-icon-default)"></span>
+<div style="font-size:var(--ui-font-m-size);line-height:var(--ui-font-m-height);font-weight:500">Drop a CSV file here or click to browse</div>
+<div style="font-size:var(--ui-font-xs-size);line-height:var(--ui-font-xs-height);color:var(--color-text-subtlest)">Download the current list first to use it as a template</div>
+</div>
+<div style="display:flex;justify-content:space-between;align-items:center;gap:8px">
+<a href="#" onClick="{{ useSample }}" style="font-size:var(--ui-font-xs-size)">Try with a sample file</a>
+<x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Button" text="Cancel" type="default" onClick="{{ closeCsv }}" hint-size="72px,32px"></x-import>
+</div>
+</div>
+<div style="display:{{ previewDisplay }};flex-direction:column;gap:16px">
+<div style="display:flex;align-items:center;gap:8px;font-size:var(--ui-font-xm-size);line-height:var(--ui-font-xm-height)"><span class="ui-icon-file" style="font-size:16px;color:var(--color-icon-default)"></span>{{ csvFileName }}</div>
+<div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border:1px solid var(--color-border-default);border-radius:4px">
+<div style="padding:12px 16px;display:flex;flex-direction:column;gap:2px;border-right:1px solid var(--color-border-default)"><span style="font-size:var(--ui-font-xs-size);color:var(--color-text-subtlest)">Will be updated</span><span style="font-size:var(--ui-font-lx-size);line-height:var(--ui-font-lx-height);font-weight:500">{{ csvRes.updated }}</span></div>
+<div style="padding:12px 16px;display:flex;flex-direction:column;gap:2px;border-right:1px solid var(--color-border-default)"><span style="font-size:var(--ui-font-xs-size);color:var(--color-text-subtlest)">Unchanged</span><span style="font-size:var(--ui-font-lx-size);line-height:var(--ui-font-lx-height);font-weight:500">{{ csvRes.unchanged }}</span></div>
+<div style="padding:12px 16px;display:flex;flex-direction:column;gap:2px"><span style="font-size:var(--ui-font-xs-size);color:var(--color-text-subtlest)">Skipped</span><span style="font-size:var(--ui-font-lx-size);line-height:var(--ui-font-lx-height);font-weight:500;color:var(--color-text-alert-default)">{{ csvRes.skippedCount }}</span></div>
+</div>
+<sc-if value="{{ csvHasErrors }}" hint-placeholder-val="{{ false }}">
+<div style="display:flex;flex-direction:column;border:1px solid var(--color-border-default);border-radius:4px;max-height:180px;overflow:auto;flex-shrink:0">
+<sc-for list="{{ csvRes.skipped }}" as="e" hint-placeholder-count="2">
+<div style="display:flex;flex-shrink:0;gap:12px;padding:8px 16px;border-bottom:1px solid var(--color-border-default);font-size:var(--ui-font-xs-size);line-height:var(--ui-font-xs-height)"><span style="color:var(--color-text-subtlest);width:48px;flex-shrink:0">Row {{ e.row }}</span><span>{{ e.msg }}</span></div>
+</sc-for>
+</div>
+</sc-if>
+<div style="font-size:var(--ui-font-xs-size);line-height:var(--ui-font-xs-height);color:var(--color-text-subtlest)">Imported values are applied to the table. Review them, then save.</div>
+<div style="display:flex;justify-content:flex-end;gap:8px">
+<x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Button" text="Choose another file" type="default" onClick="{{ resetCsv }}" hint-size="150px,32px"></x-import>
+<x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Button" text="{{ applyLabel }}" type="primary" disabled="{{ applyDisabled }}" onClick="{{ applyCsv }}" hint-size="120px,32px"></x-import>
+</div>
+</div>
+</div>
+</x-import>
+</div>
+
+<sc-if value="{{ toast }}" hint-placeholder-val="{{ false }}">
+<div style="position:fixed;right:24px;bottom:24px;z-index:30">
+<x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Toaster" type="success" title="{{ toast }}" hint-size="320px,56px"></x-import>
+</div>
+</sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;theme&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;dark&quot;,&quot;light&quot;],&quot;default&quot;:&quot;dark&quot;,&quot;tsType&quot;:&quot;'dark'|'light'&quot;},&quot;showPhase2&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Scope&quot;}}">
+const SCHEDULES = [
+  { value: 'business', label: 'Business hours', detail: 'Mon–Fri, 08:00–18:00' },
+  { value: 'after', label: 'After hours', detail: 'Mon–Fri 18:00–08:00, all day Sat–Sun' },
+  { value: 'night', label: 'Night shift', detail: 'Every day, 22:00–06:00' },
+  { value: 'weekend', label: 'Weekends', detail: 'Sat–Sun, all day' },
+  { value: '247', label: '24/7', detail: 'Always armed' },
+];
+const LOCS = [
+  { id: 'loc_7f3a91c2', name: 'Fourth Street Industrial Park', account: '1A2B', partition: '01' },
+  { id: 'loc_2b8e44d0', name: 'Warehouse 3', account: '1A2C', partition: '01' },
+  { id: 'loc_9c1d07ab', name: 'Warehouse 5', account: '', partition: '' },
+  { id: 'loc_45ef6a13', name: 'Head office', account: '2F01', partition: '' },
+];
+const SUBS = [
+  { id: 'sub_a19c3e07', name: 'Main gate', loc: 'Fourth Street Industrial Park', partition: '01' },
+  { id: 'sub_b24d8f11', name: 'Loading yard', loc: 'Fourth Street Industrial Park', partition: '02' },
+  { id: 'sub_c87e1a52', name: 'Dock area', loc: 'Warehouse 3', partition: '01' },
+  { id: 'sub_d03f9b64', name: 'Cold store', loc: 'Warehouse 3', partition: '' },
+  { id: 'sub_e61a2c78', name: 'Reception', loc: 'Head office', partition: '01' },
+  { id: 'sub_f95b4d83', name: 'Server room', loc: 'Head office', partition: '' },
+];
+const DEVS = [
+  { id: 'cam_3e71b0a4', name: 'Gate — North', type: 'Camera', loc: 'Fourth Street Industrial Park', zone: '001' },
+  { id: 'cam_4f82c1b5', name: 'Gate — South', type: 'Camera', loc: 'Fourth Street Industrial Park', zone: '002' },
+  { id: 'cam_5a93d2c6', name: 'Yard overview', type: 'Camera', loc: 'Fourth Street Industrial Park', zone: '' },
+  { id: 'dor_61a4e3d7', name: 'Main gate door', type: 'Door', loc: 'Fourth Street Industrial Park', zone: '010' },
+  { id: 'cam_72b5f4e8', name: 'Dock 4 — East', type: 'Camera', loc: 'Warehouse 3', zone: '001' },
+  { id: 'cam_83c605f9', name: 'Dock 4 — West', type: 'Camera', loc: 'Warehouse 3', zone: '001' },
+  { id: 'sen_94d7160a', name: 'Cold store temperature', type: 'Sensor', loc: 'Warehouse 3', zone: '' },
+  { id: 'cam_a5e8271b', name: 'Aisle 12', type: 'Camera', loc: 'Warehouse 5', zone: '' },
+  { id: 'cam_b6f9382c', name: 'Lobby', type: 'Camera', loc: 'Head office', zone: '001' },
+  { id: 'spk_c70a493d', name: 'Lobby speaker', type: 'Speaker', loc: 'Head office', zone: '' },
+];
+const TABS = {
+  locations: { label: 'Locations', fields: [['account', 'Account ID', 4], ['partition', 'Partition ID', 2]], csv: ['lumana_id', 'name', 'account_id', 'partition_id'], key: { account_id: 'account', partition_id: 'partition' } },
+  subs: { label: 'Sub-locations', fields: [['partition', 'Partition ID', 2]], csv: ['lumana_id', 'name', 'location', 'partition_id'], key: { partition_id: 'partition' } },
+  devices: { label: 'Cameras & devices', fields: [['zone', 'Zone ID', 3]], csv: ['lumana_id', 'name', 'type', 'location', 'zone_id'], key: { zone_id: 'zone' } },
+};
+const HEX = /^[0-9A-F]*$/;
+const clone = o => JSON.parse(JSON.stringify(o));
+
+class Component extends DCLogic {
+  state = {
+    orgOpen: false, tab: 'locations', q: '', filter: 'all',
+    armSchedule: 'after',
+    armTypes: [{ id: 1, name: 'Home', schedule: 'night' }, { id: 2, name: 'Away', schedule: 'after' }],
+    data: { locations: clone(LOCS), subs: clone(SUBS), devices: clone(DEVS) },
+    dirty: false, csvOpen: false, csvRes: null, csvFileName: '', toast: '',
+  };
+  fileRef = React.createRef();
+
+  fieldValid(v, len) { return v === '' || (v.length === len && HEX.test(v)); }
+
+  zoneConflict(r, list) { return r.zone ? (list || this.state.data.devices).find(d => d.id !== r.id && d.loc === r.loc && d.zone === r.zone) : null; }
+  fieldError(tab, r, k, label, len) {
+    if (!this.fieldValid(r[k], len)) return `${label} must be ${len} characters, using 0–9 and A–F`;
+    if (tab === 'devices' && k === 'zone') { const c = this.zoneConflict(r); if (c) return `Zone ${r.zone} is already used by ${c.name}. Each device in a location needs its own zone ID.`; }
+    return '';
+  }
+  rowInvalid(tab, r) { return TABS[tab].fields.some(([k, label, len]) => !!this.fieldError(tab, r, k, label, len)); }
+  rowMapped(tab, r) { return TABS[tab].fields.some(([k]) => r[k] !== ''); }
+
+  setField(tab, id, k, len, raw) {
+    const v = String(raw).toUpperCase().replace(/\s/g, '').slice(0, len);
+    this.setState(s => ({ dirty: true, data: { ...s.data, [tab]: s.data[tab].map(r => r.id === id ? { ...r, [k]: v } : r) } }));
+  }
+
+  parseCsv(text) {
+    const lines = text.split(/\r?\n/).filter(l => l.trim());
+    const split = l => { const out = []; let cur = '', q = false; for (const ch of l) { if (ch === '"') q = !q; else if (ch === ',' && !q) { out.push(cur); cur = ''; } else cur += ch; } out.push(cur); return out.map(x => x.trim()); };
+    const tab = this.state.tab, t = TABS[tab];
+    const head = split(lines[0] || '').map(h => h.toLowerCase());
+    const res = { updated: 0, unchanged: 0, skipped: [], changes: [] };
+    const idIdx = head.indexOf('lumana_id');
+    const cols = Object.keys(t.key).filter(c => head.includes(c));
+    if (idIdx < 0 || !cols.length) { res.skipped.push({ row: 1, msg: 'Missing required columns: ' + ['lumana_id', ...Object.keys(t.key)].join(', ') }); return res; }
+    const work = this.state.data[tab].map(x => ({ ...x }));
+    lines.slice(1).forEach((l, i) => {
+      const cells = split(l), row = i + 2, id = cells[idIdx];
+      const item = this.state.data[tab].find(r => r.id === id);
+      if (!item) { res.skipped.push({ row, msg: `Lumana ID ${id || '(empty)'} was not found in ${t.label.toLowerCase()}` }); return; }
+      const patch = {}; let bad = '';
+      cols.forEach(c => {
+        const k = t.key[c], len = t.fields.find(f => f[0] === k)[2];
+        const v = (cells[head.indexOf(c)] || '').toUpperCase();
+        if (!this.fieldValid(v, len)) bad = `${c} "${v}" must be ${len} characters (0–9, A–F)`;
+        else patch[k] = v;
+      });
+      if (!bad && tab === 'devices' && patch.zone) {
+        const c = this.zoneConflict({ ...item, ...patch }, work);
+        if (c) bad = `zone_id ${patch.zone} is already used by ${c.name} in ${item.loc}`;
+      }
+      if (bad) { res.skipped.push({ row, msg: bad }); return; }
+      Object.assign(work.find(x => x.id === id), patch);
+      const changed = Object.keys(patch).some(k => patch[k] !== item[k]);
+      if (changed) { res.updated++; res.changes.push({ id, patch }); } else res.unchanged++;
+    });
+    return res;
+  }
+  loadFile(file) {
+    if (!file) return;
+    const fr = new FileReader();
+    fr.onload = () => this.setState({ csvRes: this.parseCsv(String(fr.result)), csvFileName: file.name });
+    fr.readAsText(file);
+  }
+  sampleCsv() {
+    const tab = this.state.tab;
+    if (tab === 'locations') return 'lumana_id,name,account_id,partition_id\nloc_7f3a91c2,Fourth Street Industrial Park,1A2B,01\nloc_9c1d07ab,Warehouse 5,1A2D,01\nloc_45ef6a13,Head office,2F01,02\nloc_000000aa,Old depot,3B00,01';
+    if (tab === 'subs') return 'lumana_id,name,location,partition_id\nsub_d03f9b64,Cold store,Warehouse 3,02\nsub_f95b4d83,Server room,Head office,2\nsub_a19c3e07,Main gate,Fourth Street Industrial Park,01';
+    return 'lumana_id,name,type,location,zone_id\ncam_5a93d2c6,Yard overview,Camera,Fourth Street Industrial Park,003\ncam_83c605f9,Dock 4 — West,Camera,Warehouse 3,002\nsen_94d7160a,Cold store temperature,Sensor,Warehouse 3,0G1\ncam_a5e8271b,Aisle 12,Camera,Warehouse 5,001';
+  }
+  showToast(msg) { this.setState({ toast: msg }); clearTimeout(this._t); this._t = setTimeout(() => this.setState({ toast: '' }), 3000); }
+
+  renderVals() {
+    const NS = window.LumanaDesignSystem_1b2e75 || {};
+    const R = React.createElement;
+    const s = this.state, tab = s.tab, t = TABS[tab];
+    const val = v => (v && v.target ? v.target.value : v);
+    const all = s.data[tab];
+    const q = s.q.toLowerCase();
+    const rows = all.filter(r => (!q || r.name.toLowerCase().includes(q) || r.id.toLowerCase().includes(q))
+      && (s.filter === 'all' || (s.filter === 'mapped' ? this.rowMapped(tab, r) : !this.rowMapped(tab, r))));
+    const invalidTotal = Object.keys(TABS).reduce((n, k) => n + s.data[k].filter(r => this.rowInvalid(k, r)).length, 0);
+    const mappedN = all.filter(r => this.rowMapped(tab, r)).length;
+    const sub = { fontSize: 'var(--ui-font-xs-size)', color: 'var(--color-text-subtlest)' };
+
+    const columns = [
+      { key: 'name', label: 'Name', render: r => R('span', { style: { fontWeight: 500 } }, r.name) },
+      ...(tab === 'devices' ? [{ key: 'type', label: 'Type', width: 110 }] : []),
+      ...(tab !== 'locations' ? [{ key: 'loc', label: 'Location' }] : []),
+      { key: 'id', label: 'Lumana ID', width: 150, render: r => R('span', { style: { color: 'var(--color-text-subtle)' } }, r.id) },
+      ...t.fields.map(([k, label, len]) => ({
+        key: k, width: 170,
+        label: R('span', { style: { display: 'inline-flex', alignItems: 'center', gap: 6 } }, `${label} (${len})`,
+          R('span', { className: 'ui-icon-info', title: tab === 'devices' ? 'Each camera and device in a location needs a unique zone ID' : tab === 'subs' ? 'Sub-locations can share partition IDs' : 'Locations can share account and partition IDs', style: { fontSize: 14, cursor: 'help', color: 'var(--color-icon-default)' } })),
+        render: r => {
+          const err = this.fieldError(tab, r, k, label, len);
+          return R('div', { title: err || undefined, style: { display: 'flex', alignItems: 'center', gap: 8 } },
+            NS.Input ? R(NS.Input, { height: 32, value: r[k], placeholder: '—', style: { width: 120 }, invalid: !!err, onChange: e => this.setField(tab, r.id, k, len, val(e)) }) : r[k],
+            err ? R('span', { className: 'ui-icon-warning', title: err, style: { fontSize: 16, cursor: 'help', color: 'var(--color-icon-alert)' } }) : null);
+        },
+      })),
+    ];
+
+    const sched = SCHEDULES.find(x => x.value === s.armSchedule);
+    const res = s.csvRes;
+    return {
+      themeClass: (this.props.theme ?? 'dark') === 'dark' ? 'dark-theme' : '',
+      showPhase2: this.props.showPhase2 ?? true,
+      navItems: [
+        { value: 'devices', label: 'Devices', icon: 'ui-icon-camera-sidebar' },
+        { value: 'search', label: 'Search', icon: 'ui-icon-search-sidebar' },
+        { value: 'alerts', label: 'Alerts', icon: 'ui-icon-notifications-sidebar' },
+        { value: 'dashboards', label: 'Dashboards', icon: 'ui-icon-dashboard-sidebar' },
+        { value: 'walls', label: 'Walls', icon: 'ui-icon-wall-sidebar' },
+        { value: 'archives', label: 'Archives', icon: 'ui-icon-archive-sidebar' },
+        { value: 'cases', label: 'Cases', icon: 'ui-icon-menu-folder-sidebar' },
+        { value: 'events', label: 'Events manager', icon: 'ui-icon-controls-event-sidebar', separator: true },
+        { value: 'workflows', label: 'Workflows', icon: 'ui-icon-workflow-sidebar' },
+        { value: 'settings', label: 'Organization settings', icon: 'ui-icon-user-sidebar', separator: true },
+      ],
+      orgOpen: s.orgOpen, orgChevron: s.orgOpen ? 'rotate(180deg)' : 'rotate(0deg)',
+      toggleOrg: () => this.setState({ orgOpen: !s.orgOpen }),
+      orgChildren: ['Details', 'Email notifications', 'Session management', 'Developer', 'Analytics Sync', 'Shareable Groups Sync', 'Archive', 'Organization invitation code', 'Rate limit'],
+
+      saveHint: invalidTotal ? `Fix ${invalidTotal} invalid ${invalidTotal === 1 ? 'value' : 'values'} to save` : s.dirty ? 'Unsaved changes' : '',
+      saveDisabled: !s.dirty || invalidTotal > 0,
+      save: () => { this.setState({ dirty: false }); this.showToast('Control Center settings saved'); },
+
+      armScheduleOpts: [{ value: 'none', label: 'None — don’t arm automatically' }, ...SCHEDULES.map(x => ({ value: x.value, label: x.label }))],
+      armSchedule: s.armSchedule,
+      setArmSchedule: v => this.setState({ armSchedule: v, dirty: true }),
+      armSummary: sched ? `Armed ${sched.detail}. Disarmed outside the schedule.` : 'The account is only armed manually.',
+
+      scheduleOpts: SCHEDULES.map(x => ({ value: x.value, label: `${x.label} (${x.detail})` })),
+      hasArmTypes: s.armTypes.length > 0, noArmTypes: s.armTypes.length === 0,
+      armTypes: s.armTypes.map(a => ({
+        ...a, invalid: !a.name.trim() || s.armTypes.some(b => b.id !== a.id && b.name.trim().toLowerCase() === a.name.trim().toLowerCase()),
+        onName: e => this.setState(st => ({ dirty: true, armTypes: st.armTypes.map(b => b.id === a.id ? { ...b, name: val(e) } : b) })),
+        onSchedule: v => this.setState(st => ({ dirty: true, armTypes: st.armTypes.map(b => b.id === a.id ? { ...b, schedule: v } : b) })),
+        onRemove: () => this.setState(st => ({ dirty: true, armTypes: st.armTypes.filter(b => b.id !== a.id) })),
+      })),
+      addArmType: () => this.setState(st => ({ dirty: true, armTypes: [...st.armTypes, { id: Date.now(), name: '', schedule: '' }] })),
+
+      tabs: Object.entries(TABS).map(([k, v]) => ({ value: k, label: `${v.label} (${s.data[k].length})` })),
+      tab, setTab: v => this.setState({ tab: v, q: '' }),
+      q: s.q, setQ: v => this.setState({ q: val(v) || '' }),
+      filterOpts: [{ value: 'all', label: 'All' }, { value: 'mapped', label: 'Mapped' }, { value: 'unmapped', label: 'Not mapped' }],
+      filter: s.filter, setFilter: v => this.setState({ filter: v }),
+      mappedSummary: `${mappedN} of ${all.length} ${t.label.toLowerCase()} mapped. IDs use 0–9 and A–F.` + (tab === 'devices' ? ' Zone IDs must be unique within a location.' : ''),
+      columns, rows, noRows: rows.length === 0,
+
+      downloadCsv: () => {
+        const body = all.map(r => t.csv.map(c => {
+          const k = { lumana_id: 'id', location: 'loc', account_id: 'account', partition_id: 'partition', zone_id: 'zone' }[c] || c;
+          const v = String(r[k] ?? ''); return /[",]/.test(v) ? `"${v.replace(/"/g, '""')}"` : v;
+        }).join(','));
+        const blob = new Blob([[t.csv.join(','), ...body].join('\n')], { type: 'text/csv' });
+        const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = `contact-id-${tab}.csv`; a.click();
+      },
+      openCsv: () => this.setState({ csvOpen: true, csvRes: null }),
+      closeCsv: () => this.setState({ csvOpen: false, csvRes: null }),
+      resetCsv: () => this.setState({ csvRes: null }),
+      csvTitle: `Upload CSV — ${t.label}`,
+      csvCols: ['lumana_id', ...Object.keys(t.key)].join(', '),
+      csvDisplay: s.csvOpen ? 'flex' : 'none', idleDisplay: res ? 'none' : 'flex', previewDisplay: res ? 'flex' : 'none', csvRes: res ? { ...res, skippedCount: res.skipped.length } : { updated: 0, unchanged: 0, skippedCount: 0, skipped: [] },
+      csvHasErrors: !!res && res.skipped.length > 0, csvFileName: s.csvFileName,
+      fileRef: this.fileRef,
+      pickFile: () => this.fileRef.current && (this.fileRef.current.value = '', this.fileRef.current.click()),
+      onFile: e => this.loadFile(e.target.files[0]),
+      dragOver: e => e.preventDefault(),
+      dropFile: e => { e.preventDefault(); this.loadFile(e.dataTransfer.files[0]); },
+      useSample: e => { e.preventDefault(); this.setState({ csvRes: this.parseCsv(this.sampleCsv()), csvFileName: `sample-${tab}.csv` }); },
+      applyLabel: res ? `Apply ${res.updated} ${res.updated === 1 ? 'change' : 'changes'}` : 'Apply',
+      applyDisabled: !res || res.updated === 0,
+      applyCsv: () => {
+        const map = Object.fromEntries(res.changes.map(c => [c.id, c.patch]));
+        this.setState(st => ({ dirty: true, csvOpen: false, csvRes: null, data: { ...st.data, [tab]: st.data[tab].map(r => map[r.id] ? { ...r, ...map[r.id] } : r) } }));
+        this.showToast(`${res.updated} ${t.label.toLowerCase()} updated from CSV`);
+      },
+      toast: s.toast,
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+/* Spacing, radii and sizing. Lumana's SCSS has no spacing map — spacing lives in
+   `.gap-N` / `.p-N` / `.m-N` utility classes and literal px in component styles.
+   These tokens name the values that actually recur in the product. */
+:root{
+  --space-2:2px;   /* chip inner padding */
+  --space-4:4px;
+  --space-6:6px;
+  --space-8:8px;   /* the default gap between sibling controls */
+  --space-12:12px;
+  --space-16:16px; /* table cell padding, modal header padding-x */
+  --space-20:20px;
+  --space-24:24px; /* modal body padding, page section padding */
+  --space-25:25px;
+  --space-32:32px; /* page gutter in list views */
+  --space-40:40px;
+
+  /* radii — Lumana is a low-radius system. 4px is the house radius for nearly everything. */
+  --radius-4:4px;    /* buttons, inputs, cards, tables, modals, badges */
+  --radius-6:6px;    /* video overlay controls */
+  --radius-8:8px;    /* notification panel, icon tiles */
+  --radius-10:10px;  /* ui-badge pill */
+  --radius-16:16px;  /* camera name label */
+  --radius-20:20px;  /* free-text search field */
+  --radius-24:24px;  /* tag chip */
+  --radius-25:25px;  /* option toggle track */
+  --radius-full:9999px;
+
+  /* control heights — border-inclusive height noted in comments, as in ui-button.component.scss */
+  --control-h-s:32px;  /* 34px incl. border */
+  --control-h-m:38px;  /* 40px incl. border */
+  --control-h-l:46px;  /* 48px incl. border */
+  --control-h-input:40px;
+
+  /* icon sizes */
+  --icon-12:12px; --icon-14:14px; --icon-16:16px; --icon-20:20px; --icon-24:24px;
+
+  /* chrome */
+  --sidebar-w:65px;
+  --submenu-w:29px;
+  --submenu-w-expanded:256px;
+  --header-h:49px;
+  --row-h-device:52px;
+  --row-h-table:72px;
+  --row-h-table-compact:40px;
+
+  /* motion */
+  --motion-fast:.15s;   /* @kind other */
+  --motion-base:.3s;    /* @kind other */
+  --motion-slow:.5s;    /* @kind other */
+  --easing:ease-in-out; /* @kind other */
+}

@@ -21,53 +21,36 @@
 <style>html,body{height:100%;margin:0}a{color:var(--color-text-primary-default);text-decoration:none}a:hover{text-decoration:underline}</style>
 </helmet>
 <div class="{{ themeClass }}" style="display:flex;height:100vh;min-height:0;font-family:var(--font-sans);background:var(--color-elevation-surface-default);color:var(--color-text-default)">
-<x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Sidebar" items="{{ navItems }}" value="settings" logo-src="assets/logo-mark-alt.svg" hint-size="65px,100%"></x-import>
+<x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Sidebar" items="{{ navItems }}" value="alerts" logo-src="assets/logo-mark-alt.svg" hint-size="65px,100%"></x-import>
 
 <main style="flex:1;display:flex;flex-direction:column;min-width:0;min-height:0">
 <div style="display:flex;justify-content:space-between;align-items:center;flex-shrink:0;height:49px;padding:0 24px 0 32px;border-bottom:1px solid var(--color-border-default);font-size:var(--ui-font-xxm-size);line-height:var(--ui-font-xxm-height)">
 <div style="display:flex;align-items:center">
-<span>Organization settings</span>
+<span>Alerts</span>
 <span class="ui-icon-expand-arrow" style="font-size:12px;margin:0 16px;transform:rotate(-90deg);color:var(--color-icon-default)"></span>
-<span>Control Center</span>
-<span class="ui-icon-expand-arrow" style="font-size:12px;margin:0 16px;transform:rotate(-90deg);color:var(--color-icon-default)"></span>
-<span>{{ pageLabel }}</span>
+<span>Control center settings</span>
 </div>
-<div style="display:flex;align-items:center;gap:12px">
+<div style="display:{{ headerSaveDisplay }};align-items:center;gap:12px">
 <span style="font-size:var(--ui-font-xs-size);color:var(--color-text-subtlest)">{{ saveHint }}</span>
 <x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Button" text="Save" type="primary" disabled="{{ saveDisabled }}" onClick="{{ save }}" hint-size="64px,32px"></x-import>
 </div>
 </div>
 
 <div style="flex:1;min-height:0;display:flex">
-<aside style="width:300px;flex-shrink:0;overflow-y:auto;border-right:1px solid var(--color-border-default);padding:12px 16px;box-sizing:border-box;display:flex;flex-direction:column;gap:2px;font-size:var(--ui-font-xm-size)">
-<div onClick="{{ toggleOrg }}" style="display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:4px;cursor:pointer" style-hover="background:var(--color-background-neutral-subtle)"><span class="ui-icon-organization" style="font-size:16px;color:var(--color-icon-default)"></span><span style="flex:1">Organization</span><span class="ui-icon-expand-arrow" style="font-size:12px;color:var(--color-icon-default);transform:{{ orgChevron }};transition:transform .3s"></span></div>
-<sc-if value="{{ orgOpen }}" hint-placeholder-val="{{ false }}">
-<div style="margin-left:18px;padding-left:16px;border-left:1px solid var(--color-border-default);display:flex;flex-direction:column;gap:2px">
-<sc-for list="{{ orgChildren }}" as="c" hint-placeholder-count="9"><div style="padding:8px 10px;border-radius:4px;cursor:pointer" style-hover="background:var(--color-background-neutral-subtle)">{{ c }}</div></sc-for>
+<x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Submenu" expanded="{{ subOpen }}" onToggle="{{ toggleSub }}" hint-size="256px,100%">
+<div style="display:flex;flex-direction:column;gap:2px;font-size:var(--ui-font-m-size);line-height:var(--ui-font-m-height)">
+<sc-for list="{{ alertMenu }}" as="m" hint-placeholder-count="4"><div style="display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:4px;cursor:pointer;background:{{ m.bg }};color:{{ m.color }};margin-top:{{ m.gap }};border-top:{{ m.line }}"><span class="{{ m.icon }}" style="font-size:16px;color:{{ m.iconColor }}"></span>{{ m.label }}</div></sc-for>
 </div>
-</sc-if>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:4px" style-hover="background:var(--color-background-neutral-subtle)"><span class="ui-icon-users" style="font-size:16px;color:var(--color-icon-default)"></span>Users</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:4px" style-hover="background:var(--color-background-neutral-subtle)"><span class="ui-icon-share-arrow" style="font-size:16px;color:var(--color-icon-default)"></span>Sharing</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:4px" style-hover="background:var(--color-background-neutral-subtle)"><span class="ui-icon-list-view" style="font-size:16px;color:var(--color-icon-default)"></span>Audit logs</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:4px" style-hover="background:var(--color-background-neutral-subtle)"><span class="ui-icon-notifications" style="font-size:16px;color:var(--color-icon-default)"></span>Alert notification logs</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:4px" style-hover="background:var(--color-background-neutral-subtle)"><span class="ui-icon-key" style="font-size:16px;color:var(--color-icon-default)"></span>API keys</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:4px" style-hover="background:var(--color-background-neutral-subtle)"><span class="ui-icon-api" style="font-size:16px;color:var(--color-icon-default)"></span>OAuth2 Credentials</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:4px" style-hover="background:var(--color-background-neutral-subtle)"><span class="ui-icon-lock" style="font-size:16px;color:var(--color-icon-default)"></span>OAuth Providers</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:4px" style-hover="background:var(--color-background-neutral-subtle)"><span class="ui-icon-shield" style="font-size:16px;color:var(--color-icon-default)"></span>Roles &amp; Permissions</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:4px" style-hover="background:var(--color-background-neutral-subtle)"><span class="ui-icon-link" style="font-size:16px;color:var(--color-icon-default)"></span>Integrations</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:4px"><span class="ui-icon-armed" style="font-size:16px;color:var(--color-icon-default)"></span><span style="flex:1">Control Center</span><span class="ui-icon-expand-arrow" style="font-size:12px;color:var(--color-icon-default);transform:rotate(180deg)"></span></div>
-<div style="margin-left:18px;padding-left:16px;border-left:1px solid var(--color-border-default);display:flex;flex-direction:column;gap:2px">
-<div onClick="{{ goArming }}" style="padding:8px 10px;border-radius:4px;cursor:pointer;background:{{ armingNavBg }};color:{{ armingNavColor }}">Arming</div>
-<div onClick="{{ goMapping }}" style="padding:8px 10px;border-radius:4px;cursor:pointer;background:{{ mappingNavBg }};color:{{ mappingNavColor }}">Mapping</div>
-</div>
-<div style="display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:4px" style-hover="background:var(--color-background-neutral-subtle)"><span class="ui-icon-login-firewall" style="font-size:16px;color:var(--color-icon-default)"></span>Login firewall</div>
-</aside>
+</x-import>
 
-<div style="flex:1;min-width:0;overflow:auto;padding:28px 28px 64px;box-sizing:border-box">
+<div style="flex:1;min-width:0;overflow:auto;box-sizing:border-box">
+<div style="position:sticky;top:0;z-index:5;display:flex;gap:24px;padding:0 28px;background:var(--color-elevation-surface-default);border-bottom:1px solid var(--color-border-default)">
+<sc-for list="{{ ccTabs }}" as="t" hint-placeholder-count="5"><div onClick="{{ t.onClick }}" style="padding:12px 2px;margin-bottom:-1px;cursor:pointer;font-size:var(--ui-font-m-size);line-height:var(--ui-font-m-height);font-weight:500;color:{{ t.color }};border-bottom:2px solid {{ t.border }}">{{ t.label }}</div></sc-for>
+</div>
+<div style="padding:24px 28px 64px">
 <div style="max-width:1100px;display:{{ armingDisplay }};flex-direction:column;gap:32px">
 
 <div style="display:flex;flex-direction:column;gap:4px">
-<div style="font-size:var(--ui-font-l-size);line-height:var(--ui-font-l-height);font-weight:500">Arming</div>
 <div style="font-size:var(--ui-font-xm-size);line-height:var(--ui-font-xm-height);color:var(--color-text-subtlest)">Set the arm status and automatic arm schedule for each location</div>
 </div>
 
@@ -144,16 +127,253 @@
 </sc-if>
 </div>
 
+<div style="max-width:1400px;display:{{ sopDisplay }};flex-direction:column;gap:16px">
+<div style="display:flex;flex-direction:column;gap:4px">
+<div style="font-size:var(--ui-font-xm-size);line-height:var(--ui-font-xm-height);color:var(--color-text-subtlest);max-width:760px;text-wrap:pretty">Standard operating procedures the Control Center follows on events from your locations. Each event group uses one SOP per scope. A location or sub-location SOP replaces the account-wide one for that group.</div>
+</div>
+<div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+<div style="display:flex;align-items:center;gap:8px">
+<x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Search" placeholder="Search SOPs" value="{{ sopQ }}" onChange="{{ setSopQ }}" hint-size="260px,40px" style="width:260px"></x-import>
+<x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Select" options="{{ sopSortOpts }}" value="{{ sopSort }}" onChange="{{ setSopSort }}" hint-size="160px,40px" style="width:160px"></x-import>
+</div>
+<x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Button" text="Create new" type="default" iconClass="ui-icon-plus" onClick="{{ newSop }}" hint-size="116px,32px"></x-import>
+</div>
+<div style="font-size:var(--ui-font-xs-size);line-height:var(--ui-font-xs-height);color:var(--color-text-subtlest)">Agent steps are done by the agent chosen on the event group. If the group has no agent, the operator does them.</div>
+<div style="overflow-x:auto">
+<div style="display:grid;grid-template-columns:minmax(170px,1.2fr) minmax(220px,2fr) 60px 124px minmax(160px,1.1fr) minmax(150px,1fr) 112px 112px;min-width:1160px;border:1px solid var(--color-border-default);border-radius:4px;font-size:var(--ui-font-xm-size);line-height:var(--ui-font-xm-height)">
+<div style="padding:8px 12px;background:var(--color-elevation-surface-subtlest);font-size:var(--ui-font-s-size);line-height:var(--ui-font-s-height);font-weight:500;color:var(--color-text-subtle)">SOP name</div>
+<div style="padding:8px 12px;background:var(--color-elevation-surface-subtlest);font-size:var(--ui-font-s-size);line-height:var(--ui-font-s-height);font-weight:500;color:var(--color-text-subtle)">Description</div>
+<div style="padding:8px 12px;background:var(--color-elevation-surface-subtlest);font-size:var(--ui-font-s-size);line-height:var(--ui-font-s-height);font-weight:500;color:var(--color-text-subtle)">Steps</div>
+<div style="padding:8px 12px;background:var(--color-elevation-surface-subtlest);font-size:var(--ui-font-s-size);line-height:var(--ui-font-s-height);font-weight:500;color:var(--color-text-subtle)">Agent steps</div>
+<div style="padding:8px 12px;background:var(--color-elevation-surface-subtlest);font-size:var(--ui-font-s-size);line-height:var(--ui-font-s-height);font-weight:500;color:var(--color-text-subtle)">Used by</div>
+<div style="padding:8px 12px;background:var(--color-elevation-surface-subtlest);font-size:var(--ui-font-s-size);line-height:var(--ui-font-s-height);font-weight:500;color:var(--color-text-subtle)">Applies to</div>
+<div style="padding:8px 12px;background:var(--color-elevation-surface-subtlest);font-size:var(--ui-font-s-size);line-height:var(--ui-font-s-height);font-weight:500;color:var(--color-text-subtle)">Last modified</div>
+<div style="padding:8px 12px;background:var(--color-elevation-surface-subtlest)"></div>
+<sc-for list="{{ sopRows }}" as="r" hint-placeholder-count="9">
+<div onClick="{{ r.onOpen }}" style="padding:12px;border-top:1px solid var(--color-border-default);cursor:pointer;font-weight:500;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ r.name }}</div>
+<div onClick="{{ r.onOpen }}" title="{{ r.desc }}" style="padding:12px;border-top:1px solid var(--color-border-default);cursor:pointer;color:var(--color-text-subtle);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ r.desc }}</div>
+<div onClick="{{ r.onOpen }}" style="padding:12px;border-top:1px solid var(--color-border-default);cursor:pointer">{{ r.steps }}</div>
+<div onClick="{{ r.onOpen }}" style="padding:12px;border-top:1px solid var(--color-border-default);cursor:pointer;display:flex;align-items:center">
+<span style="display:{{ r.agentDisplay }};align-items:center;gap:4px;padding:0 8px;border-radius:4px;background:var(--color-background-neutral-subtle);font-size:var(--ui-font-xxs-size);line-height:20px"><span class="ui-icon-api" style="font-size:12px"></span>{{ r.agentText }}</span>
+<span style="display:{{ r.noneDisplay }};color:var(--color-text-subtlest)">None</span>
+</div>
+<div onClick="{{ r.onOpen }}" style="padding:12px;border-top:1px solid var(--color-border-default);cursor:pointer;display:flex;align-items:center;gap:6px;min-width:0"><span class="ui-icon-link" style="font-size:14px;color:var(--color-icon-default);flex-shrink:0"></span><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ r.group }}</span></div>
+<div onClick="{{ r.onOpen }}" title="{{ r.appliesLong }}" style="padding:12px;border-top:1px solid var(--color-border-default);cursor:pointer;display:flex;align-items:center;gap:6px;min-width:0"><span class="{{ r.appliesIcon }}" style="font-size:14px;color:var(--color-icon-default);flex-shrink:0"></span><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ r.applies }}</span></div>
+<div onClick="{{ r.onOpen }}" style="padding:12px;border-top:1px solid var(--color-border-default);cursor:pointer;display:flex;align-items:center;gap:6px;color:var(--color-text-subtle)"><span class="ui-icon-time" style="font-size:14px;color:var(--color-icon-default)"></span>{{ r.modified }}</div>
+<div style="padding:4px 8px;border-top:1px solid var(--color-border-default);display:flex;align-items:center;justify-content:flex-end;gap:2px">
+<x-import component-from-global-scope="LumanaDesignSystem_1b2e75.IconButton" iconClass="ui-icon-duplicate" noBorder="{{ true }}" title="Duplicate" onClick="{{ r.onDup }}" hint-size="32px,32px"></x-import>
+<x-import component-from-global-scope="LumanaDesignSystem_1b2e75.IconButton" iconClass="ui-icon-edit" noBorder="{{ true }}" title="Edit" onClick="{{ r.onOpen }}" hint-size="32px,32px"></x-import>
+<x-import component-from-global-scope="LumanaDesignSystem_1b2e75.IconButton" iconClass="ui-icon-delete" noBorder="{{ true }}" title="Delete" onClick="{{ r.onDelete }}" hint-size="32px,32px"></x-import>
+</div>
+</sc-for>
+</div>
+</div>
+<sc-if value="{{ noSops }}" hint-placeholder-val="{{ false }}">
+<div style="padding:24px;text-align:center;font-size:var(--ui-font-xm-size);color:var(--color-text-subtlest)">No SOPs match your search.</div>
+</sc-if>
+
+<sc-if value="{{ sopEditing }}" hint-placeholder-val="{{ false }}">
+<div style="position:fixed;inset:0;z-index:15;background:rgba(16,24,40,.6)">
+<x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Drawer" title="{{ panelTitle }}" width="{{ 1040 }}" onClose="{{ cancelSop }}" footer="{{ sopFooter }}" hint-size="1040px,100%">
+<div style="display:flex;flex-direction:column;gap:20px">
+<div style="font-size:var(--ui-font-xs-size);line-height:var(--ui-font-xs-height);color:var(--color-text-subtlest);margin-top:-8px">{{ panelSub }}</div>
+<div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px">
+<div style="display:flex;flex-direction:column;gap:6px"><div style="font-size:var(--ui-font-s-size);line-height:var(--ui-font-s-height);font-weight:500;color:var(--color-text-subtle)">SOP name</div><x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Input" value="{{ d.name }}" placeholder="e.g. Intrusion – verify and respond" onChange="{{ setDName }}" hint-size="100%,40px"></x-import></div>
+<div style="display:flex;flex-direction:column;gap:6px"><div style="font-size:var(--ui-font-s-size);line-height:var(--ui-font-s-height);font-weight:500;color:var(--color-text-subtle)">Description</div><x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Input" value="{{ d.desc }}" placeholder="One line operators see on the event" onChange="{{ setDDesc }}" hint-size="100%,40px"></x-import></div>
+</div>
+<div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;align-items:end">
+<div style="display:flex;flex-direction:column;gap:6px"><div style="font-size:var(--ui-font-s-size);line-height:var(--ui-font-s-height);font-weight:500;color:var(--color-text-subtle)">Used by event group</div><x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Select" options="{{ groupOpts }}" value="{{ d.group }}" onChange="{{ setDGroup }}" hint-size="100%,40px" style="width:100%"></x-import></div>
+<div style="display:flex;flex-direction:column;gap:6px"><div style="font-size:var(--ui-font-s-size);line-height:var(--ui-font-s-height);font-weight:500;color:var(--color-text-subtle)">Applies to</div><x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Select" options="{{ scopeOpts }}" value="{{ d.scope }}" onChange="{{ setDScope }}" hint-size="100%,40px" style="width:100%"></x-import></div>
+<div style="display:{{ targetDisplay }};flex-direction:column;gap:6px"><x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Select" options="{{ dTargetOpts }}" value="" placeholder="{{ dTargetPh }}" onChange="{{ addDTarget }}" hint-size="100%,40px" style="width:100%"></x-import></div>
+</div>
+<div style="font-size:var(--ui-font-xs-size);line-height:var(--ui-font-xs-height);color:var(--color-text-subtle);margin-top:-8px">{{ groupAgentText }}</div>
+<sc-if value="{{ dTargeted }}" hint-placeholder-val="{{ false }}">
+<div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:-8px"><sc-for list="{{ dTargetTags }}" as="t" hint-placeholder-count="2"><div style="display:flex;align-items:center;gap:6px;padding:4px 6px 4px 10px;border-radius:4px;background:var(--color-background-neutral-subtle);font-size:var(--ui-font-xs-size);line-height:var(--ui-font-xs-height)">{{ t.name }}<span onClick="{{ t.onRemove }}" class="ui-icon-close" style="font-size:12px;cursor:pointer;color:var(--color-icon-default)"></span></div></sc-for></div>
+</sc-if>
+<div style="display:flex;align-items:center;gap:8px;padding:10px 14px;border-radius:4px;background:var(--color-background-information-default);color:var(--color-text-primary-default);font-size:var(--ui-font-xs-size);line-height:var(--ui-font-xs-height)"><span class="ui-icon-info" style="font-size:14px"></span>Operators see each outcome as a button on the step. The agent follows the same branches.</div>
+
+<div style="display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:20px;align-items:start">
+<div style="display:flex;flex-direction:column;gap:8px">
+<div style="display:flex;justify-content:space-between;align-items:center;gap:12px">
+<div style="font-size:var(--ui-font-s-size);line-height:var(--ui-font-s-height);font-weight:500;color:var(--color-text-subtle)">Steps · in order</div>
+<x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Select" options="{{ addStepOpts }}" value="" placeholder="Add step" onChange="{{ addDStep }}" hint-size="200px,40px" style="width:200px"></x-import>
+</div>
+<sc-for list="{{ dSteps }}" as="st" hint-placeholder-count="4">
+<div style="display:flex;flex-direction:column;gap:4px">
+<div onClick="{{ st.onSelect }}" style="display:grid;grid-template-columns:24px 18px minmax(0,1fr) auto;gap:12px;align-items:center;padding:10px 8px 10px 12px;border-radius:4px;cursor:pointer;border:1px solid {{ st.border }};background:{{ st.bg }}">
+<div style="width:24px;height:24px;border-radius:12px;background:var(--color-background-neutral-subtle);display:flex;align-items:center;justify-content:center;font-size:var(--ui-font-xs-size);font-weight:500">{{ st.n }}</div>
+<span class="{{ st.icon }}" style="font-size:16px;color:var(--color-icon-default)"></span>
+<div style="display:flex;flex-direction:column;gap:2px;min-width:0">
+<div style="font-size:var(--ui-font-xm-size);line-height:var(--ui-font-xm-height);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ st.text }}</div>
+<div style="font-size:var(--ui-font-xs-size);line-height:var(--ui-font-xs-height);color:var(--color-text-subtlest);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ st.meta }}</div>
+</div>
+<div style="display:flex;align-items:center;gap:2px">
+<div onClick="{{ st.onUp }}" title="Move up" style="width:28px;height:28px;display:flex;align-items:center;justify-content:center;border-radius:4px;cursor:pointer;opacity:{{ st.upOpacity }}" style-hover="background:var(--color-background-neutral-subtle)"><span class="ui-icon-expand-arrow" style="font-size:12px;transform:rotate(180deg);color:var(--color-icon-default)"></span></div>
+<div onClick="{{ st.onDown }}" title="Move down" style="width:28px;height:28px;display:flex;align-items:center;justify-content:center;border-radius:4px;cursor:pointer;opacity:{{ st.downOpacity }}" style-hover="background:var(--color-background-neutral-subtle)"><span class="ui-icon-expand-arrow" style="font-size:12px;color:var(--color-icon-default)"></span></div>
+<x-import component-from-global-scope="LumanaDesignSystem_1b2e75.IconButton" iconClass="ui-icon-delete" noBorder="{{ true }}" onClick="{{ st.onRemove }}" hint-size="28px,28px"></x-import>
+</div>
+</div>
+<sc-for list="{{ st.outs }}" as="o" hint-placeholder-count="0"><div style="margin-left:56px;font-size:var(--ui-font-xs-size);line-height:var(--ui-font-xs-height);color:var(--color-text-subtle)">↳ {{ o.label }} → <span style="color:var(--color-text-subtlest)">{{ o.then }}</span></div></sc-for>
+</div>
+</sc-for>
+<sc-if value="{{ noSteps }}" hint-placeholder-val="{{ false }}">
+<div style="padding:24px;border:1px dashed var(--color-border-default);border-radius:4px;text-align:center;font-size:var(--ui-font-xm-size);color:var(--color-text-subtlest)">Add the first step this SOP should run.</div>
+</sc-if>
+<div style="font-size:var(--ui-font-xs-size);line-height:var(--ui-font-xs-height);color:var(--color-text-subtlest)">Each completed step is timestamped with who did it.</div>
+</div>
+
+<sc-if value="{{ hasStep }}" hint-placeholder-val="{{ true }}">
+<div style="display:flex;flex-direction:column;gap:14px;padding:16px;border:1px solid var(--color-border-default);border-radius:4px">
+<div style="font-size:var(--ui-font-s-size);line-height:var(--ui-font-s-height);font-weight:500;color:var(--color-text-subtle)">Step {{ sel.n }} settings</div>
+<div style="display:flex;flex-direction:column;gap:6px"><div style="font-size:var(--ui-font-s-size);line-height:var(--ui-font-s-height);font-weight:500;color:var(--color-text-subtle)">Type</div><x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Select" options="{{ stepTypeOpts }}" value="{{ sel.type }}" onChange="{{ setSType }}" hint-size="100%,40px" style="width:100%"></x-import></div>
+<div style="display:flex;flex-direction:column;gap:6px"><div style="font-size:var(--ui-font-s-size);line-height:var(--ui-font-s-height);font-weight:500;color:var(--color-text-subtle)">Step text</div><x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Input" multiline="{{ true }}" rows="{{ 3 }}" value="{{ sel.text }}" placeholder="What the operator or agent should do" onChange="{{ setSText }}" hint-size="100%,80px"></x-import></div>
+<div style="display:flex;flex-direction:column;gap:6px"><div style="font-size:var(--ui-font-s-size);line-height:var(--ui-font-s-height);font-weight:500;color:var(--color-text-subtle)">Performed by</div><x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Select" options="{{ byOpts }}" value="{{ sel.by }}" onChange="{{ setSBy }}" hint-size="100%,40px" style="width:100%"></x-import></div>
+<sc-if value="{{ sel.isWho }}" hint-placeholder-val="{{ false }}">
+<div style="display:flex;flex-direction:column;gap:6px"><div style="font-size:var(--ui-font-s-size);line-height:var(--ui-font-s-height);font-weight:500;color:var(--color-text-subtle)">{{ sel.whoLabel }}</div><x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Select" options="{{ whoOpts }}" value="{{ sel.who }}" onChange="{{ setSWho }}" hint-size="100%,40px" style="width:100%"></x-import><div style="font-size:var(--ui-font-xs-size);line-height:var(--ui-font-xs-height);color:var(--color-text-subtlest)">By role: sub-location contacts first, then location, then account contacts.</div></div>
+</sc-if>
+<sc-if value="{{ sel.isCall }}" hint-placeholder-val="{{ false }}">
+<x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Checkbox" checked="{{ sel.askPin }}" label="Ask for their passcode on the call" onChange="{{ toggleSAskPin }}" hint-size="100%,24px"></x-import>
+<div style="display:flex;flex-direction:column;gap:6px"><div style="font-size:var(--ui-font-s-size);line-height:var(--ui-font-s-height);font-weight:500;color:var(--color-text-subtle)">Attempts</div><x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Select" options="{{ attemptOpts }}" value="{{ sel.attemptsVal }}" onChange="{{ setSAttempts }}" hint-size="100%,40px" style="width:100%"></x-import></div>
+</sc-if>
+<div style="display:flex;flex-direction:column;gap:4px">
+<div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:var(--ui-font-s-size);line-height:var(--ui-font-s-height);font-weight:500;color:var(--color-text-subtle)">Required</span><x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Toggle" value="{{ sel.required }}" onChange="{{ toggleSRequired }}" hint-size="34px,24px"></x-import></div>
+<div style="font-size:var(--ui-font-xs-size);line-height:var(--ui-font-xs-height);color:var(--color-text-subtlest)">Required steps must be done, or skipped with a reason, before the incident can be resolved.</div>
+</div>
+<div style="display:flex;flex-direction:column;gap:8px;padding-top:14px;border-top:1px solid var(--color-border-default)">
+<div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:var(--ui-font-s-size);line-height:var(--ui-font-s-height);font-weight:500;color:var(--color-text-subtle)">Outcomes</span><x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Button" text="Add" type="default" iconClass="ui-icon-plus" onClick="{{ addSOut }}" hint-size="64px,32px"></x-import></div>
+<sc-for list="{{ sel.outs }}" as="o" hint-placeholder-count="2">
+<div style="display:grid;grid-template-columns:minmax(0,1fr) 28px;gap:6px;align-items:center;padding:8px;border:1px solid var(--color-border-default);border-radius:4px">
+<x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Input" value="{{ o.label }}" placeholder="Outcome" onChange="{{ o.onLabel }}" hint-size="100%,40px"></x-import>
+<x-import component-from-global-scope="LumanaDesignSystem_1b2e75.IconButton" iconClass="ui-icon-close" noBorder="{{ true }}" onClick="{{ o.onRemove }}" hint-size="28px,28px"></x-import>
+<x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Select" options="{{ thenOpts }}" value="{{ o.then }}" onChange="{{ o.onThen }}" hint-size="100%,40px" style="width:100%"></x-import>
+</div>
+</sc-for>
+<sc-if value="{{ sel.noOuts }}" hint-placeholder-val="{{ false }}">
+<div style="font-size:var(--ui-font-xs-size);line-height:var(--ui-font-xs-height);color:var(--color-text-subtlest)">No outcomes. The step shows a single Done button and moves to the next step.</div>
+</sc-if>
+</div>
+</div>
+</sc-if>
+</div>
+</div>
+</x-import>
+</div>
+</sc-if>
+</div>
+
+<div style="max-width:1400px;display:{{ ctDisplay }};flex-direction:column;gap:16px">
+<div style="display:flex;flex-direction:column;gap:4px">
+<div style="font-size:var(--ui-font-xm-size);line-height:var(--ui-font-xm-height);color:var(--color-text-subtlest);max-width:760px;text-wrap:pretty">People and services the Control Center calls or messages. “Call a contact” steps use sub-location contacts first, then location contacts, then account contacts, in call order.</div>
+</div>
+<div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+<div style="display:flex;align-items:center;gap:8px">
+<x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Select" options="{{ ctScopeOpts }}" value="{{ ctScope }}" onChange="{{ setCtScope }}" hint-size="280px,40px" style="width:280px"></x-import>
+<x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Search" placeholder="Search contacts" value="{{ ctQ }}" onChange="{{ setCtQ }}" hint-size="240px,40px" style="width:240px"></x-import>
+</div>
+<x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Button" text="Create new" type="default" iconClass="ui-icon-plus" onClick="{{ newCt }}" hint-size="116px,32px"></x-import>
+</div>
+<div style="font-size:var(--ui-font-xs-size);line-height:var(--ui-font-xs-height);color:var(--color-text-subtlest)">{{ ctNote }}</div>
+<div style="overflow-x:auto">
+<div style="display:grid;grid-template-columns:76px minmax(160px,1.2fr) minmax(130px,1fr) 150px 150px minmax(180px,1.2fr) 110px 110px minmax(120px,1fr) 48px;min-width:1240px;border:1px solid var(--color-border-default);border-radius:4px;font-size:var(--ui-font-xm-size);line-height:var(--ui-font-xm-height)">
+<div style="padding:8px 12px;background:var(--color-elevation-surface-subtlest);font-size:var(--ui-font-s-size);line-height:var(--ui-font-s-height);font-weight:500;color:var(--color-text-subtle)">Call order</div>
+<div style="padding:8px 12px;background:var(--color-elevation-surface-subtlest);font-size:var(--ui-font-s-size);line-height:var(--ui-font-s-height);font-weight:500;color:var(--color-text-subtle)">Name</div>
+<div style="padding:8px 12px;background:var(--color-elevation-surface-subtlest);font-size:var(--ui-font-s-size);line-height:var(--ui-font-s-height);font-weight:500;color:var(--color-text-subtle)">Role</div>
+<div style="padding:8px 12px;background:var(--color-elevation-surface-subtlest);font-size:var(--ui-font-s-size);line-height:var(--ui-font-s-height);font-weight:500;color:var(--color-text-subtle)">Availability</div>
+<div style="padding:8px 12px;background:var(--color-elevation-surface-subtlest);font-size:var(--ui-font-s-size);line-height:var(--ui-font-s-height);font-weight:500;color:var(--color-text-subtle)">Phone</div>
+<div style="padding:8px 12px;background:var(--color-elevation-surface-subtlest);font-size:var(--ui-font-s-size);line-height:var(--ui-font-s-height);font-weight:500;color:var(--color-text-subtle)">Email</div>
+<div style="padding:8px 12px;background:var(--color-elevation-surface-subtlest);font-size:var(--ui-font-s-size);line-height:var(--ui-font-s-height);font-weight:500;color:var(--color-text-subtle)">Passcode</div>
+<div style="padding:8px 12px;background:var(--color-elevation-surface-subtlest);font-size:var(--ui-font-s-size);line-height:var(--ui-font-s-height);font-weight:500;color:var(--color-text-subtle)">Duress code</div>
+<div style="padding:8px 12px;background:var(--color-elevation-surface-subtlest);font-size:var(--ui-font-s-size);line-height:var(--ui-font-s-height);font-weight:500;color:var(--color-text-subtle)">Notes</div>
+<div style="padding:8px 12px;background:var(--color-elevation-surface-subtlest)"></div>
+<sc-for list="{{ ctRows }}" as="c" hint-placeholder-count="5">
+<div onClick="{{ c.onOpen }}" style="padding:12px;border-top:1px solid var(--color-border-default);cursor:pointer;color:var(--color-text-subtle)">{{ c.order }}</div>
+<div onClick="{{ c.onOpen }}" style="padding:12px;border-top:1px solid var(--color-border-default);cursor:pointer;font-weight:500;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ c.name }}</div>
+<div onClick="{{ c.onOpen }}" style="padding:12px;border-top:1px solid var(--color-border-default);cursor:pointer;color:var(--color-text-subtle);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ c.role }}</div>
+<div onClick="{{ c.onOpen }}" title="{{ c.awayTitle }}" style="padding:12px;border-top:1px solid var(--color-border-default);cursor:pointer;display:flex;align-items:center">
+<x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Badge" tone="{{ c.availTone }}" hint-size="96px,20px">{{ c.availText }}</x-import>
+</div>
+<div onClick="{{ c.onOpen }}" style="padding:12px;border-top:1px solid var(--color-border-default);cursor:pointer;font-variant-numeric:tabular-nums;white-space:nowrap">{{ c.phone }}</div>
+<div onClick="{{ c.onOpen }}" style="padding:12px;border-top:1px solid var(--color-border-default);cursor:pointer;color:var(--color-text-subtle);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ c.email }}</div>
+<div style="padding:12px;border-top:1px solid var(--color-border-default);display:flex;align-items:center;gap:8px"><span style="font-variant-numeric:tabular-nums;color:var(--color-text-subtle)">{{ c.passText }}</span><a href="#" onClick="{{ c.togglePass }}" style="display:{{ c.passLinkDisplay }};font-size:var(--ui-font-xs-size)">{{ c.passLink }}</a></div>
+<div style="padding:12px;border-top:1px solid var(--color-border-default);display:flex;align-items:center;gap:8px"><span style="font-variant-numeric:tabular-nums;color:var(--color-text-subtle)">{{ c.duressText }}</span><a href="#" onClick="{{ c.toggleDuress }}" style="display:{{ c.duressLinkDisplay }};font-size:var(--ui-font-xs-size)">{{ c.duressLink }}</a></div>
+<div onClick="{{ c.onOpen }}" title="{{ c.notes }}" style="padding:12px;border-top:1px solid var(--color-border-default);cursor:pointer;color:var(--color-text-subtle);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ c.notes }}</div>
+<div style="padding:4px 8px;border-top:1px solid var(--color-border-default);display:flex;align-items:center;justify-content:center"><x-import component-from-global-scope="LumanaDesignSystem_1b2e75.IconButton" iconClass="ui-icon-edit" noBorder="{{ true }}" onClick="{{ c.onOpen }}" hint-size="32px,32px"></x-import></div>
+</sc-for>
+</div>
+</div>
+<sc-if value="{{ ctEmpty }}" hint-placeholder-val="{{ false }}">
+<div style="padding:24px;text-align:center;font-size:var(--ui-font-xm-size);color:var(--color-text-subtlest)">{{ ctEmptyText }}</div>
+</sc-if>
+
+<sc-if value="{{ ctEditing }}" hint-placeholder-val="{{ false }}">
+<div style="position:fixed;inset:0;z-index:15;background:rgba(16,24,40,.6)">
+<x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Drawer" title="{{ ctTitle }}" width="{{ 560 }}" onClose="{{ cancelCt }}" footer="{{ ctFooter }}" hint-size="560px,100%">
+<div style="display:flex;flex-direction:column;gap:16px">
+<div style="display:flex;flex-direction:column;gap:6px"><div style="font-size:var(--ui-font-s-size);line-height:var(--ui-font-s-height);font-weight:500;color:var(--color-text-subtle)">Name</div><x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Input" value="{{ ce.name }}" placeholder="Full name or service" onChange="{{ setCeName }}" hint-size="100%,40px"></x-import></div>
+<div style="display:flex;flex-direction:column;gap:6px"><div style="font-size:var(--ui-font-s-size);line-height:var(--ui-font-s-height);font-weight:500;color:var(--color-text-subtle)">Role</div><x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Select" options="{{ roleOpts }}" value="{{ ce.role }}" onChange="{{ setCeRole }}" hint-size="100%,40px" style="width:100%"></x-import><div style="font-size:var(--ui-font-xs-size);line-height:var(--ui-font-xs-height);color:var(--color-text-subtlest)">SOP steps call contacts by role.</div></div>
+<div style="display:flex;flex-direction:column;gap:6px"><div style="font-size:var(--ui-font-s-size);line-height:var(--ui-font-s-height);font-weight:500;color:var(--color-text-subtle)">Call order</div><x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Select" options="{{ orderOpts }}" value="{{ ce.orderVal }}" onChange="{{ setCeOrder }}" hint-size="100%,40px" style="width:100%"></x-import></div>
+<div style="display:flex;flex-direction:column;gap:6px"><div style="font-size:var(--ui-font-s-size);line-height:var(--ui-font-s-height);font-weight:500;color:var(--color-text-subtle)">Phone</div><x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Input" value="{{ ce.phone }}" placeholder="+1 555 000 0000" onChange="{{ setCePhone }}" hint-size="100%,40px"></x-import></div>
+<div style="display:flex;flex-direction:column;gap:6px"><div style="font-size:var(--ui-font-s-size);line-height:var(--ui-font-s-height);font-weight:500;color:var(--color-text-subtle)">Email</div><x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Input" value="{{ ce.email }}" placeholder="name@company.com" onChange="{{ setCeEmail }}" hint-size="100%,40px"></x-import></div>
+<div style="display:flex;flex-direction:column;gap:6px">
+<div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px">
+<div style="display:flex;flex-direction:column;gap:6px"><div style="font-size:var(--ui-font-s-size);line-height:var(--ui-font-s-height);font-weight:500;color:var(--color-text-subtle)">Passcode</div><x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Input" type="password" value="{{ ce.pass }}" placeholder="—" onChange="{{ setCePass }}" hint-size="100%,40px"></x-import></div>
+<div style="display:flex;flex-direction:column;gap:6px"><div style="font-size:var(--ui-font-s-size);line-height:var(--ui-font-s-height);font-weight:500;color:var(--color-text-subtle)">Duress code</div><x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Input" type="password" value="{{ ce.duress }}" placeholder="—" invalid="{{ ce.duressInvalid }}" onChange="{{ setCeDuress }}" hint-size="100%,40px"></x-import></div>
+</div>
+<div style="font-size:var(--ui-font-xs-size);line-height:var(--ui-font-xs-height);color:{{ ce.codeHintColor }}">{{ ce.codeHint }}</div>
+</div>
+<div style="display:flex;flex-direction:column;gap:6px"><div style="font-size:var(--ui-font-s-size);line-height:var(--ui-font-s-height);font-weight:500;color:var(--color-text-subtle)">Notes</div><x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Input" value="{{ ce.notes }}" placeholder="Shown to operators before they call" onChange="{{ setCeNotes }}" hint-size="100%,40px"></x-import></div>
+<div style="display:flex;flex-direction:column;gap:8px">
+<div style="display:flex;flex-direction:column;gap:2px"><div style="font-size:var(--ui-font-s-size);line-height:var(--ui-font-s-height);font-weight:500;color:var(--color-text-subtle)">Away periods</div><div style="font-size:var(--ui-font-xs-size);line-height:var(--ui-font-xs-height);color:var(--color-text-subtlest)">While away, call steps skip this contact and call the next one in call order.</div></div>
+<sc-for list="{{ ceAway }}" as="a" hint-placeholder-count="1">
+<div style="display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr) minmax(0,1.2fr) 32px;gap:8px;align-items:center">
+<x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Input" type="date" value="{{ a.from }}" invalid="{{ a.invalid }}" onChange="{{ a.onFrom }}" hint-size="100%,40px"></x-import>
+<span style="font-size:var(--ui-font-xs-size);color:var(--color-text-subtlest)">to</span>
+<x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Input" type="date" value="{{ a.to }}" invalid="{{ a.invalid }}" onChange="{{ a.onTo }}" hint-size="100%,40px"></x-import>
+<x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Input" value="{{ a.reason }}" placeholder="Reason" onChange="{{ a.onReason }}" hint-size="100%,40px"></x-import>
+<x-import component-from-global-scope="LumanaDesignSystem_1b2e75.IconButton" iconClass="ui-icon-delete" noBorder="{{ true }}" onClick="{{ a.onRemove }}" hint-size="32px,32px"></x-import>
+</div>
+</sc-for>
+<div><x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Button" text="Add away period" type="default" iconClass="ui-icon-plus" onClick="{{ addCeAway }}" hint-size="150px,32px"></x-import></div>
+</div>
+</div>
+</x-import>
+</div>
+</sc-if>
+</div>
+
+<div style="max-width:1100px;display:{{ wallDisplay }};flex-direction:column;gap:16px">
+<div style="font-size:var(--ui-font-xm-size);line-height:var(--ui-font-xm-height);color:var(--color-text-subtlest);max-width:760px;text-wrap:pretty">Select the walls to display in the Control Center</div>
+<div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+<x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Search" placeholder="Search walls" value="{{ wallQ }}" onChange="{{ setWallQ }}" hint-size="260px,40px" style="width:260px"></x-import>
+<span style="font-size:var(--ui-font-xs-size);color:var(--color-text-subtlest)">{{ wallCount }}</span>
+</div>
+<div style="overflow-x:auto">
+<div style="display:grid;grid-template-columns:minmax(200px,1.4fr) 100px minmax(200px,1.6fr) 56px;min-width:620px;border:1px solid var(--color-border-default);border-radius:4px;font-size:var(--ui-font-xm-size);line-height:var(--ui-font-xm-height)">
+<div style="padding:8px 12px;background:var(--color-elevation-surface-subtlest);font-size:var(--ui-font-s-size);line-height:var(--ui-font-s-height);font-weight:500;color:var(--color-text-subtle)">Wall</div>
+<div style="padding:8px 12px;background:var(--color-elevation-surface-subtlest);font-size:var(--ui-font-s-size);line-height:var(--ui-font-s-height);font-weight:500;color:var(--color-text-subtle)">Cameras</div>
+<div style="padding:8px 12px;background:var(--color-elevation-surface-subtlest);font-size:var(--ui-font-s-size);line-height:var(--ui-font-s-height);font-weight:500;color:var(--color-text-subtle)">Locations</div>
+<div style="padding:8px 14px;background:var(--color-elevation-surface-subtlest);display:flex;align-items:center;justify-content:center"><x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Checkbox" checked="{{ wallAll }}" indeterminate="{{ wallSome }}" onChange="{{ toggleAllWalls }}" hint-size="20px,20px"></x-import></div>
+<sc-for list="{{ wallRows }}" as="w" hint-placeholder-count="8">
+<div onClick="{{ w.onToggle }}" style="padding:12px;border-top:1px solid var(--color-border-default);cursor:pointer;display:flex;align-items:center;gap:8px;min-width:0"><span class="ui-icon-wall-sidebar" style="font-size:16px;color:var(--color-icon-default)"></span><span style="font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ w.name }}</span></div>
+<div onClick="{{ w.onToggle }}" style="padding:12px;border-top:1px solid var(--color-border-default);cursor:pointer;color:var(--color-text-subtle)">{{ w.cams }}</div>
+<div onClick="{{ w.onToggle }}" title="{{ w.locs }}" style="padding:12px;border-top:1px solid var(--color-border-default);cursor:pointer;color:var(--color-text-subtle);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ w.locs }}</div>
+<div style="padding:12px 14px;border-top:1px solid var(--color-border-default);display:flex;align-items:center;justify-content:center"><x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Checkbox" checked="{{ w.on }}" onChange="{{ w.onToggle }}" hint-size="20px,20px"></x-import></div>
+</sc-for>
+</div>
+</div>
+<sc-if value="{{ noWallRows }}" hint-placeholder-val="{{ false }}">
+<div style="padding:16px;text-align:center;font-size:var(--ui-font-xm-size);color:var(--color-text-subtlest)">Try adjusting your search.</div>
+</sc-if>
+</div>
+
 <div style="max-width:1100px;display:{{ mappingDisplay }};flex-direction:column;gap:32px">
 <section style="display:flex;flex-direction:column;gap:16px">
 <div style="display:flex;flex-direction:column;gap:2px">
-<div style="font-size:var(--ui-font-l-size);line-height:var(--ui-font-l-height);font-weight:500">Mapping</div>
 <div style="font-size:var(--ui-font-xm-size);line-height:var(--ui-font-xm-height);color:var(--color-text-subtlest)">Match locations to accounts, sub-locations to partitions and devices to zones. Values can also be edited on each item's edit page.</div>
 </div>
 <div style="display:flex;gap:24px;border-bottom:1px solid var(--color-border-default)">
 <div onClick="{{ tabA.onClick }}" style="display:flex;align-items:center;gap:6px;padding:10px 2px;margin-bottom:-1px;cursor:pointer;font-size:var(--ui-font-m-size);line-height:var(--ui-font-m-height);font-weight:500;color:{{ tabA.color }};border-bottom:2px solid {{ tabA.border }}">{{ tabA.label }}<span style="font-size:var(--ui-font-xxs-size);line-height:16px;padding:0 6px;border-radius:10px;background:var(--color-background-neutral-subtle);color:var(--color-text-subtle)">{{ tabA.count }}</span></div>
 <div onClick="{{ tabB.onClick }}" style="display:flex;align-items:center;gap:6px;padding:10px 2px;margin-bottom:-1px;cursor:pointer;font-size:var(--ui-font-m-size);line-height:var(--ui-font-m-height);font-weight:500;color:{{ tabB.color }};border-bottom:2px solid {{ tabB.border }}">{{ tabB.label }}<span style="font-size:var(--ui-font-xxs-size);line-height:16px;padding:0 6px;border-radius:10px;background:var(--color-background-neutral-subtle);color:var(--color-text-subtle)">{{ tabB.count }}</span></div>
-<div onClick="{{ tabC.onClick }}" style="display:flex;align-items:center;gap:6px;padding:10px 2px;margin-bottom:-1px;cursor:pointer;font-size:var(--ui-font-m-size);line-height:var(--ui-font-m-height);font-weight:500;color:{{ tabC.color }};border-bottom:2px solid {{ tabC.border }}">{{ tabC.label }}<span style="font-size:var(--ui-font-xxs-size);line-height:16px;padding:0 6px;border-radius:10px;background:var(--color-background-neutral-subtle);color:var(--color-text-subtle)">{{ tabC.count }}</span></div>
 </div>
 <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
 <div style="display:flex;align-items:center;gap:8px">
@@ -165,13 +385,20 @@
 <x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Button" text="{{ uploadLabel }}" type="default" iconClass="ui-icon-upload" onClick="{{ openCsv }}" hint-size="120px,32px"></x-import>
 </div>
 </div>
+<div style="display:flex;justify-content:space-between;align-items:flex-end;gap:12px;flex-wrap:wrap;margin-bottom:-8px">
 <div style="font-size:var(--ui-font-xs-size);line-height:var(--ui-font-xs-height);color:var(--color-text-subtlest)">{{ mappedSummary }}</div>
+<div style="display:{{ treeCtlDisplay }};align-items:center;gap:8px">
+<x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Button" text="Expand all" type="default" onClick="{{ expandAll }}" disabled="{{ allOpen }}" hint-size="96px,32px"></x-import>
+<x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Button" text="Collapse all" type="default" onClick="{{ collapseAll }}" disabled="{{ noneOpen }}" hint-size="104px,32px"></x-import>
+</div>
+</div>
 <x-import component-from-global-scope="LumanaDesignSystem_1b2e75.DataTable" columns="{{ columns }}" rows="{{ rows }}" rowHeight="{{ 52 }}" hint-size="100%,320px"></x-import>
 <sc-if value="{{ noRows }}" hint-placeholder-val="{{ false }}">
 <div style="padding:24px;text-align:center;font-size:var(--ui-font-xm-size);color:var(--color-text-subtlest)">Try adjusting your search or filter.</div>
 </sc-if>
 </section>
 
+</div>
 </div>
 </div>
 </div>
@@ -288,21 +515,97 @@ const DEVS = [
   { id: 'spk_c70a493d', name: 'Lobby speaker', type: 'Speaker', loc: 'Head office', zone: '' },
 ];
 const TABS = {
-  locations: { label: 'Locations', fields: [['account', 'Account ID', 4], ['partition', 'Partition ID', 2]], csv: ['lumana_id', 'name', 'account_id', 'partition_id'], key: { account_id: 'account', partition_id: 'partition' } },
+  locations: { label: 'Locations', fields: [['account', 'Account ID', 4], ['partition', 'Partition ID', 2]], csv: ['lumana_id', 'type', 'name', 'location', 'account_id', 'partition_id'], key: { account_id: 'account', partition_id: 'partition' } },
   subs: { label: 'Sub-locations', fields: [['partition', 'Partition ID', 2]], csv: ['lumana_id', 'name', 'location', 'partition_id'], key: { partition_id: 'partition' } },
   devices: { label: 'Cameras & devices', fields: [['zone', 'Zone ID', 3]], csv: ['lumana_id', 'name', 'type', 'location', 'zone_id'], key: { zone_id: 'zone' } },
 };
 const HEX = /^[0-9A-F]*$/;
+const GROUPS = { tests: 'Tests & system', trouble: 'Technical trouble', tamper: 'Tamper & camera offline', medical: 'Medical', duress: 'Duress & silent panic', panic: 'Panic & violence', fire: 'Fire, smoke & CO', intrusion: 'Intrusion & person detection', default: 'Default group' };
+const GROUP_AGENT = { tests: 'Log review agent', trouble: 'Log review agent', tamper: 'Device health agent', fire: 'Evidence collection agent', intrusion: 'Video verification agent' };
+const STEP_TYPES = {
+  instruction: { group: 'Basic', label: 'Instruction', icon: 'ui-icon-list-view' }, form: { group: 'Basic', label: 'Fill form', icon: 'ui-icon-file' }, note: { group: 'Basic', label: 'Add note', icon: 'ui-icon-edit' },
+  call: { group: 'Communicate', label: 'Call a contact', icon: 'ui-icon-phone' }, callnum: { group: 'Communicate', label: 'Call a number', icon: 'ui-icon-phone' }, message: { group: 'Communicate', label: 'Send message', icon: 'ui-icon-mail' },
+  ptt: { group: 'Communicate', label: 'Push to talk', icon: 'ui-icon-notifications' }, sound: { group: 'Communicate', label: 'Play sound', icon: 'ui-icon-notifications' },
+  pin: { group: 'Verify', label: 'Get PIN code', icon: 'ui-icon-key' },
+  guard: { group: 'Dispatch', label: 'Dispatch guard', icon: 'ui-icon-users' }, emergency: { group: 'Dispatch', label: 'Dispatch emergency services', icon: 'ui-icon-warning' },
+  http: { group: 'Systems', label: 'Send HTTP request', icon: 'ui-icon-link' }, integration: { group: 'Systems', label: 'Integration command', icon: 'ui-icon-api' }, shared: { group: 'Systems', label: 'Run shared action', icon: 'ui-icon-share-arrow' },
+};
+const BY = { operator: 'Operator', agent: 'Agent', auto: 'Automatic' };
+const ROLES = ['Account manager', 'Keyholder', 'Emergency contact', 'Site manager', 'IT on-call', 'Guard service', 'Police', 'Fire department'];
+const WHO = [...ROLES, 'All account contacts'];
+const TODAY = '2026-11-05';
+const CONTACTS = [
+  ['account', 'Maria Gallelli', 'Account manager', '+1 916 555 0142', 'maria@gallelli.example', '4821', '9911', 'Prefers SMS', [['2026-11-02', '2026-11-16', 'Vacation']]],
+  ['account', 'Sacramento PD dispatch', 'Police', '+1 916 555 0100', '', '', '', '', []],
+  ['account', 'SC Patrol', 'Guard service', '+1 916 555 0190', 'dispatch@scpatrol.example', '', '', '24/7', []],
+  ['account', 'Gallelli emergency line', 'Emergency contact', '+1 916 555 0144', '', '', '', '', [['2026-12-22', '2027-01-02', 'Office closed']]],
+  ['account', 'Metro Fire dispatch', 'Fire department', '+1 916 555 0111', '', '', '', '', []],
+  ['loc_45ef6a13', 'Priya Nair', 'Site manager', '+1 512 555 0110', 'priya@headoffice.example', '1357', '7531', 'Reception, Mon–Fri', []],
+  ['loc_45ef6a13', 'Tom Becker', 'Keyholder', '+1 512 555 0123', 'tom@headoffice.example', '2468', '8642', '', []],
+  ['loc_2b8e44d0', 'Luis Ortega', 'Keyholder', '+1 512 555 0193', 'luis@wh3.example', '1122', '2211', 'Night shift lead', []],
+  ['sub_f95b4d83', 'Dev Shah', 'IT on-call', '+1 512 555 0166', 'it-oncall@headoffice.example', '', '', 'Pager rotation', []],
+].map(([scope, name, role, phone, email, pass, duress, notes, away], i) => ({ id: 'ct_' + (i + 1), scope, name, role, phone, email, pass, duress, notes,
+  away: away.map(([from, to, reason]) => ({ k: 'a' + i + from, from, to, reason })) }));
+const WHO_TYPES = ['call', 'message'], CALLS = ['call', 'callnum'];
+let _k = 1; const uid = () => 'k' + (_k++);
+const defaultOuts = t => CALLS.includes(t) ? [['Answered', 'next'], ['No answer', 'next'], ['Busy / voicemail', 'next']] : t === 'pin' ? [['Correct PIN', 'resolve'], ['Wrong PIN', 'next']] : [];
+const mkStep = (type, text = '', o = {}) => ({ k: uid(), type, text, by: o.by || 'operator', who: o.who || (WHO_TYPES.includes(type) ? 'Keyholder' : ''), attempts: CALLS.includes(type) ? (o.attempts || 2) : 0,
+  required: o.required ?? true, askPin: !!o.askPin, outs: (o.outs || defaultOuts(type)).map(([label, then]) => ({ k: uid(), label, then })) });
+const mkSop = (id, name, desc, group, modified, steps, scope = 'account', targets = []) => ({ id, name, desc, group, modified, scope, targets, steps });
+const SOPS = [
+  mkSop('sop_1', 'Log only', 'Openings, closings and tests: no action unless unexpected.', 'tests', '2026-10-08', [mkStep('note', 'Log the event. Act only if the timing is unexpected for the site.', { by: 'agent' })]),
+  mkSop('sop_2', 'Technical trouble notice', 'Send the trouble message.', 'trouble', '2026-10-07', [mkStep('message', 'Send the trouble message to the site manager', { by: 'agent', who: 'Site manager' })]),
+  mkSop('sop_3', 'Tamper check', 'Device tampered or offline: check recovery, then send the guard.', 'tamper', '2026-10-06', [
+    mkStep('instruction', 'Check whether the device recovers within 5 minutes', { by: 'agent', outs: [['Recovered', 'resolve'], ['Still offline', 'next']] }),
+    mkStep('guard', 'Send the guard to inspect the device')]),
+  mkSop('sop_4', 'Medical', 'Medical or personal emergency.', 'medical', '2026-10-05', [mkStep('emergency', 'Dispatch emergency medical services'), mkStep('call', 'Call the emergency contact', { who: 'Emergency contact' })]),
+  mkSop('sop_5', 'Duress – silent', 'Duress or silent panic: never call the site.', 'duress', '2026-10-04', [mkStep('emergency', 'Dispatch police. Never call the site.'), mkStep('note', 'Log the police reference number')]),
+  mkSop('sop_6', 'Panic response', 'Audible panic or violence: police, then the emergency contact.', 'panic', '2026-10-03', [mkStep('emergency', 'Dispatch police'), mkStep('call', 'Call the emergency contact', { who: 'Emergency contact' })]),
+  mkSop('sop_7', 'Fire & CO response', 'Fire services first, evacuation message, keyholder, dispatch log.', 'fire', '2026-10-02', [
+    mkStep('call', 'Call fire services', { who: 'Fire department', outs: [['Answered', 'next'], ['No answer', 'escalate'], ['Busy / voicemail', 'next']] }),
+    mkStep('message', 'Send “Fire – evacuate” to all account contacts', { by: 'auto', who: 'All account contacts' }),
+    mkStep('instruction', 'For CO (162): tell anyone on site to leave and not re-enter until cleared.', { required: false }),
+    mkStep('call', 'Call the partition keyholder', { who: 'Keyholder', askPin: true }),
+    mkStep('form', 'Complete the police / fire dispatch log')]),
+  mkSop('sop_8', 'Intrusion – verify and respond', 'Panel and camera intrusions: check video, notify, verify with the keyholder, police if not verified.', 'intrusion', '2026-10-01', [
+    mkStep('instruction', 'Review live and recorded video from the triggering camera and nearby cameras', { by: 'agent', outs: [['Person or vehicle seen', 'next'], ['Nothing seen', 'resolve']] }),
+    mkStep('message', 'Notify the site contacts with a clip of the event', { by: 'auto', who: 'All account contacts' }),
+    mkStep('call', 'Call the keyholder to verify', { who: 'Keyholder', outs: [['Verified false alarm', 'resolve'], ['Not verified', 'next'], ['No answer', 'next']] }),
+    mkStep('emergency', 'Dispatch police with the site address and a description'),
+    mkStep('note', 'Record the outcome and attach the relevant clips')]),
+  mkSop('sop_9', 'General review', 'Fallback for anything no rule matched.', 'default', '2026-10-01', [mkStep('instruction', 'Review the event and its video'), mkStep('note', 'Record the outcome')]),
+  mkSop('sop_10', 'Intrusion – Head office', 'Reception verifies during office hours, then police.', 'intrusion', '2026-09-22', [
+    mkStep('call', 'Call reception to verify', { who: 'Site manager', attempts: 1, outs: [['Verified false alarm', 'resolve'], ['Not verified', 'next'], ['No answer', 'next']] }),
+    mkStep('emergency', 'Dispatch police'), mkStep('note', 'Record the outcome')], 'locations', ['loc_45ef6a13']),
+  mkSop('sop_11', 'Server room tamper', 'Server room devices: IT on-call first, then the guard.', 'tamper', '2026-09-15', [
+    mkStep('call', 'Call IT on-call', { who: 'IT on-call' }), mkStep('guard', 'Send the guard to the server room')], 'subs', ['sub_f95b4d83']),
+];
+
+const WALLS = [
+  ['w_perim', 'Perimeter overview', 16, 'Fourth Street Industrial Park, Warehouse 3, Warehouse 5'],
+  ['w_docks', 'Docks and yards', 12, 'Fourth Street Industrial Park, Warehouse 3'],
+  ['w_lobby', 'Head office lobby', 6, 'Head office'],
+  ['w_server', 'Server room', 4, 'Head office'],
+  ['w_retail', 'Retail floor', 9, 'Store 101 — Austin, Store 107 — Austin'],
+  ['w_parking', 'Parking lots', 8, 'Head office, Warehouse 3'],
+  ['w_cold', 'Cold store', 3, 'Warehouse 3'],
+  ['w_gates', 'Gates and entrances', 14, 'Fourth Street Industrial Park, Head office, Warehouse 5'],
+  ['w_night', 'Night patrol', 20, 'All locations'],
+  ['w_exec', 'Executive floor', 5, 'Head office'],
+].map(([id, name, cams, locs]) => ({ id, name, cams, locs }));
 const clone = o => JSON.parse(JSON.stringify(o));
 
 class Component extends DCLogic {
   state = {
-    page: 'arming', locQ: '',
+    page: 'mapping', locQ: '',
     armPage: 0,
     armRows: [['loc_7f3a91c2','armed','after'],['loc_2b8e44d0','type_1','business'],['loc_45ef6a13','type_2','night'],
       ...[1,2,4,5,7,8,10,11,13,14,16,17,19,20,22,23,25,26,28,29,31,32,34,35,37].map((n, k) => [LOCS[3 + n].id, k % 3 === 1 ? 'type_1' : k % 3 === 2 ? 'type_2' : 'armed', SCHEDULES[k % SCHEDULES.length].value])]
       .map(([locId, status, schedule], k) => ({ key: k + 1, locId, status, schedule })),
-    orgOpen: false, tab: 'locations', q: '', filter: 'all',
+    orgOpen: false, open: { 'Fourth Street Industrial Park': true, 'Warehouse 3': true, 'Head office': true }, tab: 'locations', q: '', filter: 'all',
+    sops: clone(SOPS), sopQ: '', sopSort: 'modified', draft: null, stepK: null,
+    subOpen: true, wallQ: '', wallOn: ['w_perim', 'w_docks', 'w_lobby', 'w_gates'],
+    contacts: clone(CONTACTS), ctScope: 'account', ctQ: '', ctDraft: null, ctShow: {},
     armSchedule: 'after',
     armTypes: [{ id: 1, name: 'Home', schedule: 'night' }, { id: 2, name: 'Away', schedule: 'after' }],
     data: { locations: clone(LOCS), subs: clone(SUBS), devices: clone(DEVS) },
@@ -338,11 +641,12 @@ class Component extends DCLogic {
     const work = this.state.data[tab].map(x => ({ ...x }));
     lines.slice(1).forEach((l, i) => {
       const cells = split(l), row = i + 2, id = cells[idIdx];
-      const item = this.state.data[tab].find(r => r.id === id);
-      if (!item) { res.skipped.push({ row, msg: `Lumana ID ${id || '(empty)'} was not found in ${t.label.toLowerCase()}` }); return; }
+      const kinds = tab === 'locations' ? ['locations', 'subs'] : [tab];
+      const ik = kinds.find(k => this.state.data[k].some(r => r.id === id)), item = ik && this.state.data[ik].find(r => r.id === id);
+      if (!item) { res.skipped.push({ row, msg: `Lumana ID ${id || '(empty)'} was not found in ${tab === 'locations' ? 'locations or sub-locations' : t.label.toLowerCase()}` }); return; }
       const patch = {}; let bad = '';
       cols.forEach(c => {
-        const k = t.key[c], len = t.fields.find(f => f[0] === k)[2];
+        const k = t.key[c], fd = TABS[ik].fields.find(f => f[0] === k); if (!fd) return; const len = fd[2];
         const v = (cells[head.indexOf(c)] || '').toUpperCase();
         if (!this.fieldValid(v, len)) bad = `${c} "${v}" must be ${len} characters (0–9, A–F)`;
         else patch[k] = v;
@@ -366,7 +670,7 @@ class Component extends DCLogic {
   }
   sampleCsv() {
     const tab = this.state.tab;
-    if (tab === 'locations') return 'lumana_id,name,account_id,partition_id\nloc_7f3a91c2,Fourth Street Industrial Park,1A2B,01\nloc_9c1d07ab,Warehouse 5,1A2D,01\nloc_45ef6a13,Head office,2F01,02\nloc_000000aa,Old depot,3B00,01';
+    if (tab === 'locations') return 'lumana_id,type,name,location,account_id,partition_id\nloc_7f3a91c2,Location,Fourth Street Industrial Park,,1A2B,01\nloc_9c1d07ab,Location,Warehouse 5,,1A2D,01\nsub_d03f9b64,Sub-location,Cold store,Warehouse 3,,02\nsub_f95b4d83,Sub-location,Server room,Head office,,2\nloc_000000aa,Location,Old depot,,3B00,01';
     if (tab === 'subs') return 'lumana_id,name,location,partition_id\nsub_d03f9b64,Cold store,Warehouse 3,02\nsub_f95b4d83,Server room,Head office,2\nsub_a19c3e07,Main gate,Fourth Street Industrial Park,01';
     return 'lumana_id,name,type,location,zone_id\ncam_5a93d2c6,Yard overview,Camera,Fourth Street Industrial Park,003\ncam_83c605f9,Dock 4 — West,Camera,Warehouse 3,002\nsen_94d7160a,Cold store temperature,Sensor,Warehouse 3,0G1\ncam_a5e8271b,Aisle 12,Camera,Warehouse 5,001';
   }
@@ -422,6 +726,181 @@ class Component extends DCLogic {
       nextPage: () => this.setState({ armPage: Math.min(pages - 1, pg + 1) }),
     };
   }
+  sopVals(s, val) {
+    const d = s.draft, NSB = window.LumanaDesignSystem_1b2e75 || {};
+    const locName = id => (s.data.locations.find(l => l.id === id) || {}).name || id;
+    const subName = id => { const x = s.data.subs.find(l => l.id === id); return x ? `${x.name} (${x.loc})` : id; };
+    const tName = (scope, id) => scope === 'subs' ? subName(id) : locName(id);
+    const applies = p => p.scope === 'account' ? 'Whole account' : p.targets.length === 1 ? tName(p.scope, p.targets[0]) : `${p.targets.length} ${p.scope === 'subs' ? 'sub-locations' : 'locations'}`;
+    const q = s.sopQ.toLowerCase();
+    const list = s.sops.filter(p => !q || [p.name, p.desc, GROUPS[p.group]].some(x => x.toLowerCase().includes(q)))
+      .sort((a, b) => s.sopSort === 'name' ? a.name.localeCompare(b.name) : b.modified.localeCompare(a.modified));
+    const open = (p, extra) => this.setState({ draft: { ...clone(p), ...extra }, stepK: p.steps[0] ? p.steps[0].k : null });
+    const setD = fn => this.setState(st => ({ draft: { ...st.draft, ...fn(st.draft) } }));
+    const setStep = (k, fn) => setD(dd => ({ steps: dd.steps.map(x => x.k === k ? { ...x, ...fn(x) } : x) }));
+    const thenLabel = t => t === 'next' ? 'Next step' : t === 'resolve' ? 'Resolve incident' : t === 'escalate' ? 'Escalate to supervisor' : (() => { const i = d.steps.findIndex(x => 'step:' + x.k === t); return i >= 0 ? `Go to step ${i + 1}` : 'Next step'; })();
+    const meta = x => [STEP_TYPES[x.type].label, BY[x.by], WHO_TYPES.includes(x.type) ? x.who : '', CALLS.includes(x.type) ? `${x.attempts} ${x.attempts === 1 ? 'attempt' : 'attempts'}` : '', x.askPin && CALLS.includes(x.type) ? 'Asks passcode' : '', x.required ? '' : 'Optional'].filter(Boolean).join(' · ');
+    const conflict = d && s.sops.find(p => p.id !== d.id && p.group === d.group && p.scope === d.scope && (d.scope === 'account' || p.targets.some(t => d.targets.includes(t))));
+    const missing = d ? [!d.name.trim() && 'a name', d.scope !== 'account' && !d.targets.length && (d.scope === 'subs' ? 'a sub-location' : 'a location'), !d.steps.length && 'a step'].filter(Boolean) : [];
+    const hint = conflict ? `${GROUPS[d.group]} already uses “${conflict.name}” for ${d.scope === 'account' ? 'the whole account' : applies({ ...d, targets: d.targets.filter(t => conflict.targets.includes(t)) })}`
+      : missing.length ? 'Add ' + missing.join(', ').replace(/, ([^,]*)$/, ' and $1') + ' to save' : '';
+    const ds = d && (d.steps.find(x => x.k === s.stepK) || d.steps[0]);
+    const pool = d && d.scope === 'subs' ? s.data.subs : s.data.locations;
+    return {
+      sopQ: s.sopQ, setSopQ: v => this.setState({ sopQ: val(v) || '' }),
+      sopSort: s.sopSort, setSopSort: v => this.setState({ sopSort: v }),
+      sopSortOpts: [{ value: 'modified', label: 'Last modified' }, { value: 'name', label: 'Name' }],
+      sopRows: list.map(p => { const ag = p.steps.filter(x => x.by === 'agent').length; return {
+        name: p.name, desc: p.desc, steps: p.steps.length, group: GROUPS[p.group], modified: p.modified,
+        agentText: `${ag} agent ${ag === 1 ? 'step' : 'steps'}`, agentDisplay: ag ? 'inline-flex' : 'none', noneDisplay: ag ? 'none' : 'inline',
+        applies: applies(p), appliesLong: p.scope === 'account' ? 'Whole account' : p.targets.map(t => tName(p.scope, t)).join(', '),
+        appliesIcon: p.scope === 'account' ? 'ui-icon-organization' : 'ui-icon-location',
+        onOpen: () => open(p), onDup: () => open(p, { id: '', name: p.name + ' (copy)' }),
+        onDelete: () => { this.setState(st => ({ sops: st.sops.filter(x => x.id !== p.id) })); this.showToast(`${p.name} deleted`); } }; }),
+      noSops: list.length === 0,
+      newSop: () => this.setState({ draft: { id: '', name: '', desc: '', group: 'intrusion', scope: 'locations', targets: [], modified: '', steps: [] }, stepK: null }),
+      sopEditing: !!d, cancelSop: () => this.setState({ draft: null }),
+      saveSop: this._saveSop = () => {
+        const saved = { ...d, id: d.id || 'sop_' + Date.now(), name: d.name.trim(), targets: d.scope === 'account' ? [] : d.targets, modified: new Date().toISOString().slice(0, 10) };
+        this.setState(st => ({ draft: null, sops: d.id ? st.sops.map(p => p.id === d.id ? saved : p) : [saved, ...st.sops] }));
+        this.showToast(d.id ? `${saved.name} saved` : `${saved.name} created`);
+      },
+      sopSaveDisabled: !!hint, draftHint: hint,
+      sopFooter: d ? React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: 8, width: '100%', justifyContent: 'flex-end' } },
+        hint ? React.createElement('span', { style: { marginRight: 'auto', fontSize: 'var(--ui-font-xs-size)', color: 'var(--color-text-alert-default)' } }, hint) : null,
+        NSB.Button ? React.createElement(NSB.Button, { text: 'Cancel', type: 'default', onClick: () => this.setState({ draft: null }) }) : null,
+        NSB.Button ? React.createElement(NSB.Button, { text: 'Save', type: 'primary', disabled: !!hint, onClick: () => this._saveSop() }) : null) : null,
+      groupAgentText: d ? `Used by event group ${GROUPS[d.group]}` + (GROUP_AGENT[d.group] ? ` (agent: ${GROUP_AGENT[d.group]})` : ' (no agent, the operator does agent steps)') : '',
+      d: d || {}, panelTitle: d ? (d.id ? 'Edit SOP · ' + (d.name.trim() || 'Untitled') : 'New SOP') : '', panelSub: d ? `SOP · ${d.steps.length} ${d.steps.length === 1 ? 'step' : 'steps'}` : '',
+      setDName: e => setD(() => ({ name: val(e) || '' })), setDDesc: e => setD(() => ({ desc: val(e) || '' })),
+      setDGroup: v => setD(() => ({ group: v })), setDScope: v => setD(dd => ({ scope: v, targets: v === dd.scope ? dd.targets : [] })),
+      groupOpts: Object.entries(GROUPS).map(([value, label]) => ({ value, label })),
+      scopeOpts: [{ value: 'account', label: 'Whole account' }, { value: 'locations', label: 'Locations' }, { value: 'subs', label: 'Sub-locations' }],
+      dTargeted: !!d && d.scope !== 'account' && d.targets.length > 0, targetDisplay: d && d.scope !== 'account' ? 'flex' : 'none',
+      dTargetPh: d && d.scope === 'subs' ? 'Add sub-location' : 'Add location',
+      dTargetTags: d ? d.targets.map(id => ({ name: tName(d.scope, id), onRemove: () => setD(dd => ({ targets: dd.targets.filter(x => x !== id) })) })) : [],
+      dTargetOpts: d ? pool.filter(x => !d.targets.includes(x.id)).map(x => ({ value: x.id, label: d.scope === 'subs' ? `${x.name} (${x.loc})` : x.name })) : [],
+      addDTarget: v => v && setD(dd => ({ targets: dd.targets.includes(v) ? dd.targets : [...dd.targets, v] })),
+      addStepOpts: Object.entries(STEP_TYPES).map(([value, t]) => ({ value, label: `${t.group} · ${t.label}` })),
+      addDStep: v => { if (!v) return; const st = mkStep(v); this.setState(x => ({ stepK: st.k, draft: { ...x.draft, steps: [...x.draft.steps, st] } })); },
+      noSteps: !!d && !d.steps.length,
+      dSteps: d ? d.steps.map((x, i) => { const on = ds && ds.k === x.k; return { n: i + 1, text: x.text || 'Untitled step', meta: meta(x), icon: STEP_TYPES[x.type].icon,
+        border: on ? 'var(--color-border-selected-default)' : 'var(--color-border-default)', bg: on ? 'var(--color-background-selected-active)' : 'transparent',
+        outs: x.outs.map(o => ({ label: o.label || 'Outcome', then: thenLabel(o.then) })),
+        upOpacity: i ? 1 : 0.3, downOpacity: i < d.steps.length - 1 ? 1 : 0.3,
+        onSelect: () => this.setState({ stepK: x.k }),
+        onUp: () => setD(dd => { const a = [...dd.steps]; if (i < 1) return {}; [a[i - 1], a[i]] = [a[i], a[i - 1]]; return { steps: a }; }),
+        onDown: () => setD(dd => { const a = [...dd.steps]; if (i >= a.length - 1) return {}; [a[i + 1], a[i]] = [a[i], a[i + 1]]; return { steps: a }; }),
+        onRemove: () => setD(dd => ({ steps: dd.steps.filter(y => y.k !== x.k) })) }; }) : [],
+      hasStep: !!ds,
+      sel: ds ? { ...ds, n: d.steps.indexOf(ds) + 1, isWho: WHO_TYPES.includes(ds.type), isCall: CALLS.includes(ds.type), whoLabel: ds.type === 'message' ? 'Send to' : 'Who to call',
+        attemptsVal: String(ds.attempts || 2), noOuts: !ds.outs.length,
+        outs: ds.outs.map(o => ({ ...o,
+          onLabel: e => setStep(ds.k, x => ({ outs: x.outs.map(y => y.k === o.k ? { ...y, label: val(e) || '' } : y) })),
+          onThen: v => setStep(ds.k, x => ({ outs: x.outs.map(y => y.k === o.k ? { ...y, then: v } : y) })),
+          onRemove: () => setStep(ds.k, x => ({ outs: x.outs.filter(y => y.k !== o.k) })) })) } : { outs: [] },
+      stepTypeOpts: Object.entries(STEP_TYPES).map(([value, t]) => ({ value, label: t.label })),
+      byOpts: Object.entries(BY).map(([value, label]) => ({ value, label })),
+      whoOpts: WHO.map(w => ({ value: w, label: w })),
+      attemptOpts: ['1', '2', '3'].map(v => ({ value: v, label: v })),
+      thenOpts: d && ds ? [{ value: 'next', label: 'Next step' }, ...d.steps.map((x, i) => ({ value: 'step:' + x.k, label: `Go to step ${i + 1}` })).filter(o => o.value !== 'step:' + ds.k),
+        { value: 'resolve', label: 'Resolve incident' }, { value: 'escalate', label: 'Escalate to supervisor' }] : [],
+      setSType: v => setStep(ds.k, x => ({ type: v, who: WHO_TYPES.includes(v) ? (x.who || 'Keyholder') : '', attempts: CALLS.includes(v) ? (x.attempts || 2) : 0, outs: x.outs.length ? x.outs : defaultOuts(v).map(([label, then]) => ({ k: uid(), label, then })) })),
+      setSText: e => setStep(ds.k, () => ({ text: val(e) || '' })),
+      setSBy: v => setStep(ds.k, () => ({ by: v })), setSWho: v => setStep(ds.k, () => ({ who: v })),
+      setSAttempts: v => setStep(ds.k, () => ({ attempts: +v })),
+      toggleSAskPin: () => setStep(ds.k, x => ({ askPin: !x.askPin })),
+      toggleSRequired: () => setStep(ds.k, x => ({ required: !x.required })),
+      addSOut: () => setStep(ds.k, x => ({ outs: [...x.outs, { k: uid(), label: '', then: 'next' }] })),
+    };
+  }
+  wallVals(s, val) {
+    const q = s.wallQ.toLowerCase(), on = new Set(s.wallOn);
+    const list = WALLS.filter(w => !q || w.name.toLowerCase().includes(q) || w.locs.toLowerCase().includes(q));
+    const shownIn = list.filter(w => on.has(w.id)).length;
+    const set = ids => this.setState({ wallOn: ids, dirty: true });
+    return {
+      wallQ: s.wallQ, setWallQ: v => this.setState({ wallQ: val(v) || '' }),
+      wallCount: `${on.size} of ${WALLS.length} walls displayed in the Control Center`,
+      wallAll: list.length > 0 && shownIn === list.length, wallSome: shownIn > 0 && shownIn < list.length,
+      toggleAllWalls: () => set(shownIn === list.length ? s.wallOn.filter(id => !list.some(w => w.id === id)) : [...new Set([...s.wallOn, ...list.map(w => w.id)])]),
+      wallRows: list.map(w => ({ name: w.name, cams: w.cams, locs: w.locs, on: on.has(w.id),
+        onToggle: () => set(on.has(w.id) ? s.wallOn.filter(id => id !== w.id) : [...s.wallOn, w.id]) })),
+      noWallRows: list.length === 0,
+    };
+  }
+  ctVals(s, val) {
+    const NSB = window.LumanaDesignSystem_1b2e75 || {}, R = React.createElement, e = s.ctDraft;
+    const scopeName = k => k === 'account' ? 'Account contacts' : ((s.data.locations.find(l => l.id === k) || {}).name || (x => x ? `${x.name} (${x.loc})` : k)(s.data.subs.find(x => x.id === k)));
+    const count = k => s.contacts.filter(c => c.scope === k).length;
+    const inScope = s.contacts.filter(c => c.scope === s.ctScope);
+    const q = s.ctQ.toLowerCase();
+    const rows = inScope.filter(c => !q || [c.name, c.role, c.phone, c.email, c.notes].some(x => x.toLowerCase().includes(q)));
+    const fmt = iso => new Date(iso + 'T00:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+    const avail = c => {
+      const now = c.away.find(a => a.from && a.to && a.from <= TODAY && TODAY <= a.to);
+      if (now) return { tone: 'warning', text: 'Away until ' + fmt(now.to), title: now.reason };
+      const next = c.away.filter(a => a.from > TODAY).sort((a, b) => a.from.localeCompare(b.from))[0];
+      return next ? { tone: 'neutral', text: 'Away from ' + fmt(next.from), title: next.reason } : { tone: 'success', text: 'Available', title: '' };
+    };
+    const setC = fn => this.setState(st => ({ ctDraft: { ...st.ctDraft, ...fn(st.ctDraft) } }));
+    const setAway = (k, patch) => setC(c => ({ away: c.away.map(a => a.k === k ? { ...a, ...patch } : a) }));
+    const masked = (c, f) => c[f] ? (s.ctShow[c.id + f] ? c[f] : '••••') : '—';
+    const toggle = (c, f) => ev => { ev && ev.preventDefault && ev.preventDefault(); this.setState(st => ({ ctShow: { ...st.ctShow, [c.id + f]: !st.ctShow[c.id + f] } })); };
+    const total = e ? inScope.filter(c => c.id !== e.id).length + 1 : 0;
+    const badAway = e ? e.away.some(a => !a.from || !a.to || a.from > a.to) : false;
+    const codeClash = e && e.pass && e.duress && e.pass === e.duress;
+    const ceMissing = e ? [!e.name.trim() && 'a name', !e.phone.trim() && 'a phone number'].filter(Boolean) : [];
+    const ceHint = ceMissing.length ? 'Add ' + ceMissing.join(' and ') + ' to save' : codeClash ? 'Passcode and duress code must differ' : badAway ? 'Fix the away period dates to save' : '';
+    const save = () => {
+      const c = { ...e, name: e.name.trim(), phone: e.phone.trim() }; delete c.order;
+      this.setState(st => {
+        const rest = st.contacts.filter(x => x.id !== c.id), scoped = rest.filter(x => x.scope === c.scope), others = rest.filter(x => x.scope !== c.scope);
+        scoped.splice(Math.min(e.order - 1, scoped.length), 0, c);
+        return { ctDraft: null, contacts: [...others, ...scoped] };
+      });
+      this.showToast(e.isNew ? `${c.name} added` : `${c.name} saved`);
+    };
+    const del = () => { this.setState(st => ({ ctDraft: null, contacts: st.contacts.filter(x => x.id !== e.id) })); this.showToast(`${e.name} deleted`); };
+    const btn = p => NSB.Button ? R(NSB.Button, p) : null;
+    return {
+      ctScope: s.ctScope, setCtScope: v => this.setState({ ctScope: v, ctQ: '' }),
+      ctScopeOpts: [{ value: 'account', label: `Account contacts (${count('account')})` },
+        ...s.data.locations.map(l => ({ value: l.id, label: `${l.name}${count(l.id) ? ` (${count(l.id)})` : ''}` })),
+        ...s.data.subs.map(x => ({ value: x.id, label: `${x.name} · ${x.loc}${count(x.id) ? ` (${count(x.id)})` : ''}` }))],
+      ctQ: s.ctQ, setCtQ: v => this.setState({ ctQ: val(v) || '' }),
+      ctNote: s.ctScope === 'account' ? `${inScope.length} account contacts. Called after any location and sub-location contacts. Click a contact to edit it.`
+        : `${inScope.length} contacts for ${scopeName(s.ctScope)}. Called before account contacts. Click a contact to edit it.`,
+      ctRows: rows.map(c => { const a = avail(c); return {
+        order: inScope.indexOf(c) + 1, name: c.name, role: c.role, phone: c.phone, email: c.email || '—', notes: c.notes || '—',
+        availText: a.text, availTone: a.tone, awayTitle: a.title,
+        passText: masked(c, 'pass'), passLink: s.ctShow[c.id + 'pass'] ? 'Hide' : 'Show', passLinkDisplay: c.pass ? 'inline' : 'none', togglePass: toggle(c, 'pass'),
+        duressText: masked(c, 'duress'), duressLink: s.ctShow[c.id + 'duress'] ? 'Hide' : 'Show', duressLinkDisplay: c.duress ? 'inline' : 'none', toggleDuress: toggle(c, 'duress'),
+        onOpen: () => this.setState({ ctDraft: { ...clone(c), order: inScope.indexOf(c) + 1 } }) }; }),
+      ctEmpty: rows.length === 0,
+      ctEmptyText: q ? 'Try adjusting your search.' : 'Contacts are the way to tell operators who to call for this scope.',
+      newCt: () => this.setState({ ctDraft: { id: 'ct_' + Date.now(), isNew: true, scope: s.ctScope, name: '', role: 'Keyholder', phone: '', email: '', pass: '', duress: '', notes: '', away: [], order: inScope.length + 1 } }),
+      ctEditing: !!e, cancelCt: () => this.setState({ ctDraft: null }),
+      ctTitle: e ? (e.isNew ? `New contact · ${scopeName(e.scope)}` : `Edit contact · ${e.name || 'Untitled'}`) : '',
+      ctFooter: e ? R('div', { style: { display: 'flex', alignItems: 'center', gap: 8, width: '100%', justifyContent: 'flex-end' } },
+        ceHint ? R('span', { style: { marginRight: 'auto', fontSize: 'var(--ui-font-xs-size)', color: 'var(--color-text-alert-default)' } }, ceHint) : null,
+        !e.isNew ? btn({ text: 'Delete contact', type: 'danger', onClick: del }) : null,
+        btn({ text: 'Cancel', type: 'default', onClick: () => this.setState({ ctDraft: null }) }),
+        btn({ text: 'Save', type: 'primary', disabled: !!ceHint, onClick: save })) : null,
+      ce: e ? { ...e, orderVal: String(e.order), duressInvalid: !!codeClash,
+        codeHint: codeClash ? 'Passcode and duress code must differ.' : 'Used by the Get PIN code step. A duress code raises a silent alarm.',
+        codeHintColor: codeClash ? 'var(--color-text-alert-default)' : 'var(--color-text-subtlest)' } : {},
+      roleOpts: ROLES.map(r => ({ value: r, label: r })),
+      orderOpts: Array.from({ length: total }, (_, i) => ({ value: String(i + 1), label: i === 0 ? '1 (called first)' : i === total - 1 && total > 1 ? `${i + 1} (called last)` : String(i + 1) })),
+      setCeName: ev => setC(() => ({ name: val(ev) || '' })), setCeRole: v => setC(() => ({ role: v })), setCeOrder: v => setC(() => ({ order: +v })),
+      setCePhone: ev => setC(() => ({ phone: val(ev) || '' })), setCeEmail: ev => setC(() => ({ email: val(ev) || '' })),
+      setCePass: ev => setC(() => ({ pass: val(ev) || '' })), setCeDuress: ev => setC(() => ({ duress: val(ev) || '' })), setCeNotes: ev => setC(() => ({ notes: val(ev) || '' })),
+      ceAway: e ? e.away.map(a => ({ ...a, invalid: !a.from || !a.to || a.from > a.to,
+        onFrom: ev => setAway(a.k, { from: val(ev) || '' }), onTo: ev => setAway(a.k, { to: val(ev) || '' }), onReason: ev => setAway(a.k, { reason: val(ev) || '' }),
+        onRemove: () => setC(c => ({ away: c.away.filter(x => x.k !== a.k) })) })) : [],
+      addCeAway: () => setC(c => ({ away: [...c.away, { k: 'a' + Date.now(), from: TODAY, to: TODAY, reason: '' }] })),
+    };
+  }
   showToast(msg) { this.setState({ toast: msg }); clearTimeout(this._t); this._t = setTimeout(() => this.setState({ toast: '' }), 3000); }
 
   renderVals() {
@@ -429,27 +908,48 @@ class Component extends DCLogic {
     const R = React.createElement;
     const s = this.state, tab = s.tab, t = TABS[tab];
     const val = v => (v && v.target ? v.target.value : v);
-    const all = s.data[tab];
+    const isTree = tab === 'locations';
+    const all = isTree ? [...s.data.locations, ...s.data.subs] : s.data[tab];
     const q = s.q.toLowerCase();
-    const rows = all.filter(r => (!q || r.name.toLowerCase().includes(q) || r.id.toLowerCase().includes(q))
-      && (s.filter === 'all' || (s.filter === 'mapped' ? this.rowMapped(tab, r) : !this.rowMapped(tab, r))));
+    const kindOf = r => isTree && r.id.startsWith('sub_') ? 'subs' : tab;
+    const match = r => (!q || r.name.toLowerCase().includes(q) || r.id.toLowerCase().includes(q))
+      && (s.filter === 'all' || (s.filter === 'mapped' ? this.rowMapped(kindOf(r), r) : !this.rowMapped(kindOf(r), r)));
+    const subsBy = {}; s.data.subs.forEach(x => (subsBy[x.loc] = subsBy[x.loc] || []).push(x));
+    const parents = Object.keys(subsBy).filter(n => s.data.locations.some(l => l.name === n));
+    const filtering = !!q || s.filter !== 'all';
+    const rows = !isTree ? s.data[tab].filter(match) : s.data.locations.flatMap(l => {
+      const kids = subsBy[l.name] || [], hit = kids.filter(match), self = match(l);
+      if (!self && !hit.length) return [];
+      const open = filtering ? hit.length > 0 : !!s.open[l.name];
+      return [{ ...l, _kids: kids.length, _open: open }, ...(open ? (filtering ? hit : kids).map(x => ({ ...x, _sub: true })) : [])];
+    });
     const invalidTotal = Object.keys(TABS).reduce((n, k) => n + s.data[k].filter(r => this.rowInvalid(k, r)).length, 0);
-    const mappedN = all.filter(r => this.rowMapped(tab, r)).length;
+    const mappedN = all.filter(r => this.rowMapped(kindOf(r), r)).length;
+    const toggleOpen = name => this.setState(st => ({ open: { ...st.open, [name]: !st.open[name] } }));
     const sub = { fontSize: 'var(--ui-font-xs-size)', color: 'var(--color-text-subtlest)' };
 
     const columns = [
-      { key: 'name', label: 'Name', render: r => R('span', { style: { fontWeight: 500 } }, r.name) },
+      { key: 'name', label: 'Name', render: r => !isTree ? R('span', { style: { fontWeight: 500 } }, r.name)
+        : R('div', { style: { display: 'flex', alignItems: 'center', gap: 8, paddingLeft: r._sub ? 32 : 0, minWidth: 0 } },
+          r._sub ? R('span', { className: 'ui-icon-location', style: { fontSize: 14, color: 'var(--color-icon-default)' } })
+            : r._kids ? R('span', { onClick: e => { e.stopPropagation(); toggleOpen(r.name); }, title: r._open ? 'Collapse' : 'Expand', className: 'ui-icon-expand-arrow',
+                style: { fontSize: 12, width: 24, height: 24, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', borderRadius: 4, cursor: 'pointer', color: 'var(--color-icon-default)', transform: r._open ? 'none' : 'rotate(-90deg)', transition: 'transform .3s' } })
+            : R('span', { style: { width: 24, flexShrink: 0 } }),
+          R('span', { style: { fontWeight: r._sub ? 400 : 500, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' } }, r.name),
+          !r._sub && r._kids ? R('span', { style: { fontSize: 'var(--ui-font-xxs-size)', lineHeight: '16px', padding: '0 6px', borderRadius: 10, background: 'var(--color-background-neutral-subtle)', color: 'var(--color-text-subtle)' } }, r._kids) : null) },
       ...(tab === 'devices' ? [{ key: 'type', label: 'Type', width: 110 }] : []),
       ...(tab !== 'locations' ? [{ key: 'loc', label: 'Location' }] : []),
       { key: 'id', label: 'Lumana ID', width: 150, render: r => R('span', { style: { color: 'var(--color-text-subtle)' } }, r.id) },
       ...t.fields.map(([k, label, len]) => ({
         key: k, width: 170,
         label: R('span', { style: { display: 'inline-flex', alignItems: 'center', gap: 6 } }, `${label} (${len})`,
-          R('span', { className: 'ui-icon-info', title: tab === 'devices' ? 'Each camera and device in a location needs a unique zone ID' : tab === 'subs' ? 'Sub-locations can share partition IDs' : 'Locations can share account and partition IDs', style: { fontSize: 14, cursor: 'help', color: 'var(--color-icon-default)' } })),
+          R('span', { className: 'ui-icon-info', title: tab === 'devices' ? 'Each camera and device in a location needs a unique zone ID' : k === 'account' ? 'Locations can share account IDs. Sub-locations use their location\'s account.' : 'Locations and sub-locations can share partition IDs', style: { fontSize: 14, cursor: 'help', color: 'var(--color-icon-default)' } })),
         render: r => {
-          const err = this.fieldError(tab, r, k, label, len);
+          const kd = kindOf(r);
+          if (!TABS[kd].fields.some(fd => fd[0] === k)) return R('span', { title: 'Uses the account ID of its location', style: { color: 'var(--color-text-subtlest)', paddingLeft: 12 } }, '—');
+          const err = this.fieldError(kd, r, k, label, len);
           return R('div', { title: err || undefined, style: { display: 'flex', alignItems: 'center', gap: 8 } },
-            NS.Input ? R(NS.Input, { height: 32, value: r[k], placeholder: '—', style: { width: 120 }, invalid: !!err, onChange: e => this.setField(tab, r.id, k, len, val(e)) }) : r[k],
+            NS.Input ? R(NS.Input, { height: 32, value: r[k], placeholder: '—', style: { width: 120 }, invalid: !!err, onChange: e => this.setField(kd, r.id, k, len, val(e)) }) : r[k],
             err ? R('span', { className: 'ui-icon-warning', title: err, style: { fontSize: 16, cursor: 'help', color: 'var(--color-icon-alert)' } }) : null);
         },
       })),
@@ -480,8 +980,23 @@ class Component extends DCLogic {
       saveDisabled: !s.dirty || invalidTotal > 0,
       save: () => { this.setState({ dirty: false }); this.showToast('Control Center settings saved'); },
 
-      pageLabel: s.page === 'arming' ? 'Arming' : 'Mapping',
-      armingDisplay: s.page === 'arming' ? 'flex' : 'none', mappingDisplay: s.page === 'mapping' ? 'flex' : 'none',
+      pageLabel: { arming: 'Arming', mapping: 'Mapping', sop: 'SOPs', contacts: 'Contacts' }[s.page], ctDisplay: s.page === 'contacts' ? 'flex' : 'none',
+      armingDisplay: s.page === 'arming' ? 'flex' : 'none', mappingDisplay: s.page === 'mapping' ? 'flex' : 'none', sopDisplay: s.page === 'sop' ? 'flex' : 'none',
+      headerSaveDisplay: ['sop', 'contacts'].includes(s.page) ? 'none' : 'flex',
+      ...this.wallVals(s, val),
+      subOpen: s.subOpen, toggleSub: () => this.setState(st => ({ subOpen: !st.subOpen })),
+      alertMenu: [['Alert events', 'ui-icon-notifications'], ['Configurations', 'ui-icon-list-view'], ['Alert groups', 'ui-icon-users'], ['Control center settings', 'ui-icon-armed']].map(([label, icon], i) => { const on = i === 3; return { label, icon,
+        bg: on ? 'var(--color-background-selected-active)' : 'transparent', color: on ? 'var(--color-text-selected)' : 'inherit', iconColor: on ? 'var(--color-icon-selected)' : 'var(--color-icon-default)',
+        gap: i === 3 ? '8px' : '0', line: 'none' }; }),
+      ccTabs: [['arming', 'Arming'], ['sop', 'SOPs'], ['contacts', 'Contacts'], ['walls', 'Walls'], ['mapping', 'Mapping']].map(([k, label]) => ({ label,
+        color: s.page === k ? 'var(--color-text-selected)' : 'var(--color-text-subtle)', border: s.page === k ? 'var(--color-border-selected-default)' : 'transparent',
+        onClick: () => this.setState({ page: k }) })),
+      wallDisplay: s.page === 'walls' ? 'flex' : 'none',
+      sopNavBg: s.page === 'sop' ? 'var(--color-background-selected-active)' : 'transparent', sopNavColor: s.page === 'sop' ? 'var(--color-text-selected)' : 'inherit',
+      goSop: () => this.setState({ page: 'sop' }), goContacts: () => this.setState({ page: 'contacts' }),
+      ctNavBg: s.page === 'contacts' ? 'var(--color-background-selected-active)' : 'transparent', ctNavColor: s.page === 'contacts' ? 'var(--color-text-selected)' : 'inherit',
+      ...this.ctVals(s, val),
+      ...this.sopVals(s, val),
       armingNavBg: s.page === 'arming' ? 'var(--color-background-selected-active)' : 'transparent', armingNavColor: s.page === 'arming' ? 'var(--color-text-selected)' : 'inherit',
       mappingNavBg: s.page === 'mapping' ? 'var(--color-background-selected-active)' : 'transparent', mappingNavColor: s.page === 'mapping' ? 'var(--color-text-selected)' : 'inherit',
       goArming: () => this.setState({ page: 'arming' }), goMapping: () => this.setState({ page: 'mapping' }),
@@ -506,17 +1021,21 @@ class Component extends DCLogic {
 
       tabs: Object.entries(TABS).map(([k, v]) => ({ value: k, label: `${v.label} (${s.data[k].length})` })),
       tab, setTab: v => this.setState({ tab: v, q: '' }),
-      ...Object.fromEntries(Object.entries(TABS).map(([k, v], i) => ['tab' + 'ABC'[i], { label: v.label, count: s.data[k].length, color: k === tab ? 'var(--color-text-selected)' : 'var(--color-text-subtle)', border: k === tab ? 'var(--color-border-selected-default)' : 'transparent', onClick: () => this.setState({ tab: k, q: '' }) }])),
+      ...Object.fromEntries([['locations', 'Locations', s.data.locations.length + s.data.subs.length], ['devices', 'Cameras & devices', s.data.devices.length]].map(([k, label, count], i) => ['tab' + 'AB'[i], { label, count, color: k === tab ? 'var(--color-text-selected)' : 'var(--color-text-subtle)', border: k === tab ? 'var(--color-border-selected-default)' : 'transparent', onClick: () => this.setState({ tab: k, q: '' }) }])),
       searchPh: 'Search ' + t.label.toLowerCase(),
       downloadLabel: 'Download CSV', uploadLabel: 'Upload CSV',
       q: s.q, setQ: v => this.setState({ q: val(v) || '' }),
       filterOpts: [{ value: 'all', label: 'All' }, { value: 'mapped', label: 'Mapped' }, { value: 'unmapped', label: 'Not mapped' }],
       filter: s.filter, setFilter: v => this.setState({ filter: v }),
-      mappedSummary: `${mappedN} of ${all.length} ${t.label.toLowerCase()} mapped. IDs use 0–9 and A–F.` + (tab === 'devices' ? ' Zone IDs must be unique within a location.' : ''),
+      treeCtlDisplay: isTree ? 'flex' : 'none',
+      allOpen: filtering || parents.every(n => s.open[n]), noneOpen: filtering || !parents.some(n => s.open[n]),
+      expandAll: () => this.setState({ open: Object.fromEntries(parents.map(n => [n, true])) }), collapseAll: () => this.setState({ open: {} }),
+      mappedSummary: (isTree ? `${s.data.locations.filter(r => this.rowMapped('locations', r)).length} of ${s.data.locations.length} locations and ${s.data.subs.filter(r => this.rowMapped('subs', r)).length} of ${s.data.subs.length} sub-locations mapped. IDs use 0–9 and A–F.` : `${mappedN} of ${all.length} ${t.label.toLowerCase()} mapped. IDs use 0–9 and A–F.`) + (tab === 'devices' ? ' Zone IDs must be unique within a location.' : ''),
       columns, rows, noRows: rows.length === 0,
 
       downloadCsv: () => {
-        const body = all.map(r => t.csv.map(c => {
+        const src = isTree ? s.data.locations.flatMap(l => [{ ...l, type: 'Location', loc: '' }, ...(subsBy[l.name] || []).map(x => ({ ...x, type: 'Sub-location', account: '' }))]) : all;
+        const body = src.map(r => t.csv.map(c => {
           const k = { lumana_id: 'id', location: 'loc', account_id: 'account', partition_id: 'partition', zone_id: 'zone' }[c] || c;
           const v = String(r[k] ?? ''); return /[",]/.test(v) ? `"${v.replace(/"/g, '""')}"` : v;
         }).join(','));
@@ -540,7 +1059,7 @@ class Component extends DCLogic {
       applyDisabled: !res || res.updated === 0,
       applyCsv: () => {
         const map = Object.fromEntries(res.changes.map(c => [c.id, c.patch]));
-        this.setState(st => ({ dirty: true, csvOpen: false, csvRes: null, data: { ...st.data, [tab]: st.data[tab].map(r => map[r.id] ? { ...r, ...map[r.id] } : r) } }));
+        this.setState(st => ({ dirty: true, csvOpen: false, csvRes: null, data: Object.fromEntries(Object.entries(st.data).map(([k, list]) => [k, list.map(r => map[r.id] ? { ...r, ...map[r.id] } : r)])) }));
         this.showToast(`${res.updated} ${t.label.toLowerCase()} updated from CSV`);
       },
       toast: s.toast,

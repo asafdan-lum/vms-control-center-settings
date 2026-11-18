@@ -21,7 +21,13 @@
 <style>html,body{height:100%;margin:0}a{color:var(--color-text-primary-default);text-decoration:none}a:hover{text-decoration:underline}</style>
 </helmet>
 <div class="{{ themeClass }}" style="display:flex;height:100vh;min-height:0;font-family:var(--font-sans);background:var(--color-elevation-surface-default);color:var(--color-text-default)">
-<x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Sidebar" items="{{ navItems }}" value="alerts" logo-src="assets/logo-mark-alt.svg" hint-size="65px,100%"></x-import>
+<x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Sidebar" items="{{ navItems }}" value="alerts" onSelect="{{ onNav }}" logo-src="assets/logo-mark-alt.svg" hint-size="65px,100%"></x-import>
+<sc-if value="{{ flyOpen }}" hint-placeholder-val="{{ false }}">
+<div onClick="{{ closeFly }}" style="position:fixed;inset:0;z-index:60"></div>
+<div style="position:fixed;left:69px;top:{{ flyTop }}px;z-index:61;width:244px;box-sizing:border-box;padding:8px;display:flex;flex-direction:column;gap:2px;background:var(--color-elevation-surface-default);border:1px solid var(--color-border-default);border-radius:4px;box-shadow:var(--shadow-md);font-size:var(--ui-font-xm-size);line-height:var(--ui-font-xm-height)">
+<sc-for list="{{ flyItems }}" as="f" hint-placeholder-count="6"><div style="display:flex;flex-direction:column;gap:8px"><div style="display:{{ f.divider }};height:1px;margin:6px 8px;background:var(--color-border-default)"></div><div onClick="{{ f.onClick }}" style="padding:8px 16px;border-radius:4px;cursor:pointer;background:{{ f.bg }};color:{{ f.color }}" style-hover="background:var(--color-background-button-tertiary-gray-hover)">{{ f.label }}</div></div></sc-for>
+</div>
+</sc-if>
 
 <main style="flex:1;display:flex;flex-direction:column;min-width:0;min-height:0">
 <div style="display:flex;justify-content:space-between;align-items:center;flex-shrink:0;height:49px;padding:0 24px 0 32px;border-bottom:1px solid var(--color-border-default);font-size:var(--ui-font-xxm-size);line-height:var(--ui-font-xxm-height)">
@@ -38,8 +44,14 @@
 
 <div style="flex:1;min-height:0;display:flex">
 <x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Submenu" expanded="{{ subOpen }}" onToggle="{{ toggleSub }}" hint-size="256px,100%">
-<div style="display:flex;flex-direction:column;gap:2px;font-size:var(--ui-font-m-size);line-height:var(--ui-font-m-height)">
-<sc-for list="{{ alertMenu }}" as="m" hint-placeholder-count="4"><div style="display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:4px;cursor:pointer;background:{{ m.bg }};color:{{ m.color }};margin-top:{{ m.gap }};border-top:{{ m.line }}"><span class="{{ m.icon }}" style="font-size:16px;color:{{ m.iconColor }}"></span>{{ m.label }}</div></sc-for>
+<div style="display:flex;flex-direction:column;gap:8px;min-height:0">
+<x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Search" placeholder="Search" height="{{ 32 }}" value="{{ treeQ }}" onChange="{{ setTreeQ }}" hint-size="100%,32px"></x-import>
+<div style="display:flex;flex-direction:column;font-size:var(--ui-font-xm-size);line-height:var(--ui-font-xm-height)">
+<div style="display:flex;align-items:center;gap:8px;height:36px;padding:0 8px;border-radius:4px;cursor:pointer" style-hover="background:var(--color-background-button-tertiary-gray-hover)"><span class="ui-icon-expand-arrow" style="width:16px;font-size:12px;transform:rotate(-90deg);color:var(--color-icon-default)"></span><span class="ui-icon-star" style="font-size:16px;color:var(--color-icon-default)"></span><span>Favorites</span></div>
+<div style="height:1px;margin:6px 0;background:var(--color-border-default)"></div>
+<sc-for list="{{ treeRows }}" as="n" hint-placeholder-count="12"><div onClick="{{ n.onSelect }}" title="{{ n.name }}" style="display:flex;align-items:center;gap:8px;height:36px;flex-shrink:0;padding:0 8px 0 {{ n.pad }}px;border-radius:4px;cursor:pointer;background:{{ n.bg }};color:{{ n.color }}" style-hover="background:var(--color-background-button-tertiary-gray-hover)"><span onClick="{{ n.onToggle }}" class="ui-icon-expand-arrow" style="width:16px;flex-shrink:0;text-align:center;font-size:12px;visibility:{{ n.chev }};transform:{{ n.rot }};transition:transform .3s;color:var(--color-icon-default)"></span><span class="{{ n.icon }}" style="font-size:16px;flex-shrink:0;color:{{ n.iconColor }}"></span><span style="flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ n.name }}</span></div></sc-for>
+<sc-if value="{{ treeEmpty }}" hint-placeholder-val="{{ false }}"><div style="padding:8px;font-size:var(--ui-font-xs-size);color:var(--color-text-subtlest)">Try to search for a different name.</div></sc-if>
+</div>
 </div>
 </x-import>
 
@@ -456,7 +468,7 @@
 </sc-if>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;theme&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;dark&quot;,&quot;light&quot;],&quot;default&quot;:&quot;dark&quot;,&quot;tsType&quot;:&quot;'dark'|'light'&quot;},&quot;showPhase2&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Scope&quot;},&quot;timezones&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;multiple&quot;,&quot;single&quot;],&quot;default&quot;:&quot;multiple&quot;,&quot;tsType&quot;:&quot;'multiple'|'single'&quot;,&quot;section&quot;:&quot;Demo data&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;theme&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;dark&quot;,&quot;light&quot;],&quot;default&quot;:&quot;dark&quot;,&quot;tsType&quot;:&quot;'dark'|'light'&quot;},&quot;showPhase2&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Scope&quot;},&quot;timezones&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;multiple&quot;,&quot;single&quot;],&quot;default&quot;:&quot;multiple&quot;,&quot;tsType&quot;:&quot;'multiple'|'single'&quot;,&quot;section&quot;:&quot;Demo data&quot;}}">
 const SCHEDULES = [
   { value: 'business', label: 'Business hours', detail: 'Mon–Fri, 08:00–18:00' },
   { value: 'after', label: 'After hours', detail: 'Mon–Fri 18:00–08:00, all day Sat–Sun' },
@@ -597,14 +609,14 @@ const clone = o => JSON.parse(JSON.stringify(o));
 
 class Component extends DCLogic {
   state = {
-    page: 'mapping', locQ: '',
+    page: 'arming', locQ: '',
     armPage: 0,
     armRows: [['loc_7f3a91c2','armed','after'],['loc_2b8e44d0','type_1','business'],['loc_45ef6a13','type_2','night'],
       ...[1,2,4,5,7,8,10,11,13,14,16,17,19,20,22,23,25,26,28,29,31,32,34,35,37].map((n, k) => [LOCS[3 + n].id, k % 3 === 1 ? 'type_1' : k % 3 === 2 ? 'type_2' : 'armed', SCHEDULES[k % SCHEDULES.length].value])]
       .map(([locId, status, schedule], k) => ({ key: k + 1, locId, status, schedule })),
     orgOpen: false, open: { 'Fourth Street Industrial Park': true, 'Warehouse 3': true, 'Head office': true }, tab: 'locations', q: '', filter: 'all',
     sops: clone(SOPS), sopQ: '', sopSort: 'modified', draft: null, stepK: null,
-    subOpen: true, wallQ: '', wallOn: ['w_perim', 'w_docks', 'w_lobby', 'w_gates'],
+    flyOpen: false, flyTop: 150, treeQ: '', sel: { type: 'all' }, treeOpen: { all: true }, subOpen: true, wallQ: '', wallOn: ['w_perim', 'w_docks', 'w_lobby', 'w_gates'],
     contacts: clone(CONTACTS), ctScope: 'account', ctQ: '', ctDraft: null, ctShow: {},
     armSchedule: 'after',
     armTypes: [{ id: 1, name: 'Home', schedule: 'night' }, { id: 2, name: 'Away', schedule: 'after' }],
@@ -682,7 +694,8 @@ class Component extends DCLogic {
     const PER = 20, byId = Object.fromEntries(s.data.locations.map(l => [l.id, l]));
     const used = new Set(s.armRows.map(x => x.locId).filter(Boolean));
     const q = s.locQ.toLowerCase();
-    const list = s.armRows.filter(x => !q || !x.locId || byId[x.locId].name.toLowerCase().includes(q));
+    const si = this.selInfo(s);
+    const list = s.armRows.filter(x => (!si || !x.locId || x.locId === si.locId) && (!q || !x.locId || byId[x.locId].name.toLowerCase().includes(q)));
     const pages = Math.max(1, Math.ceil(list.length / PER)), pg = Math.min(s.armPage, pages - 1);
     const upd = (key, patch) => this.setState(st => ({ dirty: true, armRows: st.armRows.map(x => x.key === key ? { ...x, ...patch } : x) }));
     const configured = s.armRows.filter(x => x.locId).length;
@@ -733,7 +746,10 @@ class Component extends DCLogic {
     const tName = (scope, id) => scope === 'subs' ? subName(id) : locName(id);
     const applies = p => p.scope === 'account' ? 'Whole account' : p.targets.length === 1 ? tName(p.scope, p.targets[0]) : `${p.targets.length} ${p.scope === 'subs' ? 'sub-locations' : 'locations'}`;
     const q = s.sopQ.toLowerCase();
-    const list = s.sops.filter(p => !q || [p.name, p.desc, GROUPS[p.group]].some(x => x.toLowerCase().includes(q)))
+    const si = this.selInfo(s);
+    const subsOf = n => s.data.subs.filter(x => x.loc === n).map(x => x.id);
+    const sopIn = p => !si || p.scope === 'account' || (p.scope === 'locations' ? p.targets.includes(si.locId) : p.targets.some(t => si.subId ? t === si.subId : subsOf(si.locName).includes(t)));
+    const list = s.sops.filter(p => sopIn(p) && (!q || [p.name, p.desc, GROUPS[p.group]].some(x => x.toLowerCase().includes(q))))
       .sort((a, b) => s.sopSort === 'name' ? a.name.localeCompare(b.name) : b.modified.localeCompare(a.modified));
     const open = (p, extra) => this.setState({ draft: { ...clone(p), ...extra }, stepK: p.steps[0] ? p.steps[0].k : null });
     const setD = fn => this.setState(st => ({ draft: { ...st.draft, ...fn(st.draft) } }));
@@ -816,7 +832,8 @@ class Component extends DCLogic {
   }
   wallVals(s, val) {
     const q = s.wallQ.toLowerCase(), on = new Set(s.wallOn);
-    const list = WALLS.filter(w => !q || w.name.toLowerCase().includes(q) || w.locs.toLowerCase().includes(q));
+    const si = this.selInfo(s);
+    const list = WALLS.filter(w => (!si || w.locs === 'All locations' || w.locs.split(', ').includes(si.locName)) && (!q || w.name.toLowerCase().includes(q) || w.locs.toLowerCase().includes(q)));
     const shownIn = list.filter(w => on.has(w.id)).length;
     const set = ids => this.setState({ wallOn: ids, dirty: true });
     return {
@@ -866,8 +883,8 @@ class Component extends DCLogic {
     return {
       ctScope: s.ctScope, setCtScope: v => this.setState({ ctScope: v, ctQ: '' }),
       ctScopeOpts: [{ value: 'account', label: `Account contacts (${count('account')})` },
-        ...s.data.locations.map(l => ({ value: l.id, label: `${l.name}${count(l.id) ? ` (${count(l.id)})` : ''}` })),
-        ...s.data.subs.map(x => ({ value: x.id, label: `${x.name} · ${x.loc}${count(x.id) ? ` (${count(x.id)})` : ''}` }))],
+        ...s.data.locations.filter(l => !this.selInfo(s) || l.id === this.selInfo(s).locId).map(l => ({ value: l.id, label: `${l.name}${count(l.id) ? ` (${count(l.id)})` : ''}` })),
+        ...s.data.subs.filter(x => !this.selInfo(s) || (x.loc === this.selInfo(s).locName && (!this.selInfo(s).subId || x.id === this.selInfo(s).subId))).map(x => ({ value: x.id, label: `${x.name} · ${x.loc}${count(x.id) ? ` (${count(x.id)})` : ''}` }))],
       ctQ: s.ctQ, setCtQ: v => this.setState({ ctQ: val(v) || '' }),
       ctNote: s.ctScope === 'account' ? `${inScope.length} account contacts. Called after any location and sub-location contacts. Click a contact to edit it.`
         : `${inScope.length} contacts for ${scopeName(s.ctScope)}. Called before account contacts. Click a contact to edit it.`,
@@ -901,6 +918,38 @@ class Component extends DCLogic {
       addCeAway: () => setC(c => ({ away: [...c.away, { k: 'a' + Date.now(), from: TODAY, to: TODAY, reason: '' }] })),
     };
   }
+  selInfo(s) {
+    const sl = s.sel || { type: 'all' };
+    if (sl.type === 'all') return null;
+    if (sl.type === 'loc') { const l = s.data.locations.find(x => x.id === sl.id); return l ? { locId: l.id, locName: l.name } : null; }
+    if (sl.type === 'sub') { const x = s.data.subs.find(y => y.id === sl.id); const l = x && s.data.locations.find(y => y.name === x.loc); return x ? { locId: l && l.id, locName: x.loc, subId: x.id } : null; }
+    const d = s.data.devices.find(y => y.id === sl.id); const l = d && s.data.locations.find(y => y.name === d.loc); return d ? { locId: l && l.id, locName: d.loc, camId: d.id } : null;
+  }
+  treeVals(s) {
+    const q = s.treeQ.trim().toLowerCase(), sl = s.sel || { type: 'all' }, open = s.treeOpen;
+    const hit = n => !q || n.toLowerCase().includes(q);
+    const toggle = k => ev => { ev && ev.stopPropagation && ev.stopPropagation(); this.setState(st => ({ treeOpen: { ...st.treeOpen, [k]: !st.treeOpen[k] } })); };
+    const pick = (type, id, extra) => () => this.setState(st => ({ sel: { type, id }, armPage: 0, ...(extra || {}), treeOpen: id ? { ...st.treeOpen, all: true } : st.treeOpen }));
+    const row = (key, type, id, name, depth, icon, kids, isOpen, extra) => { const on = sl.type === type && (type === 'all' || sl.id === id);
+      return { key, name, icon, pad: 8 + depth * 20, chev: kids ? 'visible' : 'hidden', rot: isOpen ? 'none' : 'rotate(-90deg)',
+        bg: on ? 'var(--color-background-selected-active)' : 'transparent', color: on ? 'var(--color-text-selected)' : 'inherit', iconColor: on ? 'var(--color-icon-selected)' : 'var(--color-icon-default)',
+        onSelect: pick(type, id, extra), onToggle: kids ? toggle(key) : undefined }; };
+    const rows = [], cams = s.data.devices.filter(d => d.type === 'Camera');
+    rows.push(row('all', 'all', null, 'All locations', 0, 'ui-icon-location', true, open.all || !!q, { ctScope: 'account' }));
+    let any = false;
+    if (open.all || q) s.data.locations.forEach(l => {
+      const subs = s.data.subs.filter(x => x.loc === l.name), lc = cams.filter(d => d.loc === l.name);
+      const subHits = subs.filter(x => hit(x.name)), camHits = lc.filter(d => hit(d.name));
+      if (!hit(l.name) && !subHits.length && !camHits.length) return;
+      any = true;
+      const k = 'L' + l.id, isOpen = q ? (subHits.length + camHits.length > 0) : !!open[k];
+      rows.push(row(k, 'loc', l.id, l.name, 1, 'ui-icon-location', subs.length + lc.length > 0, isOpen, { ctScope: l.id }));
+      if (!isOpen) return;
+      (q && !hit(l.name) ? subHits : subs).forEach(x => rows.push(row('S' + x.id, 'sub', x.id, x.name, 2, 'ui-icon-locations', false, false, { ctScope: x.id })));
+      (q && !hit(l.name) ? camHits : lc).forEach(d => rows.push(row('C' + d.id, 'cam', d.id, d.name, 2, 'ui-icon-camera', false, false, { ctScope: l.id })));
+    });
+    return { treeRows: rows, treeEmpty: !!q && !any };
+  }
   showToast(msg) { this.setState({ toast: msg }); clearTimeout(this._t); this._t = setTimeout(() => this.setState({ toast: '' }), 3000); }
 
   renderVals() {
@@ -912,11 +961,14 @@ class Component extends DCLogic {
     const all = isTree ? [...s.data.locations, ...s.data.subs] : s.data[tab];
     const q = s.q.toLowerCase();
     const kindOf = r => isTree && r.id.startsWith('sub_') ? 'subs' : tab;
-    const match = r => (!q || r.name.toLowerCase().includes(q) || r.id.toLowerCase().includes(q))
+    const si = this.selInfo(s);
+    const inSel = r => !si || (tab === 'devices' ? r.loc === si.locName && (!si.camId || r.id === si.camId)
+      : r.id.startsWith('sub_') ? r.loc === si.locName && (!si.subId || r.id === si.subId) : r.name === si.locName);
+    const match = r => inSel(r) && (!q || r.name.toLowerCase().includes(q) || r.id.toLowerCase().includes(q))
       && (s.filter === 'all' || (s.filter === 'mapped' ? this.rowMapped(kindOf(r), r) : !this.rowMapped(kindOf(r), r)));
     const subsBy = {}; s.data.subs.forEach(x => (subsBy[x.loc] = subsBy[x.loc] || []).push(x));
     const parents = Object.keys(subsBy).filter(n => s.data.locations.some(l => l.name === n));
-    const filtering = !!q || s.filter !== 'all';
+    const filtering = !!q || s.filter !== 'all' || !!(si && si.subId);
     const rows = !isTree ? s.data[tab].filter(match) : s.data.locations.flatMap(l => {
       const kids = subsBy[l.name] || [], hit = kids.filter(match), self = match(l);
       if (!self && !hit.length) return [];
@@ -985,9 +1037,13 @@ class Component extends DCLogic {
       headerSaveDisplay: ['sop', 'contacts'].includes(s.page) ? 'none' : 'flex',
       ...this.wallVals(s, val),
       subOpen: s.subOpen, toggleSub: () => this.setState(st => ({ subOpen: !st.subOpen })),
-      alertMenu: [['Alert events', 'ui-icon-notifications'], ['Configurations', 'ui-icon-list-view'], ['Alert groups', 'ui-icon-users'], ['Control center settings', 'ui-icon-armed']].map(([label, icon], i) => { const on = i === 3; return { label, icon,
-        bg: on ? 'var(--color-background-selected-active)' : 'transparent', color: on ? 'var(--color-text-selected)' : 'inherit', iconColor: on ? 'var(--color-icon-selected)' : 'var(--color-icon-default)',
-        gap: i === 3 ? '8px' : '0', line: 'none' }; }),
+      flyOpen: s.flyOpen, flyTop: s.flyTop, closeFly: () => this.setState({ flyOpen: false }),
+      onNav: v => { if (v !== 'alerts') return; const el = [...document.querySelectorAll('[title="Alerts"],[aria-label="Alerts"]')][0]; const r = el && el.getBoundingClientRect(); this.setState(st => ({ flyOpen: !st.flyOpen, flyTop: r ? Math.max(8, r.top - 8) : 150 })); },
+      flyItems: ['Alerts Monitoring', 'Create Alert', 'Alerts Configuration', 'Alerts Groups', 'Control Center settings', 'Control Center reports'].map((label, i) => { const on = i === 4; return { label, divider: i === 4 ? 'block' : 'none',
+        bg: on ? 'var(--color-background-selected-active)' : 'transparent', color: on ? 'var(--color-text-selected)' : 'inherit',
+        onClick: () => { this.setState(on ? { flyOpen: false, subOpen: true } : { flyOpen: false }); if (i === 5) window.location.href = 'Control Center Reports.dc.html'; } }; }),
+      orgName: 'Lumana verification', treeQ: s.treeQ, setTreeQ: e => this.setState({ treeQ: e && e.target ? e.target.value : e }),
+      ...this.treeVals(s),
       ccTabs: [['arming', 'Arming'], ['sop', 'SOPs'], ['contacts', 'Contacts'], ['walls', 'Walls'], ['mapping', 'Mapping']].map(([k, label]) => ({ label,
         color: s.page === k ? 'var(--color-text-selected)' : 'var(--color-text-subtle)', border: s.page === k ? 'var(--color-border-selected-default)' : 'transparent',
         onClick: () => this.setState({ page: k }) })),

@@ -1,0 +1,13 @@
+/* Satoshi — the single brand typeface across Lumana Cloud, Control Center, Parking and Site Planner.
+   Copied from lumix-cloud @ frontend/projects/ui/src/lib/assets/fonts/Satoshi.
+   NOTE: the repo declares Satoshi weights as 100 / 400 / 600 / bold / 800 while the files are
+   Light / Regular / Medium / Bold / Black. That mapping is reproduced verbatim below so
+   `font-weight: 600` renders Satoshi Medium exactly as it does in production. */
+@font-face{font-family:"Satoshi";font-weight:100;font-style:normal;font-display:swap;src:local("Satoshi"),url("../assets/fonts/Satoshi-Light.woff2") format("woff2")}
+@font-face{font-family:"Satoshi";font-weight:400;font-style:normal;font-display:swap;src:local("Satoshi"),url("../assets/fonts/Satoshi-Regular.woff2") format("woff2")}
+@font-face{font-family:"Satoshi";font-weight:500;font-style:normal;font-display:swap;src:local("Satoshi"),url("../assets/fonts/Satoshi-Medium.woff2") format("woff2")}
+@font-face{font-family:"Satoshi";font-weight:600;font-style:normal;font-display:swap;src:local("Satoshi"),url("../assets/fonts/Satoshi-Medium.woff2") format("woff2")}
+@font-face{font-family:"Satoshi";font-weight:700;font-style:normal;font-display:swap;src:local("Satoshi"),url("../assets/fonts/Satoshi-Bold.woff2") format("woff2")}
+@font-face{font-family:"Satoshi";font-weight:800;font-style:normal;font-display:swap;src:local("Satoshi"),url("../assets/fonts/Satoshi-Black.woff2") format("woff2")}
+@font-face{font-family:"Satoshi Variable";font-weight:300 900;font-style:normal;font-display:swap;src:url("../assets/fonts/Satoshi-Variable.woff2") format("woff2")}
+:root{--font-sans:"Satoshi","Satoshi Variable",sans-serif;--font-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}

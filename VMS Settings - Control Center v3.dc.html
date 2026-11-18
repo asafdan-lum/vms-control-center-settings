@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/lumana-lumix-cloud-design-system-git-1b2e75e8-6731-4899-a6b5-0c0f64d44f4b/tokens/fonts.css">
+<link rel="stylesheet" href="_ds/lumana-lumix-cloud-design-system-git-1b2e75e8-6731-4899-a6b5-0c0f64d44f4b/tokens/colors.css">
+<link rel="stylesheet" href="_ds/lumana-lumix-cloud-design-system-git-1b2e75e8-6731-4899-a6b5-0c0f64d44f4b/tokens/dark.css">
+<link rel="stylesheet" href="_ds/lumana-lumix-cloud-design-system-git-1b2e75e8-6731-4899-a6b5-0c0f64d44f4b/tokens/typography.css">
+<link rel="stylesheet" href="_ds/lumana-lumix-cloud-design-system-git-1b2e75e8-6731-4899-a6b5-0c0f64d44f4b/tokens/spacing.css">
+<link rel="stylesheet" href="_ds/lumana-lumix-cloud-design-system-git-1b2e75e8-6731-4899-a6b5-0c0f64d44f4b/tokens/elevation.css">
+<link rel="stylesheet" href="_ds/lumana-lumix-cloud-design-system-git-1b2e75e8-6731-4899-a6b5-0c0f64d44f4b/tokens/icons.css">
+<link rel="stylesheet" href="_ds/lumana-lumix-cloud-design-system-git-1b2e75e8-6731-4899-a6b5-0c0f64d44f4b/tokens/base.css">
+<link rel="stylesheet" href="_ds/lumana-lumix-cloud-design-system-git-1b2e75e8-6731-4899-a6b5-0c0f64d44f4b/styles.css">
+<script src="_ds/lumana-lumix-cloud-design-system-git-1b2e75e8-6731-4899-a6b5-0c0f64d44f4b/_ds_bundle.js"></script>
+<style>html,body{height:100%;margin:0}a{color:var(--color-text-primary-default);text-decoration:none}a:hover{text-decoration:underline}</style>
+</helmet>
+<div class="{{ themeClass }}" style="display:flex;height:100vh;min-height:0;font-family:var(--font-sans);background:var(--color-elevation-surface-default);color:var(--color-text-default)">
+<x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Sidebar" items="{{ navItems }}" value="settings" logo-src="assets/logo-mark-alt.svg" hint-size="65px,100%"></x-import>
+
+<main style="flex:1;display:flex;flex-direction:column;min-width:0;min-height:0">
+<div style="display:flex;justify-content:space-between;align-items:center;flex-shrink:0;height:49px;padding:0 24px 0 32px;border-bottom:1px solid var(--color-border-default);font-size:var(--ui-font-xxm-size);line-height:var(--ui-font-xxm-height)">
+<div style="display:flex;align-items:center">
+<span>Organization settings</span>
+<span class="ui-icon-expand-arrow" style="font-size:12px;margin:0 16px;transform:rotate(-90deg);color:var(--color-icon-default)"></span>
+<span>Control Center</span>
+<span class="ui-icon-expand-arrow" style="font-size:12px;margin:0 16px;transform:rotate(-90deg);color:var(--color-icon-default)"></span>
+<span>{{ pageLabel }}</span>
+</div>
+<div style="display:{{ headerSaveDisplay }};align-items:center;gap:12px">
+<span style="font-size:var(--ui-font-xs-size);color:var(--color-text-subtlest)">{{ saveHint }}</span>
+<x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Button" text="Save" type="primary" disabled="{{ saveDisabled }}" onClick="{{ save }}" hint-size="64px,32px"></x-import>
+</div>
+</div>
+
+<div style="flex:1;min-height:0;display:flex">
+<aside style="width:300px;flex-shrink:0;overflow-y:auto;border-right:1px solid var(--color-border-default);padding:12px 16px;box-sizing:border-box;display:flex;flex-direction:column;gap:2px;font-size:var(--ui-font-xm-size)">
+<div onClick="{{ toggleOrg }}" style="display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:4px;cursor:pointer" style-hover="background:var(--color-background-neutral-subtle)"><span class="ui-icon-organization" style="font-size:16px;color:var(--color-icon-default)"></span><span style="flex:1">Organization</span><span class="ui-icon-expand-arrow" style="font-size:12px;color:var(--color-icon-default);transform:{{ orgChevron }};transition:transform .3s"></span></div>
+<sc-if value="{{ orgOpen }}" hint-placeholder-val="{{ false }}">
+<div style="margin-left:18px;padding-left:16px;border-left:1px solid var(--color-border-default);display:flex;flex-direction:column;gap:2px">
+<sc-for list="{{ orgChildren }}" as="c" hint-placeholder-count="9"><div style="padding:8px 10px;border-radius:4px;cursor:pointer" style-hover="background:var(--color-background-neutral-subtle)">{{ c }}</div></sc-for>
+</div>
+</sc-if>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:4px" style-hover="background:var(--color-background-neutral-subtle)"><span class="ui-icon-users" style="font-size:16px;color:var(--color-icon-default)"></span>Users</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:4px" style-hover="background:var(--color-background-neutral-subtle)"><span class="ui-icon-share-arrow" style="font-size:16px;color:var(--color-icon-default)"></span>Sharing</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:4px" style-hover="background:var(--color-background-neutral-subtle)"><span class="ui-icon-list-view" style="font-size:16px;color:var(--color-icon-default)"></span>Audit logs</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:4px" style-hover="background:var(--color-background-neutral-subtle)"><span class="ui-icon-notifications" style="font-size:16px;color:var(--color-icon-default)"></span>Alert notification logs</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:4px" style-hover="background:var(--color-background-neutral-subtle)"><span class="ui-icon-key" style="font-size:16px;color:var(--color-icon-default)"></span>API keys</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:4px" style-hover="background:var(--color-background-neutral-subtle)"><span class="ui-icon-api" style="font-size:16px;color:var(--color-icon-default)"></span>OAuth2 Credentials</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:4px" style-hover="background:var(--color-background-neutral-subtle)"><span class="ui-icon-lock" style="font-size:16px;color:var(--color-icon-default)"></span>OAuth Providers</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:4px" style-hover="background:var(--color-background-neutral-subtle)"><span class="ui-icon-shield" style="font-size:16px;color:var(--color-icon-default)"></span>Roles &amp; Permissions</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:4px" style-hover="background:var(--color-background-neutral-subtle)"><span class="ui-icon-link" style="font-size:16px;color:var(--color-icon-default)"></span>Integrations</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:4px"><span class="ui-icon-armed" style="font-size:16px;color:var(--color-icon-default)"></span><span style="flex:1">Control Center</span><span class="ui-icon-expand-arrow" style="font-size:12px;color:var(--color-icon-default);transform:rotate(180deg)"></span></div>
+<div style="margin-left:18px;padding-left:16px;border-left:1px solid var(--color-border-default);display:flex;flex-direction:column;gap:2px">
+<div onClick="{{ goArming }}" style="padding:8px 10px;border-radius:4px;cursor:pointer;background:{{ armingNavBg }};color:{{ armingNavColor }}">Arming</div>
+<div onClick="{{ goMapping }}" style="padding:8px 10px;border-radius:4px;cursor:pointer;background:{{ mappingNavBg }};color:{{ mappingNavColor }}">Mapping</div>
+<div onClick="{{ goSop }}" style="padding:8px 10px;border-radius:4px;cursor:pointer;background:{{ sopNavBg }};color:{{ sopNavColor }}">SOPs</div>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:4px" style-hover="background:var(--color-background-neutral-subtle)"><span class="ui-icon-login-firewall" style="font-size:16px;color:var(--color-icon-default)"></span>Login firewall</div>
+</aside>
+
+<div style="flex:1;min-width:0;overflow:auto;padding:28px 28px 64px;box-sizing:border-box">
+<div style="max-width:1100px;display:{{ armingDisplay }};flex-direction:column;gap:32px">
+
+<div style="display:flex;flex-direction:column;gap:4px">
+<div style="font-size:var(--ui-font-l-size);line-height:var(--ui-font-l-height);font-weight:500">Arming</div>
+<div style="font-size:var(--ui-font-xm-size);line-height:var(--ui-font-xm-height);color:var(--color-text-subtlest)">Set the arm status and automatic arm schedule for each location</div>
+</div>
+
+<section style="display:flex;flex-direction:column;gap:12px">
+<div style="display:flex;flex-direction:column;gap:2px">
+<div style="font-size:var(--ui-font-m-size);line-height:var(--ui-font-m-height);font-weight:500">Location arm schedules</div>
+<div style="font-size:var(--ui-font-xs-size);line-height:var(--ui-font-xs-height);color:var(--color-text-subtlest)">Locations are armed automatically during their schedule. {{ tzNote }} <a href="#">Manage schedules</a></div>
+</div>
+<div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+<x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Search" placeholder="Search locations" value="{{ locQ }}" onChange="{{ setLocQ }}" hint-size="260px,40px" style="width:260px"></x-import>
+<div style="display:flex;align-items:center;gap:12px">
+<span style="font-size:var(--ui-font-xs-size);color:var(--color-text-subtlest)">{{ armCount }}</span>
+<x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Button" text="Add location" type="default" iconClass="ui-icon-plus" onClick="{{ addArmRow }}" disabled="{{ addDisabled }}" hint-size="124px,32px"></x-import>
+</div>
+</div>
+<div style="overflow-x:auto">
+<div style="display:grid;grid-template-columns:{{ armGridCols }};min-width:{{ armGridMin }};border:1px solid var(--color-border-default);border-radius:4px">
+<div style="padding:8px 12px;background:var(--color-elevation-surface-subtlest);font-size:var(--ui-font-s-size);line-height:var(--ui-font-s-height);font-weight:500;color:var(--color-text-subtle)">Location</div>
+<div style="padding:8px 12px;background:var(--color-elevation-surface-subtlest);font-size:var(--ui-font-s-size);line-height:var(--ui-font-s-height);font-weight:500;color:var(--color-text-subtle)">Account ID</div>
+<div style="display:{{ tzColDisplay }};padding:8px 12px;background:var(--color-elevation-surface-subtlest);font-size:var(--ui-font-s-size);line-height:var(--ui-font-s-height);font-weight:500;color:var(--color-text-subtle)">Timezone</div>
+<div style="display:{{ statusColDisplay }};padding:8px 12px;background:var(--color-elevation-surface-subtlest);font-size:var(--ui-font-s-size);line-height:var(--ui-font-s-height);font-weight:500;color:var(--color-text-subtle)">Arm type</div>
+<div style="padding:8px 12px;background:var(--color-elevation-surface-subtlest);font-size:var(--ui-font-s-size);line-height:var(--ui-font-s-height);font-weight:500;color:var(--color-text-subtle)">Arm schedule</div>
+<div style="padding:8px 12px;background:var(--color-elevation-surface-subtlest);font-size:var(--ui-font-s-size);line-height:var(--ui-font-s-height);font-weight:500;color:var(--color-text-subtle)"></div>
+<div style="padding:8px 12px;background:var(--color-elevation-surface-subtlest);font-size:var(--ui-font-s-size);line-height:var(--ui-font-s-height);font-weight:500;color:var(--color-text-subtle)"></div>
+<sc-for list="{{ locRows }}" as="l" hint-placeholder-count="8">
+<div title="{{ l.summary }}" style="padding:4px 12px;border-top:1px solid var(--color-border-default);display:flex;align-items:center;min-width:0">
+<span style="display:{{ l.nameDisplay }};font-size:var(--ui-font-xm-size);line-height:var(--ui-font-xm-height);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ l.name }}</span>
+<div style="display:{{ l.pickDisplay }};width:100%"><x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Select" options="{{ l.locOpts }}" value="{{ l.locId }}" placeholder="Select location" onChange="{{ l.onLoc }}" hint-size="100%,40px" style="width:100%"></x-import></div>
+</div>
+<div title="{{ l.summary }}" style="padding:4px 12px;border-top:1px solid var(--color-border-default);display:flex;align-items:center;min-width:0;font-size:var(--ui-font-xm-size);color:var(--color-text-subtle)">{{ l.account }}</div>
+<div title="{{ l.tzLong }}" style="display:{{ tzColDisplay }};padding:4px 12px;border-top:1px solid var(--color-border-default);display:flex;align-items:center;min-width:0;font-size:var(--ui-font-xm-size);color:var(--color-text-subtle)">{{ l.tz }}</div>
+<div title="{{ l.summary }}" style="padding:4px 12px;border-top:1px solid var(--color-border-default);display:{{ statusColDisplay }};align-items:center;min-width:0"><x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Select" options="{{ armStatusOpts }}" value="{{ l.status }}" onChange="{{ l.onStatus }}" hint-size="100%,40px" style="width:100%"></x-import></div>
+<div title="{{ l.summary }}" style="padding:4px 12px;border-top:1px solid var(--color-border-default);display:flex;align-items:center;min-width:0"><x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Select" options="{{ armScheduleOpts }}" value="{{ l.schedule }}" placeholder="Select schedule" onChange="{{ l.onSchedule }}" hint-size="100%,40px" style="width:100%"></x-import></div>
+<div style="padding:4px 12px;border-top:1px solid var(--color-border-default);display:flex;align-items:center;min-width:0;justify-content:center;padding:4px 0"><span class="ui-icon-location" title="{{ l.nowText }}" style="font-size:20px;cursor:help;color:{{ l.nowColor }};display:{{ l.nowDisplay }}"></span></div>
+<div title="{{ l.summary }}" style="padding:4px 12px;border-top:1px solid var(--color-border-default);display:flex;align-items:center;min-width:0;justify-content:center"><x-import component-from-global-scope="LumanaDesignSystem_1b2e75.IconButton" iconClass="ui-icon-delete" noBorder="{{ true }}" onClick="{{ l.onRemove }}" hint-size="32px,32px"></x-import></div>
+</sc-for>
+</div>
+</div>
+<sc-if value="{{ noLocRows }}" hint-placeholder-val="{{ false }}">
+<div style="padding:16px;text-align:center;font-size:var(--ui-font-xm-size);color:var(--color-text-subtlest)">{{ noLocText }}</div>
+</sc-if>
+<div style="display:flex;justify-content:flex-end;align-items:center;gap:8px;font-size:var(--ui-font-xs-size);color:var(--color-text-subtlest)">
+<span>{{ pageInfo }}</span>
+<x-import component-from-global-scope="LumanaDesignSystem_1b2e75.IconButton" iconClass="ui-icon-backward" onClick="{{ prevPage }}" hint-size="32px,32px"></x-import>
+<x-import component-from-global-scope="LumanaDesignSystem_1b2e75.IconButton" iconClass="ui-icon-forward" onClick="{{ nextPage }}" hint-size="32px,32px"></x-import>
+</div>
+</section>
+
+<sc-if value="{{ showPhase2 }}" hint-placeholder-val="{{ true }}">
+<section style="display:flex;flex-direction:column;gap:16px;max-width:744px;padding-top:32px;border-top:1px solid var(--color-border-default)">
+<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:16px">
+<div style="display:flex;flex-direction:column;gap:2px">
+<div style="display:flex;align-items:center;gap:8px"><span style="font-size:var(--ui-font-m-size);line-height:var(--ui-font-m-height);font-weight:500">Custom arm types</span><x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Badge" tone="info" hint-size="56px,20px">Phase 2</x-import></div>
+<div style="font-size:var(--ui-font-xs-size);line-height:var(--ui-font-xs-height);color:var(--color-text-subtlest)">Create arm types such as Home or Away. They appear as arm status options for each location</div>
+</div>
+<x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Button" text="Add arm type" type="default" iconClass="ui-icon-plus" onClick="{{ addArmType }}" hint-size="128px,32px"></x-import>
+</div>
+<sc-if value="{{ hasArmTypes }}" hint-placeholder-val="{{ true }}">
+<div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.4fr) 32px;gap:8px 12px;align-items:center">
+<div style="font-size:var(--ui-font-s-size);line-height:var(--ui-font-s-height);font-weight:500;color:var(--color-text-subtle)">Name</div>
+<div style="font-size:var(--ui-font-s-size);line-height:var(--ui-font-s-height);font-weight:500;color:var(--color-text-subtle)">Schedule</div>
+<div></div>
+<sc-for list="{{ armTypes }}" as="t" hint-placeholder-count="2">
+<x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Input" value="{{ t.name }}" placeholder="Arm type name" invalid="{{ t.invalid }}" onChange="{{ t.onName }}" hint-size="100%,40px"></x-import>
+<x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Select" options="{{ scheduleOpts }}" value="{{ t.schedule }}" placeholder="Select schedule" onChange="{{ t.onSchedule }}" hint-size="100%,40px" style="width:100%"></x-import>
+<x-import component-from-global-scope="LumanaDesignSystem_1b2e75.IconButton" iconClass="ui-icon-delete" noBorder="{{ true }}" onClick="{{ t.onRemove }}" hint-size="32px,32px"></x-import>
+</sc-for>
+</div>
+</sc-if>
+<sc-if value="{{ noArmTypes }}" hint-placeholder-val="{{ false }}">
+<div style="padding:20px;border:1px dashed var(--color-border-default);border-radius:4px;font-size:var(--ui-font-xm-size);color:var(--color-text-subtlest);text-align:center">Arm types are the way to switch between arming profiles, each with its own schedule.</div>
+</sc-if>
+</section>
+</sc-if>
+</div>
+
+<div style="max-width:1100px;display:{{ sopDisplay }};flex-direction:column;gap:20px">
+<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:16px">
+<div style="display:flex;flex-direction:column;gap:4px">
+<div style="font-size:var(--ui-font-l-size);line-height:var(--ui-font-l-height);font-weight:500">SOPs</div>
+<div style="font-size:var(--ui-font-xm-size);line-height:var(--ui-font-xm-height);color:var(--color-text-subtlest);max-width:640px">Standard operating procedures the Control Center follows when an alarm comes in from your locations. Operators see the matching SOP on every event.</div>
+</div>
+<x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Button" text="New SOP" type="default" iconClass="ui-icon-plus" onClick="{{ newSop }}" disabled="{{ sopEditing }}" hint-size="104px,32px"></x-import>
+</div>
+
+<div style="display:grid;grid-template-columns:300px minmax(0,1fr);border:1px solid var(--color-border-default);border-radius:4px;min-height:600px">
+<div style="display:flex;flex-direction:column;border-right:1px solid var(--color-border-default);min-width:0">
+<div style="display:flex;gap:8px;padding:12px;border-bottom:1px solid var(--color-border-default)">
+<x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Search" placeholder="Search SOPs" value="{{ sopQ }}" onChange="{{ setSopQ }}" hint-size="100%,40px" style="flex:1;min-width:0"></x-import>
+<x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Select" options="{{ sopFilterOpts }}" value="{{ sopFilter }}" onChange="{{ setSopFilter }}" hint-size="96px,40px" style="width:96px"></x-import>
+</div>
+<sc-for list="{{ sopList }}" as="p" hint-placeholder-count="5">
+<div onClick="{{ p.onSelect }}" style="display:flex;flex-direction:column;gap:4px;padding:12px 16px;border-bottom:1px solid var(--color-border-default);border-left:2px solid {{ p.edge }};cursor:pointer;background:{{ p.bg }}">
+<div style="display:flex;justify-content:space-between;align-items:center;gap:8px"><span style="font-size:var(--ui-font-xm-size);line-height:var(--ui-font-xm-height);font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ p.name }}</span><x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Badge" tone="{{ p.prioTone }}" hint-size="28px,20px">{{ p.prio }}</x-import></div>
+<div style="font-size:var(--ui-font-xs-size);line-height:var(--ui-font-xs-height);color:var(--color-text-subtle);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ p.triggerText }}</div>
+<div style="display:flex;align-items:center;gap:6px;font-size:var(--ui-font-xs-size);line-height:var(--ui-font-xs-height);color:var(--color-text-subtlest)"><span>{{ p.scopeText }}</span><span style="display:{{ p.draftDisplay }}">· Draft</span></div>
+</div>
+</sc-for>
+<sc-if value="{{ noSops }}" hint-placeholder-val="{{ false }}">
+<div style="padding:24px 16px;text-align:center;font-size:var(--ui-font-xm-size);color:var(--color-text-subtlest)">No SOPs match your search.</div>
+</sc-if>
+</div>
+
+<div style="min-width:0;padding:24px 28px 32px;display:flex;flex-direction:column;gap:28px">
+<sc-if value="{{ sopViewing }}" hint-placeholder-val="{{ true }}">
+<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:16px">
+<div style="display:flex;flex-direction:column;gap:8px;min-width:0">
+<div style="font-size:var(--ui-font-l-size);line-height:var(--ui-font-l-height);font-weight:500">{{ sv.name }}</div>
+<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+<x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Badge" tone="{{ sv.statusTone }}" hint-size="52px,20px">{{ sv.statusLabel }}</x-import>
+<x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Badge" tone="{{ sv.prioTone }}" hint-size="80px,20px">{{ sv.prioLabel }}</x-import>
+<span style="font-size:var(--ui-font-xs-size);color:var(--color-text-subtlest)">{{ sv.edited }}</span>
+</div>
+</div>
+<div style="display:flex;gap:8px;flex-shrink:0">
+<x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Button" text="Duplicate" type="default" iconClass="ui-icon-duplicate" onClick="{{ dupSop }}" hint-size="108px,32px"></x-import>
+<x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Button" text="Edit" type="primary" iconClass="ui-icon-edit" onClick="{{ editSop }}" hint-size="72px,32px"></x-import>
+</div>
+</div>
+
+<div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px 24px">
+<div style="display:flex;flex-direction:column;gap:8px">
+<div style="font-size:var(--ui-font-s-size);line-height:var(--ui-font-s-height);font-weight:500;color:var(--color-text-subtle)">Triggered by</div>
+<div style="display:flex;flex-wrap:wrap;gap:6px"><sc-for list="{{ sv.triggers }}" as="t" hint-placeholder-count="2"><span style="padding:2px 8px;border-radius:4px;background:var(--color-background-neutral-subtle);font-size:var(--ui-font-xs-size);line-height:var(--ui-font-xs-height)">{{ t }}</span></sc-for></div>
+</div>
+<div style="display:flex;flex-direction:column;gap:8px">
+<div style="font-size:var(--ui-font-s-size);line-height:var(--ui-font-s-height);font-weight:500;color:var(--color-text-subtle)">Applies to</div>
+<div style="font-size:var(--ui-font-xm-size);line-height:var(--ui-font-xm-height)">{{ sv.scopeLong }}</div>
+</div>
+<div style="display:flex;flex-direction:column;gap:8px">
+<div style="font-size:var(--ui-font-s-size);line-height:var(--ui-font-s-height);font-weight:500;color:var(--color-text-subtle)">Runs</div>
+<div style="font-size:var(--ui-font-xm-size);line-height:var(--ui-font-xm-height)">{{ sv.whenText }}</div>
+</div>
+</div>
+
+<div style="display:flex;flex-direction:column;gap:12px">
+<div style="font-size:var(--ui-font-m-size);line-height:var(--ui-font-m-height);font-weight:500">Procedure</div>
+<div style="display:flex;flex-direction:column">
+<sc-for list="{{ sv.steps }}" as="st" hint-placeholder-count="4">
+<div style="display:grid;grid-template-columns:24px minmax(0,1fr);gap:14px;padding:12px 0;border-top:1px solid var(--color-border-default)">
+<div style="width:24px;height:24px;border-radius:12px;background:var(--color-background-neutral-subtle);display:flex;align-items:center;justify-content:center;font-size:var(--ui-font-xs-size);font-weight:500">{{ st.n }}</div>
+<div style="display:flex;flex-direction:column;gap:2px;min-width:0">
+<div style="font-size:var(--ui-font-xm-size);line-height:var(--ui-font-xm-height);font-weight:500">{{ st.label }}</div>
+<div style="font-size:var(--ui-font-xm-size);line-height:var(--ui-font-xm-height);color:var(--color-text-subtle);text-wrap:pretty">{{ st.text }}</div>
+</div>
+</div>
+</sc-for>
+</div>
+</div>
+
+<div style="display:flex;flex-direction:column;gap:12px">
+<div style="font-size:var(--ui-font-m-size);line-height:var(--ui-font-m-height);font-weight:500">Contacts <span style="font-weight:400;font-size:var(--ui-font-xs-size);color:var(--color-text-subtlest)">Called in this order</span></div>
+<sc-if value="{{ sv.hasContacts }}" hint-placeholder-val="{{ true }}">
+<div style="display:grid;grid-template-columns:24px minmax(0,1.2fr) minmax(0,1fr) minmax(0,1fr);border:1px solid var(--color-border-default);border-radius:4px;font-size:var(--ui-font-xm-size);line-height:var(--ui-font-xm-height)">
+<sc-for list="{{ sv.contacts }}" as="c" hint-placeholder-count="2">
+<div style="padding:10px 0 10px 12px;border-top:{{ c.line }};color:var(--color-text-subtlest)">{{ c.n }}</div>
+<div style="padding:10px 12px;border-top:{{ c.line }};font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ c.name }}</div>
+<div style="padding:10px 12px;border-top:{{ c.line }};color:var(--color-text-subtle);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ c.role }}</div>
+<div style="padding:10px 12px;border-top:{{ c.line }};color:var(--color-text-subtle);display:flex;align-items:center;gap:6px"><span class="ui-icon-phone" style="font-size:14px;color:var(--color-icon-default)"></span>{{ c.phone }}</div>
+</sc-for>
+</div>
+</sc-if>
+<sc-if value="{{ sv.noContacts }}" hint-placeholder-val="{{ false }}">
+<div style="font-size:var(--ui-font-xm-size);color:var(--color-text-subtlest)">No contacts. Operators follow the procedure without calling anyone.</div>
+</sc-if>
+</div>
+</sc-if>
+
+<sc-if value="{{ sopEditing }}" hint-placeholder-val="{{ false }}">
+<div style="display:flex;justify-content:space-between;align-items:center;gap:16px">
+<div style="font-size:var(--ui-font-l-size);line-height:var(--ui-font-l-height);font-weight:500">{{ editTitle }}</div>
+<span style="font-size:var(--ui-font-xs-size);color:var(--color-text-subtlest)">{{ draftHint }}</span>
+</div>
+
+<div style="display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr) minmax(0,1fr);gap:16px">
+<div style="display:flex;flex-direction:column;gap:6px"><div style="font-size:var(--ui-font-s-size);line-height:var(--ui-font-s-height);font-weight:500;color:var(--color-text-subtle)">Name</div><x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Input" value="{{ d.name }}" placeholder="e.g. Intrusion after hours" onChange="{{ setDName }}" hint-size="100%,40px"></x-import></div>
+<div style="display:flex;flex-direction:column;gap:6px"><div style="font-size:var(--ui-font-s-size);line-height:var(--ui-font-s-height);font-weight:500;color:var(--color-text-subtle)">Priority</div><x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Select" options="{{ prioOpts }}" value="{{ d.prio }}" onChange="{{ setDPrio }}" hint-size="100%,40px" style="width:100%"></x-import></div>
+<div style="display:flex;flex-direction:column;gap:6px"><div style="font-size:var(--ui-font-s-size);line-height:var(--ui-font-s-height);font-weight:500;color:var(--color-text-subtle)">Status</div><x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Select" options="{{ statusOpts }}" value="{{ d.status }}" onChange="{{ setDStatus }}" hint-size="100%,40px" style="width:100%"></x-import></div>
+</div>
+
+<div style="display:flex;flex-direction:column;gap:8px">
+<div style="font-size:var(--ui-font-s-size);line-height:var(--ui-font-s-height);font-weight:500;color:var(--color-text-subtle)">Triggered by</div>
+<div style="display:flex;flex-wrap:wrap;gap:6px">
+<sc-for list="{{ trigChips }}" as="c" hint-placeholder-count="8"><div onClick="{{ c.onToggle }}" style="display:flex;align-items:center;gap:6px;padding:5px 10px;border-radius:4px;cursor:pointer;font-size:var(--ui-font-xs-size);line-height:var(--ui-font-xs-height);border:1px solid {{ c.border }};background:{{ c.bg }};color:{{ c.color }}"><span class="ui-icon-checkmark" style="font-size:12px;display:{{ c.checkDisplay }}"></span>{{ c.label }}</div></sc-for>
+</div>
+</div>
+
+<div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px">
+<div style="display:flex;flex-direction:column;gap:6px"><div style="font-size:var(--ui-font-s-size);line-height:var(--ui-font-s-height);font-weight:500;color:var(--color-text-subtle)">Applies to</div><x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Select" options="{{ scopeOpts }}" value="{{ d.scope }}" onChange="{{ setDScope }}" hint-size="100%,40px" style="width:100%"></x-import></div>
+<div style="display:flex;flex-direction:column;gap:6px"><div style="font-size:var(--ui-font-s-size);line-height:var(--ui-font-s-height);font-weight:500;color:var(--color-text-subtle)">Runs</div><x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Select" options="{{ whenOpts }}" value="{{ d.when }}" onChange="{{ setDWhen }}" hint-size="100%,40px" style="width:100%"></x-import></div>
+</div>
+<sc-if value="{{ dSelected }}" hint-placeholder-val="{{ false }}">
+<div style="display:flex;flex-direction:column;gap:8px;margin-top:-12px">
+<div style="display:flex;flex-wrap:wrap;gap:6px"><sc-for list="{{ dLocTags }}" as="t" hint-placeholder-count="2"><div style="display:flex;align-items:center;gap:6px;padding:4px 6px 4px 10px;border-radius:4px;background:var(--color-background-neutral-subtle);font-size:var(--ui-font-xs-size);line-height:var(--ui-font-xs-height)">{{ t.name }}<span onClick="{{ t.onRemove }}" class="ui-icon-close" style="font-size:12px;cursor:pointer;color:var(--color-icon-default)"></span></div></sc-for></div>
+<x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Select" options="{{ dAddLocOpts }}" value="" placeholder="Add location" onChange="{{ addDLoc }}" hint-size="280px,40px" style="width:280px"></x-import>
+<div style="font-size:var(--ui-font-xs-size);line-height:var(--ui-font-xs-height);color:var(--color-text-subtlest)">A location-specific SOP replaces account-wide SOPs for the same trigger.</div>
+</div>
+</sc-if>
+
+<div style="display:flex;flex-direction:column;gap:12px">
+<div style="display:flex;justify-content:space-between;align-items:center"><div style="font-size:var(--ui-font-m-size);line-height:var(--ui-font-m-height);font-weight:500">Procedure</div><x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Button" text="Add step" type="default" iconClass="ui-icon-plus" onClick="{{ addDStep }}" hint-size="100px,32px"></x-import></div>
+<sc-for list="{{ dSteps }}" as="st" hint-placeholder-count="3">
+<div style="display:grid;grid-template-columns:24px minmax(0,1fr) auto;gap:14px;align-items:start;padding:12px;border:1px solid var(--color-border-default);border-radius:4px">
+<div style="width:24px;height:24px;margin-top:8px;border-radius:12px;background:var(--color-background-neutral-subtle);display:flex;align-items:center;justify-content:center;font-size:var(--ui-font-xs-size);font-weight:500">{{ st.n }}</div>
+<div style="display:flex;flex-direction:column;gap:8px;min-width:0">
+<x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Select" options="{{ actionOpts }}" value="{{ st.action }}" onChange="{{ st.onAction }}" hint-size="260px,40px" style="width:260px;max-width:100%"></x-import>
+<x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Input" multiline="{{ true }}" rows="{{ 2 }}" value="{{ st.text }}" placeholder="Instructions for the operator" onChange="{{ st.onText }}" hint-size="100%,64px"></x-import>
+</div>
+<div style="display:flex;align-items:center;gap:2px;margin-top:4px">
+<div onClick="{{ st.onUp }}" title="Move up" style="width:32px;height:32px;display:flex;align-items:center;justify-content:center;border-radius:4px;cursor:pointer;opacity:{{ st.upOpacity }}" style-hover="background:var(--color-background-neutral-subtle)"><span class="ui-icon-expand-arrow" style="font-size:12px;transform:rotate(180deg);color:var(--color-icon-default)"></span></div>
+<div onClick="{{ st.onDown }}" title="Move down" style="width:32px;height:32px;display:flex;align-items:center;justify-content:center;border-radius:4px;cursor:pointer;opacity:{{ st.downOpacity }}" style-hover="background:var(--color-background-neutral-subtle)"><span class="ui-icon-expand-arrow" style="font-size:12px;color:var(--color-icon-default)"></span></div>
+<x-import component-from-global-scope="LumanaDesignSystem_1b2e75.IconButton" iconClass="ui-icon-delete" noBorder="{{ true }}" onClick="{{ st.onRemove }}" hint-size="32px,32px"></x-import>
+</div>
+</div>
+</sc-for>
+</div>
+
+<div style="display:flex;flex-direction:column;gap:12px">
+<div style="display:flex;justify-content:space-between;align-items:center"><div style="font-size:var(--ui-font-m-size);line-height:var(--ui-font-m-height);font-weight:500">Contacts <span style="font-weight:400;font-size:var(--ui-font-xs-size);color:var(--color-text-subtlest)">Called in this order</span></div><x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Button" text="Add contact" type="default" iconClass="ui-icon-plus" onClick="{{ addDContact }}" hint-size="120px,32px"></x-import></div>
+<sc-for list="{{ dContacts }}" as="c" hint-placeholder-count="2">
+<div style="display:grid;grid-template-columns:24px minmax(0,1.2fr) minmax(0,1fr) minmax(0,1fr) 32px;gap:8px 12px;align-items:center">
+<span style="font-size:var(--ui-font-xs-size);color:var(--color-text-subtlest);text-align:center">{{ c.n }}</span>
+<x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Input" value="{{ c.name }}" placeholder="Name" onChange="{{ c.onName }}" hint-size="100%,40px"></x-import>
+<x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Input" value="{{ c.role }}" placeholder="Role" onChange="{{ c.onRole }}" hint-size="100%,40px"></x-import>
+<x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Input" value="{{ c.phone }}" placeholder="Phone" onChange="{{ c.onPhone }}" hint-size="100%,40px"></x-import>
+<x-import component-from-global-scope="LumanaDesignSystem_1b2e75.IconButton" iconClass="ui-icon-delete" noBorder="{{ true }}" onClick="{{ c.onRemove }}" hint-size="32px,32px"></x-import>
+</div>
+</sc-for>
+</div>
+
+<div style="display:flex;justify-content:space-between;align-items:center;gap:12px;padding-top:20px;border-top:1px solid var(--color-border-default)">
+<div style="display:{{ deleteDisplay }}"><x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Button" text="Delete SOP" type="danger" iconClass="ui-icon-delete" onClick="{{ deleteSop }}" hint-size="112px,32px"></x-import></div>
+<div style="display:flex;align-items:center;gap:8px;margin-left:auto">
+<x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Button" text="Cancel" type="default" onClick="{{ cancelSop }}" hint-size="72px,32px"></x-import>
+<x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Button" text="Save SOP" type="primary" disabled="{{ sopSaveDisabled }}" onClick="{{ saveSop }}" hint-size="88px,32px"></x-import>
+</div>
+</div>
+</sc-if>
+</div>
+</div>
+</div>
+
+<div style="max-width:1100px;display:{{ mappingDisplay }};flex-direction:column;gap:32px">
+<section style="display:flex;flex-direction:column;gap:16px">
+<div style="display:flex;flex-direction:column;gap:2px">
+<div style="font-size:var(--ui-font-l-size);line-height:var(--ui-font-l-height);font-weight:500">Mapping</div>
+<div style="font-size:var(--ui-font-xm-size);line-height:var(--ui-font-xm-height);color:var(--color-text-subtlest)">Match locations to accounts, sub-locations to partitions and devices to zones. Values can also be edited on each item's edit page.</div>
+</div>
+<div style="display:flex;gap:24px;border-bottom:1px solid var(--color-border-default)">
+<div onClick="{{ tabA.onClick }}" style="display:flex;align-items:center;gap:6px;padding:10px 2px;margin-bottom:-1px;cursor:pointer;font-size:var(--ui-font-m-size);line-height:var(--ui-font-m-height);font-weight:500;color:{{ tabA.color }};border-bottom:2px solid {{ tabA.border }}">{{ tabA.label }}<span style="font-size:var(--ui-font-xxs-size);line-height:16px;padding:0 6px;border-radius:10px;background:var(--color-background-neutral-subtle);color:var(--color-text-subtle)">{{ tabA.count }}</span></div>
+<div onClick="{{ tabB.onClick }}" style="display:flex;align-items:center;gap:6px;padding:10px 2px;margin-bottom:-1px;cursor:pointer;font-size:var(--ui-font-m-size);line-height:var(--ui-font-m-height);font-weight:500;color:{{ tabB.color }};border-bottom:2px solid {{ tabB.border }}">{{ tabB.label }}<span style="font-size:var(--ui-font-xxs-size);line-height:16px;padding:0 6px;border-radius:10px;background:var(--color-background-neutral-subtle);color:var(--color-text-subtle)">{{ tabB.count }}</span></div>
+<div onClick="{{ tabC.onClick }}" style="display:flex;align-items:center;gap:6px;padding:10px 2px;margin-bottom:-1px;cursor:pointer;font-size:var(--ui-font-m-size);line-height:var(--ui-font-m-height);font-weight:500;color:{{ tabC.color }};border-bottom:2px solid {{ tabC.border }}">{{ tabC.label }}<span style="font-size:var(--ui-font-xxs-size);line-height:16px;padding:0 6px;border-radius:10px;background:var(--color-background-neutral-subtle);color:var(--color-text-subtle)">{{ tabC.count }}</span></div>
+</div>
+<div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+<div style="display:flex;align-items:center;gap:8px">
+<x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Search" placeholder="{{ searchPh }}" value="{{ q }}" onChange="{{ setQ }}" hint-size="260px,40px" style="width:260px"></x-import>
+<x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Select" options="{{ filterOpts }}" value="{{ filter }}" onChange="{{ setFilter }}" hint-size="140px,40px" style="width:140px"></x-import>
+</div>
+<div style="display:flex;gap:8px">
+<x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Button" text="{{ downloadLabel }}" type="default" iconClass="ui-icon-download" onClick="{{ downloadCsv }}" hint-size="136px,32px"></x-import>
+<x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Button" text="{{ uploadLabel }}" type="default" iconClass="ui-icon-upload" onClick="{{ openCsv }}" hint-size="120px,32px"></x-import>
+</div>
+</div>
+<div style="font-size:var(--ui-font-xs-size);line-height:var(--ui-font-xs-height);color:var(--color-text-subtlest)">{{ mappedSummary }}</div>
+<x-import component-from-global-scope="LumanaDesignSystem_1b2e75.DataTable" columns="{{ columns }}" rows="{{ rows }}" rowHeight="{{ 52 }}" hint-size="100%,320px"></x-import>
+<sc-if value="{{ noRows }}" hint-placeholder-val="{{ false }}">
+<div style="padding:24px;text-align:center;font-size:var(--ui-font-xm-size);color:var(--color-text-subtlest)">Try adjusting your search or filter.</div>
+</sc-if>
+</section>
+
+</div>
+</div>
+</div>
+</main>
+
+<input type="file" accept=".csv,text/csv" ref="{{ fileRef }}" onChange="{{ onFile }}" style="display:none">
+
+<div class="{{ themeClass }}" style="position:fixed;inset:0;z-index:20;display:{{ csvDisplay }};align-items:center;justify-content:center;background:rgba(16,24,40,.6);padding:24px;font-family:var(--font-sans)">
+<x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Modal" title="{{ csvTitle }}" width="{{ 560 }}" compact="{{ true }}" onClose="{{ closeCsv }}" hint-size="560px,360px">
+<div style="display:flex;flex-direction:column;gap:16px">
+<div style="display:{{ idleDisplay }};flex-direction:column;gap:16px">
+<div style="font-size:var(--ui-font-xm-size);line-height:var(--ui-font-xm-height);color:var(--color-text-subtle)">Rows are matched by Lumana ID. Other columns are ignored, and an empty value clears the mapping.</div>
+<div style="display:flex;flex-direction:column;gap:4px">
+<div style="font-size:var(--ui-font-s-size);line-height:var(--ui-font-s-height);font-weight:500;color:var(--color-text-subtle)">Required columns</div>
+<div style="font-size:var(--ui-font-xm-size);line-height:var(--ui-font-xm-height)">{{ csvCols }}</div>
+</div>
+<div onClick="{{ pickFile }}" onDragOver="{{ dragOver }}" onDrop="{{ dropFile }}" style="display:flex;flex-direction:column;align-items:center;gap:8px;padding:32px 16px;border:1px dashed var(--color-border-input-default);border-radius:4px;cursor:pointer;text-align:center" style-hover="background:var(--color-background-neutral-subtle)">
+<span class="ui-icon-upload" style="font-size:24px;color:var(--color-icon-default)"></span>
+<div style="font-size:var(--ui-font-m-size);line-height:var(--ui-font-m-height);font-weight:500">Drop a CSV file here or click to browse</div>
+<div style="font-size:var(--ui-font-xs-size);line-height:var(--ui-font-xs-height);color:var(--color-text-subtlest)">Download the current list first to use it as a template</div>
+</div>
+<div style="display:flex;justify-content:space-between;align-items:center;gap:8px">
+<a href="#" onClick="{{ useSample }}" style="font-size:var(--ui-font-xs-size)">Try with a sample file</a>
+<x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Button" text="Cancel" type="default" onClick="{{ closeCsv }}" hint-size="72px,32px"></x-import>
+</div>
+</div>
+<div style="display:{{ previewDisplay }};flex-direction:column;gap:16px">
+<div style="display:flex;align-items:center;gap:8px;font-size:var(--ui-font-xm-size);line-height:var(--ui-font-xm-height)"><span class="ui-icon-file" style="font-size:16px;color:var(--color-icon-default)"></span>{{ csvFileName }}</div>
+<div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border:1px solid var(--color-border-default);border-radius:4px">
+<div style="padding:12px 16px;display:flex;flex-direction:column;gap:2px;border-right:1px solid var(--color-border-default)"><span style="font-size:var(--ui-font-xs-size);color:var(--color-text-subtlest)">Will be updated</span><span style="font-size:var(--ui-font-lx-size);line-height:var(--ui-font-lx-height);font-weight:500">{{ csvRes.updated }}</span></div>
+<div style="padding:12px 16px;display:flex;flex-direction:column;gap:2px;border-right:1px solid var(--color-border-default)"><span style="font-size:var(--ui-font-xs-size);color:var(--color-text-subtlest)">Unchanged</span><span style="font-size:var(--ui-font-lx-size);line-height:var(--ui-font-lx-height);font-weight:500">{{ csvRes.unchanged }}</span></div>
+<div style="padding:12px 16px;display:flex;flex-direction:column;gap:2px"><span style="font-size:var(--ui-font-xs-size);color:var(--color-text-subtlest)">Skipped</span><span style="font-size:var(--ui-font-lx-size);line-height:var(--ui-font-lx-height);font-weight:500;color:var(--color-text-alert-default)">{{ csvRes.skippedCount }}</span></div>
+</div>
+<sc-if value="{{ csvHasErrors }}" hint-placeholder-val="{{ false }}">
+<div style="display:flex;flex-direction:column;border:1px solid var(--color-border-default);border-radius:4px;max-height:180px;overflow:auto;flex-shrink:0">
+<sc-for list="{{ csvRes.skipped }}" as="e" hint-placeholder-count="2">
+<div style="display:flex;flex-shrink:0;gap:12px;padding:8px 16px;border-bottom:1px solid var(--color-border-default);font-size:var(--ui-font-xs-size);line-height:var(--ui-font-xs-height)"><span style="color:var(--color-text-subtlest);width:48px;flex-shrink:0">Row {{ e.row }}</span><span>{{ e.msg }}</span></div>
+</sc-for>
+</div>
+</sc-if>
+<div style="font-size:var(--ui-font-xs-size);line-height:var(--ui-font-xs-height);color:var(--color-text-subtlest)">Imported values are applied to the table. Review them, then save.</div>
+<div style="display:flex;justify-content:flex-end;gap:8px">
+<x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Button" text="Choose another file" type="default" onClick="{{ resetCsv }}" hint-size="150px,32px"></x-import>
+<x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Button" text="{{ applyLabel }}" type="primary" disabled="{{ applyDisabled }}" onClick="{{ applyCsv }}" hint-size="120px,32px"></x-import>
+</div>
+</div>
+</div>
+</x-import>
+</div>
+
+<sc-if value="{{ toast }}" hint-placeholder-val="{{ false }}">
+<div style="position:fixed;right:24px;bottom:24px;z-index:30">
+<x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Toaster" type="success" title="{{ toast }}" hint-size="320px,56px"></x-import>
+</div>
+</sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;theme&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;dark&quot;,&quot;light&quot;],&quot;default&quot;:&quot;dark&quot;,&quot;tsType&quot;:&quot;'dark'|'light'&quot;},&quot;showPhase2&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Scope&quot;},&quot;timezones&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;multiple&quot;,&quot;single&quot;],&quot;default&quot;:&quot;multiple&quot;,&quot;tsType&quot;:&quot;'multiple'|'single'&quot;,&quot;section&quot;:&quot;Demo data&quot;}}">
+const SCHEDULES = [
+  { value: 'business', label: 'Business hours', detail: 'Mon–Fri, 08:00–18:00' },
+  { value: 'after', label: 'After hours', detail: 'Mon–Fri 18:00–08:00, all day Sat–Sun' },
+  { value: 'night', label: 'Night shift', detail: 'Every day, 22:00–06:00' },
+  { value: 'weekend', label: 'Weekends', detail: 'Sat–Sun, all day' },
+  { value: '247', label: '24/7', detail: 'Always armed' },
+];
+const LOCS = [
+  { id: 'loc_7f3a91c2', name: 'Fourth Street Industrial Park', account: '1A2B', partition: '01' },
+  { id: 'loc_2b8e44d0', name: 'Warehouse 3', account: '1A2C', partition: '01' },
+  { id: 'loc_9c1d07ab', name: 'Warehouse 5', account: '', partition: '' },
+  { id: 'loc_45ef6a13', name: 'Head office', account: '2F01', partition: '' },
+];
+const CITIES = ['Austin','Dallas','Denver','Phoenix','Tampa','Atlanta','Columbus','Raleigh','Boise','Omaha','Tucson','Reno','Fresno','Mesa','Tulsa','Wichita','Plano','Irvine','Durham','Madison','Spokane','Laredo'];
+const KINDS = ['Store','Depot','Branch','Clinic','Office','Yard'];
+for (let n = 0; n < 148; n++) LOCS.push({ id: 'loc_' + (0x1a2b3c + n * 7919).toString(16).padStart(8, '0').slice(-8), name: `${KINDS[n % 6]} ${String(101 + n)} — ${CITIES[(n * 5) % CITIES.length]}`, account: n % 3 === 0 ? '' : (0x3000 + n * 37).toString(16).toUpperCase().slice(-4), partition: '' });
+const TZ_BY_CITY = { Austin:'America/Chicago', Dallas:'America/Chicago', Tulsa:'America/Chicago', Wichita:'America/Chicago', Plano:'America/Chicago', Laredo:'America/Chicago', Omaha:'America/Chicago', Madison:'America/Chicago', Denver:'America/Denver', Boise:'America/Denver', Phoenix:'America/Phoenix', Tucson:'America/Phoenix', Mesa:'America/Phoenix', Tampa:'America/New_York', Atlanta:'America/New_York', Columbus:'America/New_York', Raleigh:'America/New_York', Durham:'America/New_York', Reno:'America/Los_Angeles', Fresno:'America/Los_Angeles', Irvine:'America/Los_Angeles', Spokane:'America/Los_Angeles' };
+LOCS.forEach(l => { const c = (l.name.split('— ')[1] || ''); l.tzUS = TZ_BY_CITY[c] || 'America/Chicago'; });
+const SCHED_FN = {
+  business: (d, m) => d >= 1 && d <= 5 && m >= 480 && m < 1080,
+  after: (d, m) => !(d >= 1 && d <= 5 && m >= 480 && m < 1080),
+  night: (d, m) => m >= 1320 || m < 360,
+  weekend: d => d === 0 || d === 6,
+  '247': () => true,
+};
+const DAYS = { Sun: 0, Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6 };
+function localNow(tz) {
+  const parts = Object.fromEntries(new Intl.DateTimeFormat('en-US', { timeZone: tz, weekday: 'short', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).formatToParts(new Date()).map(p => [p.type, p.value]));
+  return { d: DAYS[parts.weekday], m: (+parts.hour % 24) * 60 + +parts.minute, label: parts.hour + ':' + parts.minute };
+}
+function tzName(tz, style) { return (new Intl.DateTimeFormat('en-US', { timeZone: tz, timeZoneName: style }).formatToParts(new Date()).find(p => p.type === 'timeZoneName') || {}).value || tz; }
+function untilChange(fn, d, m) {
+  const cur = fn(d, m);
+  for (let i = 1; i <= 10080; i++) { const t = m + i; if (fn((d + Math.floor(t / 1440)) % 7, t % 1440) !== cur) return i; }
+  return null;
+}
+const fmtDur = n => { const hh = Math.floor(n / 60), mm = n % 60; return hh >= 24 ? `${Math.floor(hh / 24)}d ${hh % 24}h` : hh ? `${hh}h${mm ? ' ' + mm + 'm' : ''}` : `${mm}m`; };
+const SUBS = [
+  { id: 'sub_a19c3e07', name: 'Main gate', loc: 'Fourth Street Industrial Park', partition: '01' },
+  { id: 'sub_b24d8f11', name: 'Loading yard', loc: 'Fourth Street Industrial Park', partition: '02' },
+  { id: 'sub_c87e1a52', name: 'Dock area', loc: 'Warehouse 3', partition: '01' },
+  { id: 'sub_d03f9b64', name: 'Cold store', loc: 'Warehouse 3', partition: '' },
+  { id: 'sub_e61a2c78', name: 'Reception', loc: 'Head office', partition: '01' },
+  { id: 'sub_f95b4d83', name: 'Server room', loc: 'Head office', partition: '' },
+];
+const DEVS = [
+  { id: 'cam_3e71b0a4', name: 'Gate — North', type: 'Camera', loc: 'Fourth Street Industrial Park', zone: '001' },
+  { id: 'cam_4f82c1b5', name: 'Gate — South', type: 'Camera', loc: 'Fourth Street Industrial Park', zone: '002' },
+  { id: 'cam_5a93d2c6', name: 'Yard overview', type: 'Camera', loc: 'Fourth Street Industrial Park', zone: '' },
+  { id: 'dor_61a4e3d7', name: 'Main gate door', type: 'Door', loc: 'Fourth Street Industrial Park', zone: '010' },
+  { id: 'cam_72b5f4e8', name: 'Dock 4 — East', type: 'Camera', loc: 'Warehouse 3', zone: '001' },
+  { id: 'cam_83c605f9', name: 'Dock 4 — West', type: 'Camera', loc: 'Warehouse 3', zone: '001' },
+  { id: 'sen_94d7160a', name: 'Cold store temperature', type: 'Sensor', loc: 'Warehouse 3', zone: '' },
+  { id: 'cam_a5e8271b', name: 'Aisle 12', type: 'Camera', loc: 'Warehouse 5', zone: '' },
+  { id: 'cam_b6f9382c', name: 'Lobby', type: 'Camera', loc: 'Head office', zone: '001' },
+  { id: 'spk_c70a493d', name: 'Lobby speaker', type: 'Speaker', loc: 'Head office', zone: '' },
+];
+const TABS = {
+  locations: { label: 'Locations', fields: [['account', 'Account ID', 4], ['partition', 'Partition ID', 2]], csv: ['lumana_id', 'name', 'account_id', 'partition_id'], key: { account_id: 'account', partition_id: 'partition' } },
+  subs: { label: 'Sub-locations', fields: [['partition', 'Partition ID', 2]], csv: ['lumana_id', 'name', 'location', 'partition_id'], key: { partition_id: 'partition' } },
+  devices: { label: 'Cameras & devices', fields: [['zone', 'Zone ID', 3]], csv: ['lumana_id', 'name', 'type', 'location', 'zone_id'], key: { zone_id: 'zone' } },
+};
+const HEX = /^[0-9A-F]*$/;
+const TRIG = { intrusion: 'Intrusion', person: 'Person detected', vehicle: 'Vehicle detected', door: 'Door forced open', loiter: 'Loitering', fire: 'Fire alarm', smoke: 'Smoke detected', panic: 'Panic button', duress: 'Duress code', tamper: 'Tamper', offline: 'Camera offline', temp: 'Temperature alert' };
+const ACTIONS = { verify: 'Verify on video', talkdown: 'Talk-down', call: 'Call contacts', police: 'Dispatch police', fire: 'Dispatch fire department', notify: 'Send notification', close: 'Close event' };
+const PRIO = { p1: ['P1', 'P1 · Critical', 'alert'], p2: ['P2', 'P2 · High', 'warning'], p3: ['P3', 'P3 · Normal', 'neutral'] };
+let _k = 1; const uid = () => 'k' + (_k++);
+const mkSop = (id, name, prio, status, when, triggers, locs, steps, contacts, edited) => ({ id, name, prio, status, when, triggers, scope: locs ? 'selected' : 'all', locs: locs || [],
+  steps: steps.map(([action, text]) => ({ k: uid(), action, text })), contacts: contacts.map(([name, role, phone]) => ({ k: uid(), name, role, phone })), edited });
+const SOPS = [
+  mkSop('sop_1', 'Intrusion after hours', 'p1', 'active', 'armed', ['intrusion', 'person', 'door'], null, [
+    ['verify', 'Open live and recorded video from the triggering camera and up to two nearby cameras. Confirm whether a person or vehicle is present.'],
+    ['talkdown', 'If a person is visible, issue a verbal warning through the nearest speaker. State that the site is monitored and police are being contacted.'],
+    ['call', 'Call the contacts in order. Leave a voicemail if there is no answer and move to the next contact.'],
+    ['police', 'If the intrusion is confirmed or the person stays after the talk-down, dispatch police with the site address and a description.'],
+    ['close', 'Record the outcome and attach the relevant clips to the event.'],
+  ], [['Dana Levi', 'Security manager', '+1 512 555 0142'], ['Marcus Webb', 'Facilities lead', '+1 512 555 0177']], 'Edited by Dana Levi on Oct 28, 2026'),
+  mkSop('sop_2', 'Fire and smoke', 'p1', 'active', 'always', ['fire', 'smoke'], null, [
+    ['verify', 'Check video from the triggering zone for visible smoke or flames. Do not delay dispatch for more than 60 seconds.'],
+    ['fire', 'Dispatch the fire department with the site address and the affected zone.'],
+    ['call', 'Call the contacts in order and inform them that the fire department is on the way.'],
+    ['close', 'Record the outcome once the fire department confirms the site is safe.'],
+  ], [['Marcus Webb', 'Facilities lead', '+1 512 555 0177']], 'Edited by Marcus Webb on Sep 14, 2026'),
+  mkSop('sop_3', 'Panic and duress — Head office', 'p1', 'active', 'always', ['panic', 'duress'], ['loc_45ef6a13'], [
+    ['police', 'Dispatch police immediately. Do not call the site first.'],
+    ['verify', 'Watch reception and lobby cameras and pass any description to the police.'],
+    ['call', 'Call the contacts in order once police are dispatched.'],
+    ['close', 'Record the outcome and attach the relevant clips to the event.'],
+  ], [['Priya Nair', 'Office manager', '+1 512 555 0110'], ['Dana Levi', 'Security manager', '+1 512 555 0142']], 'Edited by Dana Levi on Aug 2, 2026'),
+  mkSop('sop_4', 'Loitering at warehouses', 'p2', 'active', 'armed', ['loiter', 'vehicle'], ['loc_7f3a91c2', 'loc_2b8e44d0', 'loc_9c1d07ab'], [
+    ['verify', 'Confirm that a person or vehicle has stayed in view for more than 5 minutes.'],
+    ['talkdown', 'Ask the person to leave the property through the nearest speaker.'],
+    ['notify', 'Email the site contacts with a clip of the event.'],
+    ['close', 'Close the event if the person leaves. Escalate to Intrusion after hours if they enter the building.'],
+  ], [['Marcus Webb', 'Facilities lead', '+1 512 555 0177']], 'Edited by Marcus Webb on Oct 3, 2026'),
+  mkSop('sop_5', 'Camera offline or tampered', 'p3', 'active', 'always', ['offline', 'tamper'], null, [
+    ['verify', 'Check the device status and the last recorded frame for signs of tampering.'],
+    ['notify', 'Email IT support with the device name, location and time it went offline.'],
+    ['close', 'Close the event when the device is back online.'],
+  ], [], 'Edited by Dana Levi on Jul 19, 2026'),
+  mkSop('sop_6', 'Cold store temperature', 'p2', 'draft', 'always', ['temp'], ['loc_2b8e44d0'], [
+    ['notify', 'Text the warehouse supervisor with the current reading.'],
+    ['call', 'If the reading is still out of range after 15 minutes, call the contacts in order.'],
+  ], [['Luis Ortega', 'Warehouse supervisor', '+1 512 555 0193']], 'Edited by Luis Ortega on Nov 1, 2026'),
+];
+const clone = o => JSON.parse(JSON.stringify(o));
+
+class Component extends DCLogic {
+  state = {
+    page: 'sop', locQ: '',
+    armPage: 0,
+    armRows: [['loc_7f3a91c2','armed','after'],['loc_2b8e44d0','type_1','business'],['loc_45ef6a13','type_2','night'],
+      ...[1,2,4,5,7,8,10,11,13,14,16,17,19,20,22,23,25,26,28,29,31,32,34,35,37].map((n, k) => [LOCS[3 + n].id, k % 3 === 1 ? 'type_1' : k % 3 === 2 ? 'type_2' : 'armed', SCHEDULES[k % SCHEDULES.length].value])]
+      .map(([locId, status, schedule], k) => ({ key: k + 1, locId, status, schedule })),
+    orgOpen: false, tab: 'locations', q: '', filter: 'all',
+    sops: clone(SOPS), sopId: 'sop_1', sopQ: '', sopFilter: 'all', draft: null,
+    armSchedule: 'after',
+    armTypes: [{ id: 1, name: 'Home', schedule: 'night' }, { id: 2, name: 'Away', schedule: 'after' }],
+    data: { locations: clone(LOCS), subs: clone(SUBS), devices: clone(DEVS) },
+    dirty: false, csvOpen: false, csvRes: null, csvFileName: '', toast: '',
+  };
+  fileRef = React.createRef();
+
+  fieldValid(v, len) { return v === '' || (v.length === len && HEX.test(v)); }
+
+  zoneConflict(r, list) { return r.zone ? (list || this.state.data.devices).find(d => d.id !== r.id && d.loc === r.loc && d.zone === r.zone) : null; }
+  fieldError(tab, r, k, label, len) {
+    if (!this.fieldValid(r[k], len)) return `${label} must be ${len} characters, using 0–9 and A–F`;
+    if (tab === 'devices' && k === 'zone') { const c = this.zoneConflict(r); if (c) return `Zone ${r.zone} is already used by ${c.name}. Each device in a location needs its own zone ID.`; }
+    return '';
+  }
+  rowInvalid(tab, r) { return TABS[tab].fields.some(([k, label, len]) => !!this.fieldError(tab, r, k, label, len)); }
+  rowMapped(tab, r) { return TABS[tab].fields.some(([k]) => r[k] !== ''); }
+
+  setField(tab, id, k, len, raw) {
+    const v = String(raw).toUpperCase().replace(/\s/g, '').slice(0, len);
+    this.setState(s => ({ dirty: true, data: { ...s.data, [tab]: s.data[tab].map(r => r.id === id ? { ...r, [k]: v } : r) } }));
+  }
+
+  parseCsv(text) {
+    const lines = text.split(/\r?\n/).filter(l => l.trim());
+    const split = l => { const out = []; let cur = '', q = false; for (const ch of l) { if (ch === '"') q = !q; else if (ch === ',' && !q) { out.push(cur); cur = ''; } else cur += ch; } out.push(cur); return out.map(x => x.trim()); };
+    const tab = this.state.tab, t = TABS[tab];
+    const head = split(lines[0] || '').map(h => h.toLowerCase());
+    const res = { updated: 0, unchanged: 0, skipped: [], changes: [] };
+    const idIdx = head.indexOf('lumana_id');
+    const cols = Object.keys(t.key).filter(c => head.includes(c));
+    if (idIdx < 0 || !cols.length) { res.skipped.push({ row: 1, msg: 'Missing required columns: ' + ['lumana_id', ...Object.keys(t.key)].join(', ') }); return res; }
+    const work = this.state.data[tab].map(x => ({ ...x }));
+    lines.slice(1).forEach((l, i) => {
+      const cells = split(l), row = i + 2, id = cells[idIdx];
+      const item = this.state.data[tab].find(r => r.id === id);
+      if (!item) { res.skipped.push({ row, msg: `Lumana ID ${id || '(empty)'} was not found in ${t.label.toLowerCase()}` }); return; }
+      const patch = {}; let bad = '';
+      cols.forEach(c => {
+        const k = t.key[c], len = t.fields.find(f => f[0] === k)[2];
+        const v = (cells[head.indexOf(c)] || '').toUpperCase();
+        if (!this.fieldValid(v, len)) bad = `${c} "${v}" must be ${len} characters (0–9, A–F)`;
+        else patch[k] = v;
+      });
+      if (!bad && tab === 'devices' && patch.zone) {
+        const c = this.zoneConflict({ ...item, ...patch }, work);
+        if (c) bad = `zone_id ${patch.zone} is already used by ${c.name} in ${item.loc}`;
+      }
+      if (bad) { res.skipped.push({ row, msg: bad }); return; }
+      Object.assign(work.find(x => x.id === id), patch);
+      const changed = Object.keys(patch).some(k => patch[k] !== item[k]);
+      if (changed) { res.updated++; res.changes.push({ id, patch }); } else res.unchanged++;
+    });
+    return res;
+  }
+  loadFile(file) {
+    if (!file) return;
+    const fr = new FileReader();
+    fr.onload = () => this.setState({ csvRes: this.parseCsv(String(fr.result)), csvFileName: file.name });
+    fr.readAsText(file);
+  }
+  sampleCsv() {
+    const tab = this.state.tab;
+    if (tab === 'locations') return 'lumana_id,name,account_id,partition_id\nloc_7f3a91c2,Fourth Street Industrial Park,1A2B,01\nloc_9c1d07ab,Warehouse 5,1A2D,01\nloc_45ef6a13,Head office,2F01,02\nloc_000000aa,Old depot,3B00,01';
+    if (tab === 'subs') return 'lumana_id,name,location,partition_id\nsub_d03f9b64,Cold store,Warehouse 3,02\nsub_f95b4d83,Server room,Head office,2\nsub_a19c3e07,Main gate,Fourth Street Industrial Park,01';
+    return 'lumana_id,name,type,location,zone_id\ncam_5a93d2c6,Yard overview,Camera,Fourth Street Industrial Park,003\ncam_83c605f9,Dock 4 — West,Camera,Warehouse 3,002\nsen_94d7160a,Cold store temperature,Sensor,Warehouse 3,0G1\ncam_a5e8271b,Aisle 12,Camera,Warehouse 5,001';
+  }
+  componentDidMount() { this._tick = setInterval(() => this.forceUpdate(), 30000); }
+  componentWillUnmount() { clearInterval(this._tick); }
+  armingVals(s, val) {
+    const multiTz = (this.props.timezones ?? 'multiple') === 'multiple';
+    const tzOf = l => multiTz ? l.tzUS : 'Europe/Berlin';
+    const PER = 20, byId = Object.fromEntries(s.data.locations.map(l => [l.id, l]));
+    const used = new Set(s.armRows.map(x => x.locId).filter(Boolean));
+    const q = s.locQ.toLowerCase();
+    const list = s.armRows.filter(x => !q || !x.locId || byId[x.locId].name.toLowerCase().includes(q));
+    const pages = Math.max(1, Math.ceil(list.length / PER)), pg = Math.min(s.armPage, pages - 1);
+    const upd = (key, patch) => this.setState(st => ({ dirty: true, armRows: st.armRows.map(x => x.key === key ? { ...x, ...patch } : x) }));
+    const configured = s.armRows.filter(x => x.locId).length;
+    return {
+      armGridCols: ['minmax(220px,1.6fr)', '96px', multiTz ? '90px' : null, (this.props.showPhase2 ?? true) ? 'minmax(170px,1fr)' : null, 'minmax(190px,1.1fr)', '36px', '44px'].filter(Boolean).join(' '),
+      armGridMin: (560 + (multiTz ? 90 : 0) + ((this.props.showPhase2 ?? true) ? 200 : 0)) + 'px',
+      tzColDisplay: multiTz ? 'flex' : 'none',
+      tzNote: multiTz ? 'Schedules run in each location\'s local time.' : 'All locations use Central European Time.',
+      statusColDisplay: (this.props.showPhase2 ?? true) ? 'flex' : 'none',
+      armCount: `${configured} of ${s.data.locations.length} locations have an arm schedule`,
+      addDisabled: used.size >= s.data.locations.length,
+      addArmRow: () => this.setState(st => ({ dirty: true, armPage: 0, locQ: '', armRows: [{ key: Date.now(), locId: '', status: 'armed', schedule: '', isNew: true }, ...st.armRows] })),
+      locRows: list.slice(pg * PER, pg * PER + PER).map(x => {
+        const l = byId[x.locId], sc = SCHEDULES.find(v => v.value === x.schedule);
+        return { key: x.key, locId: x.locId, status: x.status, schedule: x.schedule,
+          name: l ? l.name : '', account: l && l.account ? l.account : '—',
+          nameDisplay: x.isNew ? 'none' : 'block', pickDisplay: x.isNew ? 'block' : 'none',
+          locOpts: x.isNew ? s.data.locations.filter(o => o.id === x.locId || !used.has(o.id)).map(o => ({ value: o.id, label: o.name })) : [],
+          ...(() => {
+            if (!l || !sc) return { tz: l ? tzName(tzOf(l), 'short') : '', tzLong: l ? tzName(tzOf(l), 'long') : '', nowDisplay: 'none', nowText: '', nowColor: 'inherit' };
+            const tz = tzOf(l), n = localNow(tz), fn = SCHED_FN[sc.value], on = fn(n.d, n.m), left = untilChange(fn, n.d, n.m);
+            const failed = on && ['loc_45ef6a13', LOCS[8].id, LOCS[20].id].includes(l.id);
+            const nowText = `Now ${n.label} local` + (left == null ? '. Always armed.' : on ? `, disarms in ${fmtDur(left)}.` : `, arms in ${fmtDur(left)}.`)
+              + (failed ? ' 2 devices failed to arm.' : '');
+            return { tz: tzName(tz, 'short'), tzLong: tzName(tz, 'long'), nowDisplay: 'inline-block', nowText,
+              nowColor: failed ? 'var(--color-icon-warning)' : on ? 'var(--color-icon-alert)' : 'var(--color-text-default)' };
+          })(),
+          summary: !sc ? 'Select a schedule to arm this location automatically' : (() => {
+            const t = x.status.startsWith('type_') && (this.props.showPhase2 ?? true) ? s.armTypes.find(a => 'type_' + a.id === x.status) : null;
+            const armed = t ? `Armed (${t.name.trim()})` : 'Armed';
+            const tzs = multiTz && l ? ` (${tzName(tzOf(l), 'short')}, local time)` : '';
+            return sc.value === '247' ? `${armed} at all times.` : `${armed} ${sc.detail}${tzs}. Disarmed outside the schedule.`;
+          })(),
+          onLoc: v => upd(x.key, { locId: v }), onStatus: v => upd(x.key, { status: v }), onSchedule: v => upd(x.key, { schedule: v }),
+          onRemove: () => this.setState(st => ({ dirty: true, armRows: st.armRows.filter(y => y.key !== x.key) })) };
+      }),
+      noLocRows: list.length === 0,
+      noLocText: q ? 'Try adjusting your search.' : 'Add a location to arm it automatically on a schedule.',
+      pageInfo: list.length ? `${pg * PER + 1}–${Math.min(list.length, pg * PER + PER)} of ${list.length}` : '0 of 0',
+      prevPage: () => this.setState({ armPage: Math.max(0, pg - 1) }),
+      nextPage: () => this.setState({ armPage: Math.min(pages - 1, pg + 1) }),
+    };
+  }
+  sopVals(s, val) {
+    const locName = id => (s.data.locations.find(l => l.id === id) || {}).name || id;
+    const scopeText = p => p.scope === 'all' ? 'All locations' : p.locs.length === 1 ? locName(p.locs[0]) : `${p.locs.length} locations`;
+    const q = s.sopQ.toLowerCase(), d = s.draft;
+    const list = s.sops.filter(p => (!q || p.name.toLowerCase().includes(q) || p.triggers.some(t => TRIG[t].toLowerCase().includes(q))) && (s.sopFilter === 'all' || p.status === s.sopFilter));
+    const cur = s.sops.find(p => p.id === s.sopId);
+    const setD = fn => this.setState(st => ({ draft: { ...st.draft, ...fn(st.draft) } }));
+    const updIn = (key, k, patch) => setD(dd => ({ [key]: dd[key].map(x => x.k === k ? { ...x, ...patch } : x) }));
+    const move = (i, dir) => setD(dd => { const a = [...dd.steps], j = i + dir; if (j < 0 || j >= a.length) return {}; [a[i], a[j]] = [a[j], a[i]]; return { steps: a }; });
+    const missing = d ? [!d.name.trim() && 'a name', !d.triggers.length && 'a trigger', d.scope === 'selected' && !d.locs.length && 'a location', !d.steps.length && 'a step'].filter(Boolean) : [];
+    const cloneSop = p => ({ ...clone(p), steps: p.steps.map(x => ({ ...x, k: uid() })), contacts: p.contacts.map(x => ({ ...x, k: uid() })) });
+    return {
+      sopQ: s.sopQ, setSopQ: v => this.setState({ sopQ: val(v) || '' }),
+      sopFilter: s.sopFilter, setSopFilter: v => this.setState({ sopFilter: v }),
+      sopFilterOpts: [{ value: 'all', label: 'All' }, { value: 'active', label: 'Active' }, { value: 'draft', label: 'Draft' }],
+      sopList: list.map(p => ({ name: p.name || 'Untitled SOP', prio: PRIO[p.prio][0], prioTone: PRIO[p.prio][2],
+        triggerText: p.triggers.map(t => TRIG[t]).join(', '), scopeText: scopeText(p), draftDisplay: p.status === 'draft' ? 'inline' : 'none',
+        bg: p.id === s.sopId ? 'var(--color-background-selected-active)' : 'transparent', edge: p.id === s.sopId ? 'var(--color-border-selected-default)' : 'transparent',
+        onSelect: () => d ? this.showToast('Save or cancel your changes first') : this.setState({ sopId: p.id }) })),
+      noSops: list.length === 0,
+      sopViewing: !d && !!cur, sopEditing: !!d,
+      sv: cur ? { name: cur.name, statusLabel: cur.status === 'active' ? 'Active' : 'Draft', statusTone: cur.status === 'active' ? 'success' : 'neutral',
+        prioLabel: PRIO[cur.prio][1], prioTone: PRIO[cur.prio][2], edited: cur.edited,
+        triggers: cur.triggers.map(t => TRIG[t]),
+        scopeLong: cur.scope === 'all' ? 'All locations without their own SOP for these triggers' : cur.locs.map(locName).join(', '),
+        whenText: cur.when === 'armed' ? 'Only while the location is armed' : 'At all times, armed or disarmed',
+        steps: cur.steps.map((x, i) => ({ n: i + 1, label: ACTIONS[x.action], text: x.text || '—' })),
+        contacts: cur.contacts.map((c, i) => ({ ...c, n: i + 1, line: i ? '1px solid var(--color-border-default)' : 'none' })),
+        hasContacts: cur.contacts.length > 0, noContacts: !cur.contacts.length } : { triggers: [], steps: [], contacts: [] },
+      editSop: () => this.setState({ draft: cloneSop(cur) }),
+      dupSop: () => this.setState({ draft: { ...cloneSop(cur), id: '', name: cur.name + ' (copy)', status: 'draft' } }),
+      newSop: () => this.setState({ sopQ: '', sopFilter: 'all', draft: { id: '', name: '', prio: 'p2', status: 'draft', when: 'armed', triggers: [], scope: 'all', locs: [], steps: [{ k: uid(), action: 'verify', text: '' }], contacts: [] } }),
+      cancelSop: () => this.setState({ draft: null }),
+      deleteSop: () => { this.setState(st => { const rest = st.sops.filter(p => p.id !== st.draft.id); return { sops: rest, draft: null, sopId: rest[0] ? rest[0].id : '' }; }); this.showToast('SOP deleted'); },
+      saveSop: () => {
+        const id = d.id || 'sop_' + Date.now();
+        const saved = { ...d, id, name: d.name.trim(), locs: d.scope === 'all' ? [] : d.locs, edited: 'Edited by you just now' };
+        this.setState(st => ({ draft: null, sopId: id, sops: d.id ? st.sops.map(p => p.id === id ? saved : p) : [...st.sops, saved] }));
+        this.showToast(d.id ? 'SOP saved' : 'SOP created');
+      },
+      sopSaveDisabled: missing.length > 0,
+      draftHint: missing.length ? 'Add ' + missing.join(', ').replace(/, ([^,]*)$/, ' and $1') + ' to save' : '',
+      editTitle: d ? (d.id ? 'Edit SOP' : 'New SOP') : '',
+      deleteDisplay: d && d.id ? 'block' : 'none',
+      d: d || {},
+      prioOpts: Object.entries(PRIO).map(([value, p]) => ({ value, label: p[1] })),
+      statusOpts: [{ value: 'active', label: 'Active' }, { value: 'draft', label: 'Draft' }],
+      scopeOpts: [{ value: 'all', label: 'All locations' }, { value: 'selected', label: 'Selected locations' }],
+      whenOpts: [{ value: 'armed', label: 'Only while armed' }, { value: 'always', label: 'At all times' }],
+      actionOpts: Object.entries(ACTIONS).map(([value, label]) => ({ value, label })),
+      setDName: e => setD(() => ({ name: val(e) || '' })),
+      setDPrio: v => setD(() => ({ prio: v })), setDStatus: v => setD(() => ({ status: v })),
+      setDScope: v => setD(() => ({ scope: v })), setDWhen: v => setD(() => ({ when: v })),
+      trigChips: Object.entries(TRIG).map(([k, label]) => { const on = !!d && d.triggers.includes(k); return { label,
+        border: on ? 'var(--color-border-selected-default)' : 'var(--color-border-default)', bg: on ? 'var(--color-background-selected-active)' : 'transparent',
+        color: on ? 'var(--color-text-selected)' : 'var(--color-text-subtle)', checkDisplay: on ? 'inline-block' : 'none',
+        onToggle: () => setD(dd => ({ triggers: dd.triggers.includes(k) ? dd.triggers.filter(x => x !== k) : [...dd.triggers, k] })) }; }),
+      dSelected: !!d && d.scope === 'selected',
+      dLocTags: d ? d.locs.map(id => ({ name: locName(id), onRemove: () => setD(dd => ({ locs: dd.locs.filter(x => x !== id) })) })) : [],
+      dAddLocOpts: d ? s.data.locations.filter(l => !d.locs.includes(l.id)).map(l => ({ value: l.id, label: l.name })) : [],
+      addDLoc: v => v && setD(dd => ({ locs: dd.locs.includes(v) ? dd.locs : [...dd.locs, v] })),
+      dSteps: d ? d.steps.map((x, i) => ({ ...x, n: i + 1, upOpacity: i ? 1 : 0.3, downOpacity: i < d.steps.length - 1 ? 1 : 0.3,
+        onAction: v => updIn('steps', x.k, { action: v }), onText: e => updIn('steps', x.k, { text: val(e) || '' }),
+        onUp: () => move(i, -1), onDown: () => move(i, 1), onRemove: () => setD(dd => ({ steps: dd.steps.filter(y => y.k !== x.k) })) })) : [],
+      addDStep: () => setD(dd => ({ steps: [...dd.steps, { k: uid(), action: 'call', text: '' }] })),
+      dContacts: d ? d.contacts.map((c, i) => ({ ...c, n: i + 1,
+        onName: e => updIn('contacts', c.k, { name: val(e) || '' }), onRole: e => updIn('contacts', c.k, { role: val(e) || '' }), onPhone: e => updIn('contacts', c.k, { phone: val(e) || '' }),
+        onRemove: () => setD(dd => ({ contacts: dd.contacts.filter(y => y.k !== c.k) })) })) : [],
+      addDContact: () => setD(dd => ({ contacts: [...dd.contacts, { k: uid(), name: '', role: '', phone: '' }] })),
+    };
+  }
+  showToast(msg) { this.setState({ toast: msg }); clearTimeout(this._t); this._t = setTimeout(() => this.setState({ toast: '' }), 3000); }
+
+  renderVals() {
+    const NS = window.LumanaDesignSystem_1b2e75 || {};
+    const R = React.createElement;
+    const s = this.state, tab = s.tab, t = TABS[tab];
+    const val = v => (v && v.target ? v.target.value : v);
+    const all = s.data[tab];
+    const q = s.q.toLowerCase();
+    const rows = all.filter(r => (!q || r.name.toLowerCase().includes(q) || r.id.toLowerCase().includes(q))
+      && (s.filter === 'all' || (s.filter === 'mapped' ? this.rowMapped(tab, r) : !this.rowMapped(tab, r))));
+    const invalidTotal = Object.keys(TABS).reduce((n, k) => n + s.data[k].filter(r => this.rowInvalid(k, r)).length, 0);
+    const mappedN = all.filter(r => this.rowMapped(tab, r)).length;
+    const sub = { fontSize: 'var(--ui-font-xs-size)', color: 'var(--color-text-subtlest)' };
+
+    const columns = [
+      { key: 'name', label: 'Name', render: r => R('span', { style: { fontWeight: 500 } }, r.name) },
+      ...(tab === 'devices' ? [{ key: 'type', label: 'Type', width: 110 }] : []),
+      ...(tab !== 'locations' ? [{ key: 'loc', label: 'Location' }] : []),
+      { key: 'id', label: 'Lumana ID', width: 150, render: r => R('span', { style: { color: 'var(--color-text-subtle)' } }, r.id) },
+      ...t.fields.map(([k, label, len]) => ({
+        key: k, width: 170,
+        label: R('span', { style: { display: 'inline-flex', alignItems: 'center', gap: 6 } }, `${label} (${len})`,
+          R('span', { className: 'ui-icon-info', title: tab === 'devices' ? 'Each camera and device in a location needs a unique zone ID' : tab === 'subs' ? 'Sub-locations can share partition IDs' : 'Locations can share account and partition IDs', style: { fontSize: 14, cursor: 'help', color: 'var(--color-icon-default)' } })),
+        render: r => {
+          const err = this.fieldError(tab, r, k, label, len);
+          return R('div', { title: err || undefined, style: { display: 'flex', alignItems: 'center', gap: 8 } },
+            NS.Input ? R(NS.Input, { height: 32, value: r[k], placeholder: '—', style: { width: 120 }, invalid: !!err, onChange: e => this.setField(tab, r.id, k, len, val(e)) }) : r[k],
+            err ? R('span', { className: 'ui-icon-warning', title: err, style: { fontSize: 16, cursor: 'help', color: 'var(--color-icon-alert)' } }) : null);
+        },
+      })),
+    ];
+
+    const sched = SCHEDULES.find(x => x.value === s.armSchedule);
+    const res = s.csvRes;
+    return {
+      themeClass: (this.props.theme ?? 'dark') === 'dark' ? 'dark-theme' : '',
+      showPhase2: this.props.showPhase2 ?? true,
+      navItems: [
+        { value: 'devices', label: 'Devices', icon: 'ui-icon-camera-sidebar' },
+        { value: 'search', label: 'Search', icon: 'ui-icon-search-sidebar' },
+        { value: 'alerts', label: 'Alerts', icon: 'ui-icon-notifications-sidebar' },
+        { value: 'dashboards', label: 'Dashboards', icon: 'ui-icon-dashboard-sidebar' },
+        { value: 'walls', label: 'Walls', icon: 'ui-icon-wall-sidebar' },
+        { value: 'archives', label: 'Archives', icon: 'ui-icon-archive-sidebar' },
+        { value: 'cases', label: 'Cases', icon: 'ui-icon-menu-folder-sidebar' },
+        { value: 'events', label: 'Events manager', icon: 'ui-icon-controls-event-sidebar', separator: true },
+        { value: 'workflows', label: 'Workflows', icon: 'ui-icon-workflow-sidebar' },
+        { value: 'settings', label: 'Organization settings', icon: 'ui-icon-user-sidebar', separator: true },
+      ],
+      orgOpen: s.orgOpen, orgChevron: s.orgOpen ? 'rotate(180deg)' : 'rotate(0deg)',
+      toggleOrg: () => this.setState({ orgOpen: !s.orgOpen }),
+      orgChildren: ['Details', 'Email notifications', 'Session management', 'Developer', 'Analytics Sync', 'Shareable Groups Sync', 'Archive', 'Organization invitation code', 'Rate limit'],
+
+      saveHint: invalidTotal ? `Fix ${invalidTotal} invalid ${invalidTotal === 1 ? 'value' : 'values'} to save` : s.dirty ? 'Unsaved changes' : '',
+      saveDisabled: !s.dirty || invalidTotal > 0,
+      save: () => { this.setState({ dirty: false }); this.showToast('Control Center settings saved'); },
+
+      pageLabel: { arming: 'Arming', mapping: 'Mapping', sop: 'SOPs' }[s.page],
+      armingDisplay: s.page === 'arming' ? 'flex' : 'none', mappingDisplay: s.page === 'mapping' ? 'flex' : 'none', sopDisplay: s.page === 'sop' ? 'flex' : 'none',
+      headerSaveDisplay: s.page === 'sop' ? 'none' : 'flex',
+      sopNavBg: s.page === 'sop' ? 'var(--color-background-selected-active)' : 'transparent', sopNavColor: s.page === 'sop' ? 'var(--color-text-selected)' : 'inherit',
+      goSop: () => this.setState({ page: 'sop' }),
+      ...this.sopVals(s, val),
+      armingNavBg: s.page === 'arming' ? 'var(--color-background-selected-active)' : 'transparent', armingNavColor: s.page === 'arming' ? 'var(--color-text-selected)' : 'inherit',
+      mappingNavBg: s.page === 'mapping' ? 'var(--color-background-selected-active)' : 'transparent', mappingNavColor: s.page === 'mapping' ? 'var(--color-text-selected)' : 'inherit',
+      goArming: () => this.setState({ page: 'arming' }), goMapping: () => this.setState({ page: 'mapping' }),
+      locQ: s.locQ, setLocQ: v => this.setState({ locQ: val(v) || '', armPage: 0 }),
+      armStatusOpts: [{ value: 'armed', label: 'Armed' },
+        ...((this.props.showPhase2 ?? true) ? s.armTypes.filter(a => a.name.trim()).map(a => ({ value: 'type_' + a.id, label: 'Armed — ' + a.name.trim() })) : [])],
+      ...this.armingVals(s, val),
+      armScheduleOpts: SCHEDULES.map(x => ({ value: x.value, label: x.label })),
+      armSchedule: s.armSchedule,
+      setArmSchedule: v => this.setState({ armSchedule: v, dirty: true }),
+      armSummary: sched ? `Armed ${sched.detail}. Disarmed outside the schedule.` : 'The account is only armed manually.',
+
+      scheduleOpts: SCHEDULES.map(x => ({ value: x.value, label: `${x.label} (${x.detail})` })),
+      hasArmTypes: s.armTypes.length > 0, noArmTypes: s.armTypes.length === 0,
+      armTypes: s.armTypes.map(a => ({
+        ...a, invalid: !a.name.trim() || s.armTypes.some(b => b.id !== a.id && b.name.trim().toLowerCase() === a.name.trim().toLowerCase()),
+        onName: e => this.setState(st => ({ dirty: true, armTypes: st.armTypes.map(b => b.id === a.id ? { ...b, name: val(e) } : b) })),
+        onSchedule: v => this.setState(st => ({ dirty: true, armTypes: st.armTypes.map(b => b.id === a.id ? { ...b, schedule: v } : b) })),
+        onRemove: () => this.setState(st => ({ dirty: true, armTypes: st.armTypes.filter(b => b.id !== a.id) })),
+      })),
+      addArmType: () => this.setState(st => ({ dirty: true, armTypes: [...st.armTypes, { id: Date.now(), name: '', schedule: '' }] })),
+
+      tabs: Object.entries(TABS).map(([k, v]) => ({ value: k, label: `${v.label} (${s.data[k].length})` })),
+      tab, setTab: v => this.setState({ tab: v, q: '' }),
+      ...Object.fromEntries(Object.entries(TABS).map(([k, v], i) => ['tab' + 'ABC'[i], { label: v.label, count: s.data[k].length, color: k === tab ? 'var(--color-text-selected)' : 'var(--color-text-subtle)', border: k === tab ? 'var(--color-border-selected-default)' : 'transparent', onClick: () => this.setState({ tab: k, q: '' }) }])),
+      searchPh: 'Search ' + t.label.toLowerCase(),
+      downloadLabel: 'Download CSV', uploadLabel: 'Upload CSV',
+      q: s.q, setQ: v => this.setState({ q: val(v) || '' }),
+      filterOpts: [{ value: 'all', label: 'All' }, { value: 'mapped', label: 'Mapped' }, { value: 'unmapped', label: 'Not mapped' }],
+      filter: s.filter, setFilter: v => this.setState({ filter: v }),
+      mappedSummary: `${mappedN} of ${all.length} ${t.label.toLowerCase()} mapped. IDs use 0–9 and A–F.` + (tab === 'devices' ? ' Zone IDs must be unique within a location.' : ''),
+      columns, rows, noRows: rows.length === 0,
+
+      downloadCsv: () => {
+        const body = all.map(r => t.csv.map(c => {
+          const k = { lumana_id: 'id', location: 'loc', account_id: 'account', partition_id: 'partition', zone_id: 'zone' }[c] || c;
+          const v = String(r[k] ?? ''); return /[",]/.test(v) ? `"${v.replace(/"/g, '""')}"` : v;
+        }).join(','));
+        const blob = new Blob([[t.csv.join(','), ...body].join('\n')], { type: 'text/csv' });
+        const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = `contact-id-${tab}.csv`; a.click();
+      },
+      openCsv: () => this.setState({ csvOpen: true, csvRes: null }),
+      closeCsv: () => this.setState({ csvOpen: false, csvRes: null }),
+      resetCsv: () => this.setState({ csvRes: null }),
+      csvTitle: `Upload CSV — ${t.label}`,
+      csvCols: ['lumana_id', ...Object.keys(t.key)].join(', '),
+      csvDisplay: s.csvOpen ? 'flex' : 'none', idleDisplay: res ? 'none' : 'flex', previewDisplay: res ? 'flex' : 'none', csvRes: res ? { ...res, skippedCount: res.skipped.length } : { updated: 0, unchanged: 0, skippedCount: 0, skipped: [] },
+      csvHasErrors: !!res && res.skipped.length > 0, csvFileName: s.csvFileName,
+      fileRef: this.fileRef,
+      pickFile: () => this.fileRef.current && (this.fileRef.current.value = '', this.fileRef.current.click()),
+      onFile: e => this.loadFile(e.target.files[0]),
+      dragOver: e => e.preventDefault(),
+      dropFile: e => { e.preventDefault(); this.loadFile(e.dataTransfer.files[0]); },
+      useSample: e => { e.preventDefault(); this.setState({ csvRes: this.parseCsv(this.sampleCsv()), csvFileName: `sample-${tab}.csv` }); },
+      applyLabel: res ? `Apply ${res.updated} ${res.updated === 1 ? 'change' : 'changes'}` : 'Apply',
+      applyDisabled: !res || res.updated === 0,
+      applyCsv: () => {
+        const map = Object.fromEntries(res.changes.map(c => [c.id, c.patch]));
+        this.setState(st => ({ dirty: true, csvOpen: false, csvRes: null, data: { ...st.data, [tab]: st.data[tab].map(r => map[r.id] ? { ...r, ...map[r.id] } : r) } }));
+        this.showToast(`${res.updated} ${t.label.toLowerCase()} updated from CSV`);
+      },
+      toast: s.toast,
+    };
+  }
+}
+</script>
+</body>
+</html>

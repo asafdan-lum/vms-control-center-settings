@@ -1,0 +1,43 @@
+/* Base resets + a few structural helpers the product's SCSS assumes.
+   Anything a consumer's hand-written HTML needs in order to look native. */
+html{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+body{margin:0;font-family:var(--font-sans);font-size:var(--ui-font-xm-size);font-weight:var(--ui-font-xm-weight);line-height:var(--ui-font-xm-height);color:var(--color-text-default);background:var(--color-elevation-surface-default)}
+*,*::before,*::after{box-sizing:border-box}
+a{color:var(--color-link-default);text-decoration:none}
+a:hover{color:var(--color-link-hover);text-decoration:none}
+::selection{background:var(--color-background-selected-active)}
+::-webkit-scrollbar{width:8px;height:8px}
+::-webkit-scrollbar-thumb{background:var(--color-scrollbar);border-radius:var(--radius-full)}
+::-webkit-scrollbar-track{background:transparent}
+
+/* Page chrome */
+.ui-header{display:flex;justify-content:space-between;align-items:center;height:var(--header-h);padding:0 var(--space-24);background:var(--elevation-surface);border-bottom:1px solid var(--color-border-default);color:var(--color-text-default);font-size:var(--ui-font-xxm-size);font-weight:var(--ui-font-xxm-weight);line-height:var(--ui-font-xxm-height)}
+.ui-page{padding:32px 40px}
+.ui-tab{height:100%;padding:var(--space-24);overflow-y:auto}
+.ui-page-title{font-size:var(--ui-font-page-title-size);font-weight:var(--ui-font-page-title-weight);line-height:var(--ui-font-page-title-height);color:var(--text-title)}
+
+/* Table — mirrors theme/ui-table.scss */
+.ui-table{width:100%;border-collapse:collapse}
+.ui-table:not(.spaced){border:1px solid var(--color-border-default)}
+.ui-table .header th{padding:12px 16px;text-align:left;color:var(--color-text-subtle);background:var(--color-elevation-surface-subtle);border-top:1px solid var(--color-border-default);border-bottom:1px solid var(--color-border-default);font-size:var(--ui-font-s-size);font-weight:var(--ui-font-s-weight);line-height:var(--ui-font-s-height)}
+.ui-table td{padding:0 16px;color:var(--color-text-default);border-bottom:1px solid var(--color-border-default)}
+.ui-table.td-72 td{height:var(--row-h-table)}
+.ui-table.td-40 td{height:var(--row-h-table-compact)}
+.ui-table tr:hover{background:var(--color-elevation-surface-subtlest)}
+.ui-table.spaced{border-collapse:separate;border-spacing:0 10px}
+.ui-table.spaced td{height:var(--row-h-table);border-top:1px solid var(--color-border-default)}
+.ui-table.spaced tr:hover{box-shadow:var(--shadow-md);cursor:pointer}
+
+/* Div-grid table — mirrors theme/ui-grid.scss */
+.ui-grid{display:flex;flex-direction:column;min-height:0;border:1px solid var(--color-border-default)}
+.ui-grid .header>div{padding:12px 16px;color:var(--color-text-subtle);background:var(--color-elevation-surface-subtle);border-bottom:1px solid var(--color-border-default);font-size:var(--ui-font-s-size);font-weight:var(--ui-font-s-weight);line-height:var(--ui-font-s-height)}
+.ui-grid .table-row{display:grid}
+.ui-grid .table-row:not(.header){height:var(--row-h-table);color:var(--color-text-default);border-bottom:1px solid var(--color-border-default)}
+.ui-grid .table-row:not(.header)>div{display:flex;align-items:center;justify-content:flex-start;padding:0 16px}
+.ui-grid .table-row:hover .hover{opacity:1}
+
+/* Modal — mirrors styles/ui-modal.scss */
+.ui-modal{display:flex;flex-direction:column;height:100%;background:var(--color-elevation-surface-overlay-default);border-radius:var(--radius-4);overflow:hidden}
+.ui-modal>.header{padding:16px 24px;font-size:var(--ui-font-m-size);font-weight:var(--ui-font-m-weight);line-height:var(--ui-font-m-height);color:var(--color-text-default);border-bottom:1px solid var(--color-border-default);background:var(--color-elevation-surface-overlay-default)}
+.ui-modal>.body{padding:24px;flex:1 1 auto;overflow-y:auto;background:var(--color-elevation-surface-overlay-darker);border-bottom:1px solid var(--color-border-default)}
+.ui-modal>.footer{display:flex;justify-content:flex-end;gap:8px;padding:20px 24px;background:var(--color-elevation-surface-overlay-default)}

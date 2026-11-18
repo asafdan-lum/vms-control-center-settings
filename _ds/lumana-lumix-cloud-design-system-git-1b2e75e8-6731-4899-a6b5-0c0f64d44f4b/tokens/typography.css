@@ -1,0 +1,49 @@
+/* Type scale — transcribed from lumix-cloud @ frontend/projects/ui/src/lib/styles/fonts.scss.
+   The product uses a NAMED scale (not numeric steps): every text style is one of these keys,
+   applied through the `fonts.font(<key>)` SCSS mixin which reads these exact variables.
+   Sizes are literal px — never round them. */
+:root{
+  --ui-font-page-title-size:24px;   --ui-font-page-title-weight:500;   --ui-font-page-title-height:32px;
+  --ui-font-page-title2-size:36px;  --ui-font-page-title2-weight:400;  --ui-font-page-title2-height:44px;
+  --ui-font-page-title3-size:18px;  --ui-font-page-title3-weight:400;  --ui-font-page-title3-height:28px;
+  --ui-font-page-title4-size:24px;  --ui-font-page-title4-weight:400;  --ui-font-page-title4-height:32px;
+  --ui-font-xxl-size:64px;          --ui-font-xxl-weight:500;          --ui-font-xxl-height:64px;
+  --ui-font-xxxl-medium-size:32px;  --ui-font-xxxl-medium-weight:500;  --ui-font-xxxl-medium-height:40px;
+  --ui-font-h2-size:20px;           --ui-font-h2-weight:500;           --ui-font-h2-height:32px;
+  --ui-font-h3-size:16px;           --ui-font-h3-weight:400;           --ui-font-h3-height:28px;
+  --ui-font-h4-size:15px;           --ui-font-h4-weight:400;           --ui-font-h4-height:24px;
+  --ui-font-lx-size:20px;           --ui-font-lx-weight:500;           --ui-font-lx-height:28px;
+  --ui-font-l-size:16px;            --ui-font-l-weight:500;            --ui-font-l-height:24px;
+  --ui-font-lxx-size:16px;          --ui-font-lxx-weight:400;          --ui-font-lxx-height:24px;
+  --ui-font-m-size:14px;            --ui-font-m-weight:500;            --ui-font-m-height:24px;
+  --ui-font-mx-size:14px;           --ui-font-mx-weight:500;           --ui-font-mx-height:24px;
+  --ui-font-xm-size:14px;           --ui-font-xm-weight:400;           --ui-font-xm-height:24px;
+  --ui-font-xxm-size:14px;          --ui-font-xxm-weight:400;          --ui-font-xxm-height:20px;
+  --ui-font-s-size:12px;            --ui-font-s-weight:500;            --ui-font-s-height:20px;
+  --ui-font-xs-size:12px;           --ui-font-xs-weight:400;           --ui-font-xs-height:20px;
+  --ui-font-xxs-size:10px;          --ui-font-xxs-weight:400;          --ui-font-xxs-height:16px;
+  --ui-font-xxxxs-size:10px;        --ui-font-xxxxs-weight:500;        --ui-font-xxxxs-height:16px;
+  --ui-font-xxxs-size:6px;          --ui-font-xxxs-weight:400;         --ui-font-xxxs-height:16px;
+  --ui-font-checkbox-label-size:12px; --ui-font-checkbox-label-weight:500; --ui-font-checkbox-label-height:20px;
+  --ui-font-badge-label-size:12px;  --ui-font-badge-label-weight:600;  --ui-font-badge-label-height:24px;
+}
+/* Utility classes — one per scale key, for hand-written HTML (slides, cards, mocks). */
+.ui-font-page-title{font-size:var(--ui-font-page-title-size);font-weight:var(--ui-font-page-title-weight);line-height:var(--ui-font-page-title-height)}
+.ui-font-page-title2{font-size:var(--ui-font-page-title2-size);font-weight:var(--ui-font-page-title2-weight);line-height:var(--ui-font-page-title2-height)}
+.ui-font-page-title3{font-size:var(--ui-font-page-title3-size);font-weight:var(--ui-font-page-title3-weight);line-height:var(--ui-font-page-title3-height)}
+.ui-font-page-title4{font-size:var(--ui-font-page-title4-size);font-weight:var(--ui-font-page-title4-weight);line-height:var(--ui-font-page-title4-height)}
+.ui-font-xxl{font-size:var(--ui-font-xxl-size);font-weight:var(--ui-font-xxl-weight);line-height:var(--ui-font-xxl-height)}
+.ui-font-xxxl-medium{font-size:var(--ui-font-xxxl-medium-size);font-weight:var(--ui-font-xxxl-medium-weight);line-height:var(--ui-font-xxxl-medium-height)}
+.ui-font-h2{font-size:var(--ui-font-h2-size);font-weight:var(--ui-font-h2-weight);line-height:var(--ui-font-h2-height)}
+.ui-font-h3{font-size:var(--ui-font-h3-size);font-weight:var(--ui-font-h3-weight);line-height:var(--ui-font-h3-height)}
+.ui-font-h4{font-size:var(--ui-font-h4-size);font-weight:var(--ui-font-h4-weight);line-height:var(--ui-font-h4-height)}
+.ui-font-lx{font-size:var(--ui-font-lx-size);font-weight:var(--ui-font-lx-weight);line-height:var(--ui-font-lx-height)}
+.ui-font-l{font-size:var(--ui-font-l-size);font-weight:var(--ui-font-l-weight);line-height:var(--ui-font-l-height)}
+.ui-font-lxx{font-size:var(--ui-font-lxx-size);font-weight:var(--ui-font-lxx-weight);line-height:var(--ui-font-lxx-height)}
+.ui-font-m{font-size:var(--ui-font-m-size);font-weight:var(--ui-font-m-weight);line-height:var(--ui-font-m-height)}
+.ui-font-xm{font-size:var(--ui-font-xm-size);font-weight:var(--ui-font-xm-weight);line-height:var(--ui-font-xm-height)}
+.ui-font-xxm{font-size:var(--ui-font-xxm-size);font-weight:var(--ui-font-xxm-weight);line-height:var(--ui-font-xxm-height)}
+.ui-font-s{font-size:var(--ui-font-s-size);font-weight:var(--ui-font-s-weight);line-height:var(--ui-font-s-height)}
+.ui-font-xs{font-size:var(--ui-font-xs-size);font-weight:var(--ui-font-xs-weight);line-height:var(--ui-font-xs-height)}
+.ui-font-xxs{font-size:var(--ui-font-xxs-size);font-weight:var(--ui-font-xxs-weight);line-height:var(--ui-font-xxs-height)}
+.ui-font-badge-label{font-size:var(--ui-font-badge-label-size);font-weight:var(--ui-font-badge-label-weight);line-height:var(--ui-font-badge-label-height)}

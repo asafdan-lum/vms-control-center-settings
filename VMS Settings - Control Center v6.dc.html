@@ -378,38 +378,44 @@
 </sc-if>
 </div>
 
-<div style="max-width:1100px;display:{{ mappingDisplay }};flex-direction:column;gap:32px">
-<section style="display:flex;flex-direction:column;gap:16px">
-<div style="display:flex;flex-direction:column;gap:2px">
-<div style="font-size:var(--ui-font-xm-size);line-height:var(--ui-font-xm-height);color:var(--color-text-subtlest)">Match locations to accounts, sub-locations to partitions and devices to zones. Values can also be edited on each item's edit page.</div>
+<div style="max-width:1100px;display:{{ mappingDisplay }};flex-direction:column;gap:16px">
+<div style="font-size:var(--ui-font-xm-size);line-height:var(--ui-font-xm-height);color:var(--color-text-subtlest);text-wrap:pretty">Match locations to accounts, sub-locations to partitions and cameras and devices to zones. Values can also be edited on each item's edit page.</div>
+<div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+<div style="width:280px"><x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Search" placeholder="{{ searchPh }}" value="{{ q }}" onChange="{{ setQ }}" hint-size="280px,40px"></x-import></div>
+<div style="width:150px"><x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Select" options="{{ filterOpts }}" value="{{ filter }}" onChange="{{ setFilter }}" hint-size="150px,40px"></x-import></div>
 </div>
-<div style="display:flex;gap:24px;border-bottom:1px solid var(--color-border-default)">
-<div onClick="{{ tabA.onClick }}" style="display:flex;align-items:center;gap:6px;padding:10px 2px;margin-bottom:-1px;cursor:pointer;font-size:var(--ui-font-m-size);line-height:var(--ui-font-m-height);font-weight:500;color:{{ tabA.color }};border-bottom:2px solid {{ tabA.border }}">{{ tabA.label }}<span style="font-size:var(--ui-font-xxs-size);line-height:16px;padding:0 6px;border-radius:10px;background:var(--color-background-neutral-subtle);color:var(--color-text-subtle)">{{ tabA.count }}</span></div>
-<div onClick="{{ tabB.onClick }}" style="display:flex;align-items:center;gap:6px;padding:10px 2px;margin-bottom:-1px;cursor:pointer;font-size:var(--ui-font-m-size);line-height:var(--ui-font-m-height);font-weight:500;color:{{ tabB.color }};border-bottom:2px solid {{ tabB.border }}">{{ tabB.label }}<span style="font-size:var(--ui-font-xxs-size);line-height:16px;padding:0 6px;border-radius:10px;background:var(--color-background-neutral-subtle);color:var(--color-text-subtle)">{{ tabB.count }}</span></div>
+<div style="display:flex;align-items:center;gap:8px">
+<x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Button" text="Download CSV" type="default" iconClass="ui-icon-download" onClick="{{ downloadCsv }}" hint-size="136px,32px"></x-import>
+<x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Button" text="Upload CSV" type="default" iconClass="ui-icon-upload" onClick="{{ openCsv }}" hint-size="120px,32px"></x-import>
+</div>
 </div>
 <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+<div style="flex:1;min-width:280px;font-size:var(--ui-font-xs-size);line-height:var(--ui-font-xs-height);color:var(--color-text-subtlest);text-wrap:pretty">{{ mappedSummary }}</div>
 <div style="display:flex;align-items:center;gap:8px">
-<x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Search" placeholder="{{ searchPh }}" value="{{ q }}" onChange="{{ setQ }}" hint-size="260px,40px" style="width:260px"></x-import>
-<x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Select" options="{{ filterOpts }}" value="{{ filter }}" onChange="{{ setFilter }}" hint-size="140px,40px" style="width:140px"></x-import>
-</div>
-<div style="display:flex;gap:8px">
-<x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Button" text="{{ downloadLabel }}" type="default" iconClass="ui-icon-download" onClick="{{ downloadCsv }}" hint-size="136px,32px"></x-import>
-<x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Button" text="{{ uploadLabel }}" type="default" iconClass="ui-icon-upload" onClick="{{ openCsv }}" hint-size="120px,32px"></x-import>
-</div>
-</div>
-<div style="display:flex;justify-content:space-between;align-items:flex-end;gap:12px;flex-wrap:wrap;margin-bottom:-8px">
-<div style="font-size:var(--ui-font-xs-size);line-height:var(--ui-font-xs-height);color:var(--color-text-subtlest)">{{ mappedSummary }}</div>
-<div style="display:{{ treeCtlDisplay }};align-items:center;gap:8px">
 <x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Button" text="Expand all" type="default" onClick="{{ expandAll }}" disabled="{{ allOpen }}" hint-size="96px,32px"></x-import>
 <x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Button" text="Collapse all" type="default" onClick="{{ collapseAll }}" disabled="{{ noneOpen }}" hint-size="104px,32px"></x-import>
 </div>
 </div>
-<x-import component-from-global-scope="LumanaDesignSystem_1b2e75.DataTable" columns="{{ columns }}" rows="{{ rows }}" rowHeight="{{ 52 }}" hint-size="100%,320px"></x-import>
+<div style="overflow-x:auto">
+<div style="display:grid;grid-template-columns:minmax(260px,1fr) 120px 140px 150px 150px 150px;min-width:970px;border:1px solid var(--color-border-default);border-radius:4px;font-size:var(--ui-font-xm-size);line-height:var(--ui-font-xm-height)">
+<div style="padding:10px 12px;background:var(--color-elevation-surface-subtlest);border-bottom:1px solid var(--color-border-default);font-size:var(--ui-font-s-size);line-height:var(--ui-font-s-height);font-weight:500;color:var(--color-text-subtle);display:flex;align-items:center;gap:6px;min-width:0">Name</div>
+<div style="padding:10px 12px;background:var(--color-elevation-surface-subtlest);border-bottom:1px solid var(--color-border-default);font-size:var(--ui-font-s-size);line-height:var(--ui-font-s-height);font-weight:500;color:var(--color-text-subtle);display:flex;align-items:center;gap:6px;min-width:0">Type</div>
+<div style="padding:10px 12px;background:var(--color-elevation-surface-subtlest);border-bottom:1px solid var(--color-border-default);font-size:var(--ui-font-s-size);line-height:var(--ui-font-s-height);font-weight:500;color:var(--color-text-subtle);display:flex;align-items:center;gap:6px;min-width:0">Lumana ID</div>
+<div style="padding:10px 12px;background:var(--color-elevation-surface-subtlest);border-bottom:1px solid var(--color-border-default);font-size:var(--ui-font-s-size);line-height:var(--ui-font-s-height);font-weight:500;color:var(--color-text-subtle);display:flex;align-items:center;gap:6px;min-width:0">Account ID (4)<span class="ui-icon-info" title="Locations can share account IDs. Sub-locations use their location's account." style="font-size:14px;cursor:help;color:var(--color-icon-default)"></span></div>
+<div style="padding:10px 12px;background:var(--color-elevation-surface-subtlest);border-bottom:1px solid var(--color-border-default);font-size:var(--ui-font-s-size);line-height:var(--ui-font-s-height);font-weight:500;color:var(--color-text-subtle);display:flex;align-items:center;gap:6px;min-width:0">Partition ID (2)<span class="ui-icon-info" title="Locations and sub-locations can share partition IDs" style="font-size:14px;cursor:help;color:var(--color-icon-default)"></span></div>
+<div style="padding:10px 12px;background:var(--color-elevation-surface-subtlest);border-bottom:1px solid var(--color-border-default);font-size:var(--ui-font-s-size);line-height:var(--ui-font-s-height);font-weight:500;color:var(--color-text-subtle);display:flex;align-items:center;gap:6px;min-width:0">Zone ID (3)<span class="ui-icon-info" title="Each camera and device in a location needs a unique zone ID" style="font-size:14px;cursor:help;color:var(--color-icon-default)"></span></div>
+{{ mapBody }}
+</div>
+</div>
 <sc-if value="{{ noRows }}" hint-placeholder-val="{{ false }}">
 <div style="padding:24px;text-align:center;font-size:var(--ui-font-xm-size);color:var(--color-text-subtlest)">Try adjusting your search or filter.</div>
 </sc-if>
-</section>
-
+<div style="display:flex;justify-content:flex-end;align-items:center;gap:8px;font-size:var(--ui-font-xs-size);color:var(--color-text-subtlest)">
+<span>{{ mapPageInfo }}</span>
+<x-import component-from-global-scope="LumanaDesignSystem_1b2e75.IconButton" iconClass="ui-icon-backward" onClick="{{ mapPrev }}" hint-size="32px,32px"></x-import>
+<x-import component-from-global-scope="LumanaDesignSystem_1b2e75.IconButton" iconClass="ui-icon-forward" onClick="{{ mapNext }}" hint-size="32px,32px"></x-import>
+</div>
 </div>
 </div>
 </div>
@@ -515,22 +521,25 @@ const SUBS = [
   { id: 'sub_f95b4d83', name: 'Server room', loc: 'Head office', partition: '' },
 ];
 const DEVS = [
-  { id: 'cam_3e71b0a4', name: 'Gate — North', type: 'Camera', loc: 'Fourth Street Industrial Park', zone: '001' },
-  { id: 'cam_4f82c1b5', name: 'Gate — South', type: 'Camera', loc: 'Fourth Street Industrial Park', zone: '002' },
-  { id: 'cam_5a93d2c6', name: 'Yard overview', type: 'Camera', loc: 'Fourth Street Industrial Park', zone: '' },
-  { id: 'dor_61a4e3d7', name: 'Main gate door', type: 'Door', loc: 'Fourth Street Industrial Park', zone: '010' },
-  { id: 'cam_72b5f4e8', name: 'Dock 4 — East', type: 'Camera', loc: 'Warehouse 3', zone: '001' },
-  { id: 'cam_83c605f9', name: 'Dock 4 — West', type: 'Camera', loc: 'Warehouse 3', zone: '001' },
-  { id: 'sen_94d7160a', name: 'Cold store temperature', type: 'Sensor', loc: 'Warehouse 3', zone: '' },
-  { id: 'cam_a5e8271b', name: 'Aisle 12', type: 'Camera', loc: 'Warehouse 5', zone: '' },
-  { id: 'cam_b6f9382c', name: 'Lobby', type: 'Camera', loc: 'Head office', zone: '001' },
-  { id: 'spk_c70a493d', name: 'Lobby speaker', type: 'Speaker', loc: 'Head office', zone: '' },
+  { id: 'cam_3e71b0a4', sub: 'sub_a19c3e07', ip: '10.20.1.11', name: 'Gate — North', type: 'Camera', loc: 'Fourth Street Industrial Park', zone: '001' },
+  { id: 'cam_4f82c1b5', sub: 'sub_a19c3e07', ip: '10.20.1.12', name: 'Gate — South', type: 'Camera', loc: 'Fourth Street Industrial Park', zone: '002' },
+  { id: 'cam_5a93d2c6', ip: '10.20.1.13', name: 'Yard overview', type: 'Camera', loc: 'Fourth Street Industrial Park', zone: '' },
+  { id: 'dor_61a4e3d7', sub: 'sub_a19c3e07', ip: '10.20.1.40', name: 'Main gate door', type: 'Door', loc: 'Fourth Street Industrial Park', zone: '010' },
+  { id: 'cam_72b5f4e8', sub: 'sub_c87e1a52', ip: '10.30.4.21', name: 'Dock 4 — East', type: 'Camera', loc: 'Warehouse 3', zone: '001' },
+  { id: 'cam_83c605f9', sub: 'sub_c87e1a52', ip: '10.30.4.22', name: 'Dock 4 — West', type: 'Camera', loc: 'Warehouse 3', zone: '001' },
+  { id: 'sen_94d7160a', sub: 'sub_d03f9b64', ip: '10.30.4.60', name: 'Cold store temperature', type: 'Sensor', loc: 'Warehouse 3', zone: '' },
+  { id: 'cam_a5e8271b', ip: '10.50.2.15', name: 'Aisle 12', type: 'Camera', loc: 'Warehouse 5', zone: '' },
+  { id: 'cam_b6f9382c', sub: 'sub_e61a2c78', ip: '192.168.10.21', name: 'Lobby', type: 'Camera', loc: 'Head office', zone: '001' },
+  { id: 'spk_c70a493d', sub: 'sub_e61a2c78', ip: '192.168.10.80', name: 'Lobby speaker', type: 'Speaker', loc: 'Head office', zone: '' },
 ];
 const TABS = {
   locations: { label: 'Locations', fields: [['account', 'Account ID', 4], ['partition', 'Partition ID', 2]], csv: ['lumana_id', 'type', 'name', 'location', 'account_id', 'partition_id'], key: { account_id: 'account', partition_id: 'partition' } },
   subs: { label: 'Sub-locations', fields: [['partition', 'Partition ID', 2]], csv: ['lumana_id', 'name', 'location', 'partition_id'], key: { partition_id: 'partition' } },
   devices: { label: 'Cameras & devices', fields: [['zone', 'Zone ID', 3]], csv: ['lumana_id', 'name', 'type', 'location', 'zone_id'], key: { zone_id: 'zone' } },
+  all: { label: 'Locations, cameras & devices', fields: [['account', 'Account ID', 4], ['partition', 'Partition ID', 2], ['zone', 'Zone ID', 3]], csv: ['lumana_id', 'type', 'name', 'location', 'ip', 'account_id', 'partition_id', 'zone_id'], key: { account_id: 'account', partition_id: 'partition', zone_id: 'zone' } },
 };
+const KINDS_OF = ['locations', 'subs', 'devices'];
+const kindOfId = id => id.startsWith('loc_') ? 'locations' : id.startsWith('sub_') ? 'subs' : 'devices';
 const HEX = /^[0-9A-F]*$/;
 const GROUPS = { tests: 'Tests & system', trouble: 'Technical trouble', tamper: 'Tamper & camera offline', medical: 'Medical', duress: 'Duress & silent panic', panic: 'Panic & violence', fire: 'Fire, smoke & CO', intrusion: 'Intrusion & person detection', default: 'Default group' };
 const GROUP_AGENT = { tests: 'Log review agent', trouble: 'Log review agent', tamper: 'Device health agent', fire: 'Evidence collection agent', intrusion: 'Video verification agent' };
@@ -610,11 +619,11 @@ const clone = o => JSON.parse(JSON.stringify(o));
 class Component extends DCLogic {
   state = {
     page: 'arming', locQ: '',
-    armPage: 0,
+    armPage: 0, mapPage: 0,
     armRows: [['loc_7f3a91c2','armed','after'],['loc_2b8e44d0','type_1','business'],['loc_45ef6a13','type_2','night'],
       ...[1,2,4,5,7,8,10,11,13,14,16,17,19,20,22,23,25,26,28,29,31,32,34,35,37].map((n, k) => [LOCS[3 + n].id, k % 3 === 1 ? 'type_1' : k % 3 === 2 ? 'type_2' : 'armed', SCHEDULES[k % SCHEDULES.length].value])]
       .map(([locId, status, schedule], k) => ({ key: k + 1, locId, status, schedule })),
-    orgOpen: false, open: { 'Fourth Street Industrial Park': true, 'Warehouse 3': true, 'Head office': true }, tab: 'locations', q: '', filter: 'all',
+    orgOpen: false, open: { 'Fourth Street Industrial Park': true, 'Warehouse 3': true, 'Head office': true }, tab: 'all', q: '', filter: 'all',
     sops: clone(SOPS), sopQ: '', sopSort: 'modified', draft: null, stepK: null,
     flyOpen: false, flyTop: 150, treeQ: '', sel: { type: 'all' }, treeOpen: { all: true }, subOpen: true, wallQ: '', wallOn: ['w_perim', 'w_docks', 'w_lobby', 'w_gates'],
     contacts: clone(CONTACTS), ctScope: 'account', ctQ: '', ctDraft: null, ctShow: {},
@@ -653,9 +662,9 @@ class Component extends DCLogic {
     const work = this.state.data[tab].map(x => ({ ...x }));
     lines.slice(1).forEach((l, i) => {
       const cells = split(l), row = i + 2, id = cells[idIdx];
-      const kinds = tab === 'locations' ? ['locations', 'subs'] : [tab];
+      const kinds = tab === 'all' ? KINDS_OF : tab === 'locations' ? ['locations', 'subs'] : [tab];
       const ik = kinds.find(k => this.state.data[k].some(r => r.id === id)), item = ik && this.state.data[ik].find(r => r.id === id);
-      if (!item) { res.skipped.push({ row, msg: `Lumana ID ${id || '(empty)'} was not found in ${tab === 'locations' ? 'locations or sub-locations' : t.label.toLowerCase()}` }); return; }
+      if (!item) { res.skipped.push({ row, msg: `Lumana ID ${id || '(empty)'} was not found in ${tab === 'all' ? 'locations, sub-locations, cameras or devices' : tab === 'locations' ? 'locations or sub-locations' : t.label.toLowerCase()}` }); return; }
       const patch = {}; let bad = '';
       cols.forEach(c => {
         const k = t.key[c], fd = TABS[ik].fields.find(f => f[0] === k); if (!fd) return; const len = fd[2];
@@ -663,7 +672,7 @@ class Component extends DCLogic {
         if (!this.fieldValid(v, len)) bad = `${c} "${v}" must be ${len} characters (0–9, A–F)`;
         else patch[k] = v;
       });
-      if (!bad && tab === 'devices' && patch.zone) {
+      if (!bad && ik === 'devices' && patch.zone) {
         const c = this.zoneConflict({ ...item, ...patch }, work);
         if (c) bad = `zone_id ${patch.zone} is already used by ${c.name} in ${item.loc}`;
       }
@@ -682,6 +691,7 @@ class Component extends DCLogic {
   }
   sampleCsv() {
     const tab = this.state.tab;
+    if (tab === 'all') return 'lumana_id,type,name,location,ip,account_id,partition_id,zone_id\nloc_9c1d07ab,Location,Warehouse 5,,,1A2D,01,\nsub_d03f9b64,Sub-location,Cold store,Warehouse 3,,,02,\ncam_5a93d2c6,Camera,Yard overview,Fourth Street Industrial Park,10.20.1.13,,,003\ncam_83c605f9,Camera,Dock 4 — West,Warehouse 3,10.30.4.22,,,002\nsen_94d7160a,Sensor,Cold store temperature,Warehouse 3,10.30.4.60,,,0G1\nloc_000000aa,Location,Old depot,,,3B00,01,';
     if (tab === 'locations') return 'lumana_id,type,name,location,account_id,partition_id\nloc_7f3a91c2,Location,Fourth Street Industrial Park,,1A2B,01\nloc_9c1d07ab,Location,Warehouse 5,,1A2D,01\nsub_d03f9b64,Sub-location,Cold store,Warehouse 3,,02\nsub_f95b4d83,Sub-location,Server room,Head office,,2\nloc_000000aa,Location,Old depot,,3B00,01';
     if (tab === 'subs') return 'lumana_id,name,location,partition_id\nsub_d03f9b64,Cold store,Warehouse 3,02\nsub_f95b4d83,Server room,Head office,2\nsub_a19c3e07,Main gate,Fourth Street Industrial Park,01';
     return 'lumana_id,name,type,location,zone_id\ncam_5a93d2c6,Yard overview,Camera,Fourth Street Industrial Park,003\ncam_83c605f9,Dock 4 — West,Camera,Warehouse 3,002\nsen_94d7160a,Cold store temperature,Sensor,Warehouse 3,0G1\ncam_a5e8271b,Aisle 12,Camera,Warehouse 5,001';
@@ -923,13 +933,13 @@ class Component extends DCLogic {
     if (sl.type === 'all') return null;
     if (sl.type === 'loc') { const l = s.data.locations.find(x => x.id === sl.id); return l ? { locId: l.id, locName: l.name } : null; }
     if (sl.type === 'sub') { const x = s.data.subs.find(y => y.id === sl.id); const l = x && s.data.locations.find(y => y.name === x.loc); return x ? { locId: l && l.id, locName: x.loc, subId: x.id } : null; }
-    const d = s.data.devices.find(y => y.id === sl.id); const l = d && s.data.locations.find(y => y.name === d.loc); return d ? { locId: l && l.id, locName: d.loc, camId: d.id } : null;
+    const d = s.data.devices.find(y => y.id === sl.id); const l = d && s.data.locations.find(y => y.name === d.loc); return d ? { locId: l && l.id, locName: d.loc, camId: d.id, camSub: d.sub || null } : null;
   }
   treeVals(s) {
     const q = s.treeQ.trim().toLowerCase(), sl = s.sel || { type: 'all' }, open = s.treeOpen;
     const hit = n => !q || n.toLowerCase().includes(q);
     const toggle = k => ev => { ev && ev.stopPropagation && ev.stopPropagation(); this.setState(st => ({ treeOpen: { ...st.treeOpen, [k]: !st.treeOpen[k] } })); };
-    const pick = (type, id, extra) => () => this.setState(st => ({ sel: { type, id }, armPage: 0, ...(extra || {}), treeOpen: id ? { ...st.treeOpen, all: true } : st.treeOpen }));
+    const pick = (type, id, extra) => () => this.setState(st => ({ sel: { type, id }, armPage: 0, mapPage: 0, ...(extra || {}), treeOpen: id ? { ...st.treeOpen, all: true } : st.treeOpen }));
     const row = (key, type, id, name, depth, icon, kids, isOpen, extra) => { const on = sl.type === type && (type === 'all' || sl.id === id);
       return { key, name, icon, pad: 8 + depth * 20, chev: kids ? 'visible' : 'hidden', rot: isOpen ? 'none' : 'rotate(-90deg)',
         bg: on ? 'var(--color-background-selected-active)' : 'transparent', color: on ? 'var(--color-text-selected)' : 'inherit', iconColor: on ? 'var(--color-icon-selected)' : 'var(--color-icon-default)',
@@ -945,8 +955,15 @@ class Component extends DCLogic {
       const k = 'L' + l.id, isOpen = q ? (subHits.length + camHits.length > 0) : !!open[k];
       rows.push(row(k, 'loc', l.id, l.name, 1, 'ui-icon-location', subs.length + lc.length > 0, isOpen, { ctScope: l.id }));
       if (!isOpen) return;
-      (q && !hit(l.name) ? subHits : subs).forEach(x => rows.push(row('S' + x.id, 'sub', x.id, x.name, 2, 'ui-icon-locations', false, false, { ctScope: x.id })));
-      (q && !hit(l.name) ? camHits : lc).forEach(d => rows.push(row('C' + d.id, 'cam', d.id, d.name, 2, 'ui-icon-camera', false, false, { ctScope: l.id })));
+      const showAll = !q || hit(l.name);
+      subs.forEach(x => {
+        const sc = lc.filter(d => d.sub === x.id), scHits = sc.filter(d => hit(d.name));
+        if (!showAll && !hit(x.name) && !scHits.length) return;
+        const sk = 'S' + x.id, sOpen = q ? scHits.length > 0 : !!open[sk];
+        rows.push(row(sk, 'sub', x.id, x.name, 2, 'ui-icon-locations', sc.length > 0, sOpen, { ctScope: x.id }));
+        if (sOpen) (q && !hit(x.name) && !hit(l.name) ? scHits : sc).forEach(d => rows.push(row('C' + d.id, 'cam', d.id, d.name, 3, 'ui-icon-camera', false, false, { ctScope: x.id })));
+      });
+      lc.filter(d => !d.sub && (showAll || hit(d.name))).forEach(d => rows.push(row('C' + d.id, 'cam', d.id, d.name, 2, 'ui-icon-camera', false, false, { ctScope: l.id })));
     });
     return { treeRows: rows, treeEmpty: !!q && !any };
   }
@@ -957,48 +974,61 @@ class Component extends DCLogic {
     const R = React.createElement;
     const s = this.state, tab = s.tab, t = TABS[tab];
     const val = v => (v && v.target ? v.target.value : v);
-    const isTree = tab === 'locations';
-    const all = isTree ? [...s.data.locations, ...s.data.subs] : s.data[tab];
+    const isTree = true;
+    const all = [...s.data.locations, ...s.data.subs, ...s.data.devices];
     const q = s.q.toLowerCase();
-    const kindOf = r => isTree && r.id.startsWith('sub_') ? 'subs' : tab;
+    const kindOf = r => kindOfId(r.id);
     const si = this.selInfo(s);
-    const inSel = r => !si || (tab === 'devices' ? r.loc === si.locName && (!si.camId || r.id === si.camId)
-      : r.id.startsWith('sub_') ? r.loc === si.locName && (!si.subId || r.id === si.subId) : r.name === si.locName);
-    const match = r => inSel(r) && (!q || r.name.toLowerCase().includes(q) || r.id.toLowerCase().includes(q))
+    const inSel = r => { if (!si) return true; const k = kindOf(r);
+      if (k === 'locations') return r.name === si.locName;
+      if (k === 'subs') return r.loc === si.locName && (!si.subId || r.id === si.subId) && (!si.camId || r.id === si.camSub);
+      return r.loc === si.locName && (!si.subId || r.sub === si.subId) && (!si.camId || r.id === si.camId); };
+    const match = r => inSel(r) && (!q || r.name.toLowerCase().includes(q) || r.id.toLowerCase().includes(q) || (r.ip || '').includes(q))
       && (s.filter === 'all' || (s.filter === 'mapped' ? this.rowMapped(kindOf(r), r) : !this.rowMapped(kindOf(r), r)));
-    const subsBy = {}; s.data.subs.forEach(x => (subsBy[x.loc] = subsBy[x.loc] || []).push(x));
-    const parents = Object.keys(subsBy).filter(n => s.data.locations.some(l => l.name === n));
-    const filtering = !!q || s.filter !== 'all' || !!(si && si.subId);
-    const rows = !isTree ? s.data[tab].filter(match) : s.data.locations.flatMap(l => {
-      const kids = subsBy[l.name] || [], hit = kids.filter(match), self = match(l);
-      if (!self && !hit.length) return [];
-      const open = filtering ? hit.length > 0 : !!s.open[l.name];
-      return [{ ...l, _kids: kids.length, _open: open }, ...(open ? (filtering ? hit : kids).map(x => ({ ...x, _sub: true })) : [])];
+    const subsBy = {}; [...s.data.subs, ...s.data.devices].forEach(x => (subsBy[x.loc] = subsBy[x.loc] || []).push(x));
+    const parents = [...Object.keys(subsBy).filter(n => s.data.locations.some(l => l.name === n)), ...s.data.subs.filter(x => s.data.devices.some(d => d.sub === x.id)).map(x => 'S' + x.id)];
+    const filtering = !!q || s.filter !== 'all' || !!(si && (si.subId || si.camId));
+    const groups = s.data.locations.map(l => {
+      const subs = s.data.subs.filter(x => x.loc === l.name), devs = s.data.devices.filter(d => d.loc === l.name), direct = devs.filter(d => !d.sub);
+      const subNodes = subs.map(x => { const kids = devs.filter(d => d.sub === x.id), hitK = kids.filter(match); return { x, kids, hitK, show: match(x) || hitK.length > 0 }; });
+      const directHit = direct.filter(match), anyChild = subNodes.some(n => n.show) || directHit.length > 0;
+      if (!match(l) && !anyChild) return [];
+      const open = filtering ? anyChild : !!s.open[l.name];
+      const out = [{ ...l, _depth: 0, _kids: subs.length + direct.length, _open: open, _key: l.name }];
+      if (!open) return out;
+      (filtering ? subNodes.filter(n => n.show) : subNodes).forEach(n => {
+        const so = filtering ? n.hitK.length > 0 : !!s.open['S' + n.x.id];
+        out.push({ ...n.x, _depth: 1, _kids: n.kids.length, _open: so, _key: 'S' + n.x.id });
+        if (so) (filtering ? n.hitK : n.kids).forEach(d => out.push({ ...d, _depth: 2 }));
+      });
+      (filtering ? directHit : direct).forEach(d => out.push({ ...d, _depth: 1 }));
+      return out;
     });
-    const invalidTotal = Object.keys(TABS).reduce((n, k) => n + s.data[k].filter(r => this.rowInvalid(k, r)).length, 0);
+    const MPER = 20, mPages = Math.max(1, Math.ceil(groups.filter(g => g.length).length / MPER)), mPg = Math.min(s.mapPage || 0, mPages - 1);
+    const gList = groups.filter(g => g.length), rows = s.page === 'mapping' ? gList.slice(mPg * MPER, mPg * MPER + MPER).flat() : [];
+    const invalidTotal = KINDS_OF.reduce((n, k) => n + s.data[k].filter(r => this.rowInvalid(k, r)).length, 0);
     const mappedN = all.filter(r => this.rowMapped(kindOf(r), r)).length;
     const toggleOpen = name => this.setState(st => ({ open: { ...st.open, [name]: !st.open[name] } }));
     const sub = { fontSize: 'var(--ui-font-xs-size)', color: 'var(--color-text-subtlest)' };
 
     const columns = [
-      { key: 'name', label: 'Name', render: r => !isTree ? R('span', { style: { fontWeight: 500 } }, r.name)
-        : R('div', { style: { display: 'flex', alignItems: 'center', gap: 8, paddingLeft: r._sub ? 32 : 0, minWidth: 0 } },
-          r._sub ? R('span', { className: 'ui-icon-location', style: { fontSize: 14, color: 'var(--color-icon-default)' } })
+      { key: 'name', label: 'Name', width: 300, render: r => !isTree ? R('span', { style: { fontWeight: 500 } }, r.name)
+        : R('div', { style: { display: 'flex', alignItems: 'center', gap: 8, paddingLeft: r._sub ? 32 : 0, minWidth: 0, overflow: 'hidden' } },
+          r._sub ? R('span', { className: kindOf(r) === 'subs' ? 'ui-icon-location' : 'ui-icon-camera', style: { fontSize: 14, color: 'var(--color-icon-default)' } })
             : r._kids ? R('span', { onClick: e => { e.stopPropagation(); toggleOpen(r.name); }, title: r._open ? 'Collapse' : 'Expand', className: 'ui-icon-expand-arrow',
                 style: { fontSize: 12, width: 24, height: 24, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', borderRadius: 4, cursor: 'pointer', color: 'var(--color-icon-default)', transform: r._open ? 'none' : 'rotate(-90deg)', transition: 'transform .3s' } })
             : R('span', { style: { width: 24, flexShrink: 0 } }),
           R('span', { style: { fontWeight: r._sub ? 400 : 500, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' } }, r.name),
           !r._sub && r._kids ? R('span', { style: { fontSize: 'var(--ui-font-xxs-size)', lineHeight: '16px', padding: '0 6px', borderRadius: 10, background: 'var(--color-background-neutral-subtle)', color: 'var(--color-text-subtle)' } }, r._kids) : null) },
-      ...(tab === 'devices' ? [{ key: 'type', label: 'Type', width: 110 }] : []),
-      ...(tab !== 'locations' ? [{ key: 'loc', label: 'Location' }] : []),
+      { key: 'type', label: 'Type', width: 130, render: r => R('span', { style: { color: 'var(--color-text-subtle)' } }, kindOf(r) === 'locations' ? 'Location' : kindOf(r) === 'subs' ? 'Sub-location' : r.type) },
       { key: 'id', label: 'Lumana ID', width: 150, render: r => R('span', { style: { color: 'var(--color-text-subtle)' } }, r.id) },
       ...t.fields.map(([k, label, len]) => ({
         key: k, width: 170,
         label: R('span', { style: { display: 'inline-flex', alignItems: 'center', gap: 6 } }, `${label} (${len})`,
-          R('span', { className: 'ui-icon-info', title: tab === 'devices' ? 'Each camera and device in a location needs a unique zone ID' : k === 'account' ? 'Locations can share account IDs. Sub-locations use their location\'s account.' : 'Locations and sub-locations can share partition IDs', style: { fontSize: 14, cursor: 'help', color: 'var(--color-icon-default)' } })),
+          R('span', { className: 'ui-icon-info', title: k === 'zone' ? 'Each camera and device in a location needs a unique zone ID' : k === 'account' ? 'Locations can share account IDs. Sub-locations use their location\'s account.' : 'Locations and sub-locations can share partition IDs', style: { fontSize: 14, cursor: 'help', color: 'var(--color-icon-default)' } })),
         render: r => {
           const kd = kindOf(r);
-          if (!TABS[kd].fields.some(fd => fd[0] === k)) return R('span', { title: 'Uses the account ID of its location', style: { color: 'var(--color-text-subtlest)', paddingLeft: 12 } }, '—');
+          if (!TABS[kd].fields.some(fd => fd[0] === k)) return R('span', { title: k === 'account' && kd === 'subs' ? 'Uses the account ID of its location' : undefined, style: { color: 'var(--color-text-subtlest)', paddingLeft: 12 } }, '—');
           const err = this.fieldError(kd, r, k, label, len);
           return R('div', { title: err || undefined, style: { display: 'flex', alignItems: 'center', gap: 8 } },
             NS.Input ? R(NS.Input, { height: 32, value: r[k], placeholder: '—', style: { width: 120 }, invalid: !!err, onChange: e => this.setField(kd, r.id, k, len, val(e)) }) : r[k],
@@ -1075,28 +1105,50 @@ class Component extends DCLogic {
       })),
       addArmType: () => this.setState(st => ({ dirty: true, armTypes: [...st.armTypes, { id: Date.now(), name: '', schedule: '' }] })),
 
-      tabs: Object.entries(TABS).map(([k, v]) => ({ value: k, label: `${v.label} (${s.data[k].length})` })),
       tab, setTab: v => this.setState({ tab: v, q: '' }),
       ...Object.fromEntries([['locations', 'Locations', s.data.locations.length + s.data.subs.length], ['devices', 'Cameras & devices', s.data.devices.length]].map(([k, label, count], i) => ['tab' + 'AB'[i], { label, count, color: k === tab ? 'var(--color-text-selected)' : 'var(--color-text-subtle)', border: k === tab ? 'var(--color-border-selected-default)' : 'transparent', onClick: () => this.setState({ tab: k, q: '' }) }])),
-      searchPh: 'Search ' + t.label.toLowerCase(),
+      searchPh: 'Search by name, ID or IP',
       downloadLabel: 'Download CSV', uploadLabel: 'Upload CSV',
-      q: s.q, setQ: v => this.setState({ q: val(v) || '' }),
+      q: s.q, setQ: v => this.setState({ q: val(v) || '', mapPage: 0 }),
       filterOpts: [{ value: 'all', label: 'All' }, { value: 'mapped', label: 'Mapped' }, { value: 'unmapped', label: 'Not mapped' }],
-      filter: s.filter, setFilter: v => this.setState({ filter: v }),
+      filter: s.filter, setFilter: v => this.setState({ filter: v, mapPage: 0 }),
       treeCtlDisplay: isTree ? 'flex' : 'none',
       allOpen: filtering || parents.every(n => s.open[n]), noneOpen: filtering || !parents.some(n => s.open[n]),
       expandAll: () => this.setState({ open: Object.fromEntries(parents.map(n => [n, true])) }), collapseAll: () => this.setState({ open: {} }),
-      mappedSummary: (isTree ? `${s.data.locations.filter(r => this.rowMapped('locations', r)).length} of ${s.data.locations.length} locations and ${s.data.subs.filter(r => this.rowMapped('subs', r)).length} of ${s.data.subs.length} sub-locations mapped. IDs use 0–9 and A–F.` : `${mappedN} of ${all.length} ${t.label.toLowerCase()} mapped. IDs use 0–9 and A–F.`) + (tab === 'devices' ? ' Zone IDs must be unique within a location.' : ''),
-      columns, rows, noRows: rows.length === 0,
+      mappedSummary: `${s.data.locations.filter(r => this.rowMapped('locations', r)).length} of ${s.data.locations.length} locations, ${s.data.subs.filter(r => this.rowMapped('subs', r)).length} of ${s.data.subs.length} sub-locations and ${s.data.devices.filter(r => this.rowMapped('devices', r)).length} of ${s.data.devices.length} cameras and devices mapped. IDs use 0–9 and A–F. Zone IDs must be unique within a location.`,
+      noRows: s.page === 'mapping' && rows.length === 0,
+      mapPageInfo: gList.length ? `Locations ${mPg * MPER + 1}–${Math.min(gList.length, mPg * MPER + MPER)} of ${gList.length}` : '',
+      mapPrev: () => this.setState({ mapPage: Math.max(0, mPg - 1) }), mapNext: () => this.setState({ mapPage: Math.min(mPages - 1, mPg + 1) }),
+      mapBody: React.createElement(React.Fragment, null, ...rows.map(r => { const kd = kindOf(r), top = r._depth === 0;
+        const C = { padding: '0 12px', height: 52, borderBottom: '1px solid var(--color-border-default)', display: 'flex', alignItems: 'center', minWidth: 0, gap: 8 };
+        const ell = { overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' };
+        return R(React.Fragment, { key: r.id },
+          R('div', { title: r.name, style: { ...C, paddingLeft: 12 + r._depth * 28 } },
+            r._kids ? R('span', { onClick: () => toggleOpen(r._key), title: r._open ? 'Collapse' : 'Expand', className: 'ui-icon-expand-arrow', style: { flexShrink: 0, width: 24, height: 24, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', borderRadius: 4, cursor: 'pointer', fontSize: 12, color: 'var(--color-icon-default)', transform: r._open ? 'none' : 'rotate(-90deg)', transition: 'transform .3s' } })
+              : R('span', { style: { width: 24, flexShrink: 0 } }),
+            top ? null : R('span', { className: kd === 'subs' ? 'ui-icon-locations' : 'ui-icon-camera', style: { flexShrink: 0, fontSize: 16, color: 'var(--color-icon-default)' } }),
+            R('span', { style: { ...ell, fontWeight: top ? 500 : 400 } }, r.name),
+            r._kids ? R('span', { style: { flexShrink: 0, fontSize: 'var(--ui-font-xxs-size)', lineHeight: '16px', padding: '0 6px', borderRadius: 10, background: 'var(--color-background-neutral-subtle)', color: 'var(--color-text-subtle)' } }, r._kids) : null),
+          R('div', { style: { ...C, color: 'var(--color-text-subtle)' } }, kd === 'locations' ? 'Location' : kd === 'subs' ? 'Sub-location' : r.type),
+          R('div', { title: r.id, style: { ...C, color: 'var(--color-text-subtle)' } }, R('span', { style: ell }, r.id)),
+          ...TABS.all.fields.map(([k, label, len]) => {
+            const has = TABS[kd].fields.some(fd => fd[0] === k);
+            if (!has) return R('div', { key: k, style: C }, R('span', { title: k === 'account' && kd === 'subs' ? 'Uses the account ID of its location' : undefined, style: { paddingLeft: 12, color: 'var(--color-text-subtlest)' } }, '—'));
+            const err = this.fieldError(kd, r, k, label, len);
+            return R('div', { key: k, title: err || undefined, style: { ...C, gap: 6 } },
+              R('div', { style: { width: 96, flexShrink: 0 } }, NS.Input ? R(NS.Input, { height: 32, value: r[k], placeholder: '—', invalid: !!err, onChange: e => this.setField(kd, r.id, k, len, val(e)) }) : r[k]),
+              err ? R('span', { className: 'ui-icon-warning', title: err, style: { fontSize: 16, cursor: 'help', color: 'var(--color-icon-alert)' } }) : null);
+          }));
+      })),
 
       downloadCsv: () => {
-        const src = isTree ? s.data.locations.flatMap(l => [{ ...l, type: 'Location', loc: '' }, ...(subsBy[l.name] || []).map(x => ({ ...x, type: 'Sub-location', account: '' }))]) : all;
+        const src = s.data.locations.flatMap(l => [{ ...l, type: 'Location', loc: '' }, ...(subsBy[l.name] || []).map(x => kindOf(x) === 'subs' ? { ...x, type: 'Sub-location', account: '' } : x)]);
         const body = src.map(r => t.csv.map(c => {
           const k = { lumana_id: 'id', location: 'loc', account_id: 'account', partition_id: 'partition', zone_id: 'zone' }[c] || c;
           const v = String(r[k] ?? ''); return /[",]/.test(v) ? `"${v.replace(/"/g, '""')}"` : v;
         }).join(','));
         const blob = new Blob([[t.csv.join(','), ...body].join('\n')], { type: 'text/csv' });
-        const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = `contact-id-${tab}.csv`; a.click();
+        const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'contact-id-mapping.csv'; a.click();
       },
       openCsv: () => this.setState({ csvOpen: true, csvRes: null }),
       closeCsv: () => this.setState({ csvOpen: false, csvRes: null }),
@@ -1116,7 +1168,7 @@ class Component extends DCLogic {
       applyCsv: () => {
         const map = Object.fromEntries(res.changes.map(c => [c.id, c.patch]));
         this.setState(st => ({ dirty: true, csvOpen: false, csvRes: null, data: Object.fromEntries(Object.entries(st.data).map(([k, list]) => [k, list.map(r => map[r.id] ? { ...r, ...map[r.id] } : r)])) }));
-        this.showToast(`${res.updated} ${t.label.toLowerCase()} updated from CSV`);
+        this.showToast(`${res.updated} ${res.updated === 1 ? 'item' : 'items'} updated from CSV`);
       },
       toast: s.toast,
     };

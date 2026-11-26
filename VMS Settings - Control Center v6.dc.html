@@ -49,7 +49,7 @@
 <div style="display:flex;flex-direction:column;font-size:var(--ui-font-xm-size);line-height:var(--ui-font-xm-height)">
 <div style="display:flex;align-items:center;gap:8px;height:36px;padding:0 8px;border-radius:4px;cursor:pointer" style-hover="background:var(--color-background-button-tertiary-gray-hover)"><span class="ui-icon-expand-arrow" style="width:16px;font-size:12px;transform:rotate(-90deg);color:var(--color-icon-default)"></span><span class="ui-icon-star" style="font-size:16px;color:var(--color-icon-default)"></span><span>Favorites</span></div>
 <div style="height:1px;margin:6px 0;background:var(--color-border-default)"></div>
-<sc-for list="{{ treeRows }}" as="n" hint-placeholder-count="12"><div onClick="{{ n.onSelect }}" title="{{ n.name }}" style="display:flex;align-items:center;gap:8px;height:36px;flex-shrink:0;padding:0 8px 0 {{ n.pad }}px;border-radius:4px;cursor:pointer;background:{{ n.bg }};color:{{ n.color }}" style-hover="background:var(--color-background-button-tertiary-gray-hover)"><span onClick="{{ n.onToggle }}" class="ui-icon-expand-arrow" style="width:16px;flex-shrink:0;text-align:center;font-size:12px;visibility:{{ n.chev }};transform:{{ n.rot }};transition:transform .3s;color:var(--color-icon-default)"></span><span class="{{ n.icon }}" style="font-size:16px;flex-shrink:0;color:{{ n.iconColor }}"></span><span style="flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ n.name }}</span></div></sc-for>
+<sc-for list="{{ treeRows }}" as="n" hint-placeholder-count="12"><div onClick="{{ n.onSelect }}" title="{{ n.tip }}" style="display:flex;align-items:center;gap:8px;height:36px;flex-shrink:0;padding:0 8px 0 {{ n.pad }}px;border-radius:4px;cursor:pointer;background:{{ n.bg }};color:{{ n.color }}" style-hover="background:var(--color-background-button-tertiary-gray-hover)"><span onClick="{{ n.onToggle }}" class="ui-icon-expand-arrow" style="width:16px;flex-shrink:0;text-align:center;font-size:12px;visibility:{{ n.chev }};transform:{{ n.rot }};transition:transform .3s;color:var(--color-icon-default)"></span><span class="{{ n.icon }}" style="font-size:16px;flex-shrink:0;color:{{ n.iconColor }}"></span><span style="flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ n.name }}</span></div></sc-for>
 <sc-if value="{{ treeEmpty }}" hint-placeholder-val="{{ false }}"><div style="padding:8px;font-size:var(--ui-font-xs-size);color:var(--color-text-subtlest)">Try to search for a different name.</div></sc-if>
 </div>
 </div>
@@ -73,19 +73,18 @@
 </div>
 <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
 <x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Search" placeholder="Search locations" value="{{ locQ }}" onChange="{{ setLocQ }}" hint-size="260px,40px" style="width:260px"></x-import>
-<div style="display:flex;align-items:center;gap:12px">
+<div style="width:220px"><x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Select" options="{{ schedFilterOpts }}" value="{{ schedFilter }}" onChange="{{ setSchedFilter }}" hint-size="220px,40px" style="width:100%"></x-import></div>
+<div style="display:flex;align-items:center;gap:12px;margin-left:auto">
 <span style="font-size:var(--ui-font-xs-size);color:var(--color-text-subtlest)">{{ armCount }}</span>
-<x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Button" text="Add location" type="default" iconClass="ui-icon-plus" onClick="{{ addArmRow }}" disabled="{{ addDisabled }}" hint-size="124px,32px"></x-import>
 </div>
 </div>
-<div style="overflow-x:auto">
+<div>
 <div style="display:grid;grid-template-columns:{{ armGridCols }};min-width:{{ armGridMin }};border:1px solid var(--color-border-default);border-radius:4px">
 <div style="padding:8px 12px;background:var(--color-elevation-surface-subtlest);font-size:var(--ui-font-s-size);line-height:var(--ui-font-s-height);font-weight:500;color:var(--color-text-subtle)">Location</div>
 <div style="padding:8px 12px;background:var(--color-elevation-surface-subtlest);font-size:var(--ui-font-s-size);line-height:var(--ui-font-s-height);font-weight:500;color:var(--color-text-subtle)">Account ID</div>
 <div style="display:{{ tzColDisplay }};padding:8px 12px;background:var(--color-elevation-surface-subtlest);font-size:var(--ui-font-s-size);line-height:var(--ui-font-s-height);font-weight:500;color:var(--color-text-subtle)">Timezone</div>
 <div style="display:{{ statusColDisplay }};padding:8px 12px;background:var(--color-elevation-surface-subtlest);font-size:var(--ui-font-s-size);line-height:var(--ui-font-s-height);font-weight:500;color:var(--color-text-subtle)">Arm type</div>
 <div style="padding:8px 12px;background:var(--color-elevation-surface-subtlest);font-size:var(--ui-font-s-size);line-height:var(--ui-font-s-height);font-weight:500;color:var(--color-text-subtle)">Arm schedule</div>
-<div style="padding:8px 12px;background:var(--color-elevation-surface-subtlest);font-size:var(--ui-font-s-size);line-height:var(--ui-font-s-height);font-weight:500;color:var(--color-text-subtle)"></div>
 <div style="padding:8px 12px;background:var(--color-elevation-surface-subtlest);font-size:var(--ui-font-s-size);line-height:var(--ui-font-s-height);font-weight:500;color:var(--color-text-subtle)"></div>
 <sc-for list="{{ locRows }}" as="l" hint-placeholder-count="8">
 <div title="{{ l.summary }}" style="padding:4px 12px;border-top:1px solid var(--color-border-default);display:flex;align-items:center;min-width:0">
@@ -96,8 +95,7 @@
 <div title="{{ l.tzLong }}" style="display:{{ tzColDisplay }};padding:4px 12px;border-top:1px solid var(--color-border-default);display:flex;align-items:center;min-width:0;font-size:var(--ui-font-xm-size);color:var(--color-text-subtle)">{{ l.tz }}</div>
 <div title="{{ l.summary }}" style="padding:4px 12px;border-top:1px solid var(--color-border-default);display:{{ statusColDisplay }};align-items:center;min-width:0"><x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Select" options="{{ armStatusOpts }}" value="{{ l.status }}" onChange="{{ l.onStatus }}" hint-size="100%,40px" style="width:100%"></x-import></div>
 <div title="{{ l.summary }}" style="padding:4px 12px;border-top:1px solid var(--color-border-default);display:flex;align-items:center;min-width:0"><x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Select" options="{{ armScheduleOpts }}" value="{{ l.schedule }}" placeholder="Select schedule" onChange="{{ l.onSchedule }}" hint-size="100%,40px" style="width:100%"></x-import></div>
-<div style="padding:4px 12px;border-top:1px solid var(--color-border-default);display:flex;align-items:center;min-width:0;justify-content:center;padding:4px 0"><span class="ui-icon-location" title="{{ l.nowText }}" style="font-size:20px;cursor:help;color:{{ l.nowColor }};display:{{ l.nowDisplay }}"></span></div>
-<div title="{{ l.summary }}" style="padding:4px 12px;border-top:1px solid var(--color-border-default);display:flex;align-items:center;min-width:0;justify-content:center"><x-import component-from-global-scope="LumanaDesignSystem_1b2e75.IconButton" iconClass="ui-icon-delete" noBorder="{{ true }}" onClick="{{ l.onRemove }}" hint-size="32px,32px"></x-import></div>
+<div title="{{ l.summary }}" style="padding:4px 12px;border-top:1px solid var(--color-border-default);display:flex;align-items:center;min-width:0;justify-content:center"><div title="Clear arm schedule" style="display:{{ l.clearDisplay }}"><x-import component-from-global-scope="LumanaDesignSystem_1b2e75.IconButton" iconClass="ui-icon-close" noBorder="{{ true }}" onClick="{{ l.onRemove }}" hint-size="32px,32px"></x-import></div></div>
 </sc-for>
 </div>
 </div>
@@ -355,6 +353,7 @@
 
 <div style="max-width:1100px;display:{{ wallDisplay }};flex-direction:column;gap:16px">
 <div style="font-size:var(--ui-font-xm-size);line-height:var(--ui-font-xm-height);color:var(--color-text-subtlest);max-width:760px;text-wrap:pretty">Select the walls to display in the Control Center</div>
+<div style="display:{{ ccPickDisplay }};align-items:center;gap:12px"><span style="font-size:var(--ui-font-m-size);line-height:var(--ui-font-m-height);font-weight:500">Control Center</span><div style="width:300px"><x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Select" options="{{ ccOpts }}" value="{{ ccId }}" onChange="{{ setCcId }}" hint-size="300px,40px" style="width:100%"></x-import></div></div>
 <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
 <x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Search" placeholder="Search walls" value="{{ wallQ }}" onChange="{{ setWallQ }}" hint-size="260px,40px" style="width:260px"></x-import>
 <span style="font-size:var(--ui-font-xs-size);color:var(--color-text-subtlest)">{{ wallCount }}</span>
@@ -378,6 +377,37 @@
 </sc-if>
 </div>
 
+<div style="max-width:1100px;display:{{ camDisplay }};flex-direction:column;gap:16px">
+<div style="font-size:var(--ui-font-xm-size);line-height:var(--ui-font-xm-height);color:var(--color-text-subtlest);max-width:760px;text-wrap:pretty">Select which cameras the Control Center can view live and play back</div>
+<div style="display:{{ ccPickDisplay }};align-items:center;gap:12px"><span style="font-size:var(--ui-font-m-size);line-height:var(--ui-font-m-height);font-weight:500">Control Center</span><div style="width:300px"><x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Select" options="{{ ccOpts }}" value="{{ ccId }}" onChange="{{ setCcId }}" hint-size="300px,40px" style="width:100%"></x-import></div></div>
+<div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+<x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Search" placeholder="Search cameras" value="{{ camQ }}" onChange="{{ setCamQ }}" hint-size="260px,40px" style="width:260px"></x-import>
+<span style="font-size:var(--ui-font-xs-size);color:var(--color-text-subtlest)">{{ camCount }}</span>
+</div>
+<div style="overflow-x:auto">
+<div style="display:grid;grid-template-columns:minmax(220px,1.4fr) minmax(200px,1.4fr) 120px 120px;min-width:660px;border:1px solid var(--color-border-default);border-radius:4px;font-size:var(--ui-font-xm-size);line-height:var(--ui-font-xm-height)">
+<div style="padding:8px 12px;background:var(--color-elevation-surface-subtlest);font-size:var(--ui-font-s-size);line-height:var(--ui-font-s-height);font-weight:500;color:var(--color-text-subtle)">Camera</div>
+<div style="padding:8px 12px;background:var(--color-elevation-surface-subtlest);font-size:var(--ui-font-s-size);line-height:var(--ui-font-s-height);font-weight:500;color:var(--color-text-subtle)">Location</div>
+<div style="padding:8px 12px;background:var(--color-elevation-surface-subtlest);font-size:var(--ui-font-s-size);line-height:var(--ui-font-s-height);font-weight:500;color:var(--color-text-subtle);display:flex;align-items:center;gap:8px"><x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Checkbox" checked="{{ liveAll }}" indeterminate="{{ liveSome }}" onChange="{{ toggleAllLive }}" hint-size="20px,20px"></x-import><span>Live view</span></div>
+<div style="padding:8px 12px;background:var(--color-elevation-surface-subtlest);font-size:var(--ui-font-s-size);line-height:var(--ui-font-s-height);font-weight:500;color:var(--color-text-subtle);display:flex;align-items:center;gap:8px"><x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Checkbox" checked="{{ playAll }}" indeterminate="{{ playSome }}" onChange="{{ toggleAllPlay }}" hint-size="20px,20px"></x-import><span>Playback</span></div>
+<sc-for list="{{ camRows }}" as="c" hint-placeholder-count="10">
+<div title="{{ c.name }}" style="padding:12px;border-top:1px solid var(--color-border-default);display:flex;align-items:center;gap:8px;min-width:0"><span class="ui-icon-camera" style="font-size:16px;flex-shrink:0;color:var(--color-icon-default)"></span><span style="font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ c.name }}</span></div>
+<div title="{{ c.where }}" style="padding:12px;border-top:1px solid var(--color-border-default);color:var(--color-text-subtle);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ c.where }}</div>
+<div style="padding:12px;border-top:1px solid var(--color-border-default);display:flex;align-items:center"><x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Checkbox" checked="{{ c.live }}" onChange="{{ c.onLive }}" hint-size="20px,20px"></x-import></div>
+<div style="padding:12px;border-top:1px solid var(--color-border-default);display:flex;align-items:center"><x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Checkbox" checked="{{ c.play }}" onChange="{{ c.onPlay }}" hint-size="20px,20px"></x-import></div>
+</sc-for>
+</div>
+</div>
+<sc-if value="{{ noCamRows }}" hint-placeholder-val="{{ false }}">
+<div style="padding:16px;text-align:center;font-size:var(--ui-font-xm-size);color:var(--color-text-subtlest)">Try adjusting your search.</div>
+</sc-if>
+<div style="display:flex;justify-content:flex-end;align-items:center;gap:8px;font-size:var(--ui-font-xs-size);color:var(--color-text-subtlest)">
+<span>{{ camPageInfo }}</span>
+<x-import component-from-global-scope="LumanaDesignSystem_1b2e75.IconButton" iconClass="ui-icon-backward" onClick="{{ camPrev }}" hint-size="32px,32px"></x-import>
+<x-import component-from-global-scope="LumanaDesignSystem_1b2e75.IconButton" iconClass="ui-icon-forward" onClick="{{ camNext }}" hint-size="32px,32px"></x-import>
+</div>
+</div>
+
 <div style="max-width:1100px;display:{{ mappingDisplay }};flex-direction:column;gap:16px">
 <div style="font-size:var(--ui-font-xm-size);line-height:var(--ui-font-xm-height);color:var(--color-text-subtlest);text-wrap:pretty">Match locations to accounts, sub-locations to partitions and cameras and devices to zones. Values can also be edited on each item's edit page.</div>
 <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
@@ -393,16 +423,29 @@
 <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
 <div style="flex:1;min-width:280px;font-size:var(--ui-font-xs-size);line-height:var(--ui-font-xs-height);color:var(--color-text-subtlest);text-wrap:pretty">{{ mappedSummary }}</div>
 <div style="display:flex;align-items:center;gap:8px">
-<x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Button" text="Expand all" type="default" onClick="{{ expandAll }}" disabled="{{ allOpen }}" hint-size="96px,32px"></x-import>
-<x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Button" text="Collapse all" type="default" onClick="{{ collapseAll }}" disabled="{{ noneOpen }}" hint-size="104px,32px"></x-import>
+<x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Button" text="Auto-assign IDs" type="default" onClick="{{ autoAssign }}" disabled="{{ autoFull }}" hint-size="128px,32px"></x-import>
+<x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Button" text="Clear all" type="default" onClick="{{ openClear }}" hint-size="88px,32px"></x-import>
+<div style="width:1px;height:20px;background:var(--color-border-default)"></div>
+<div title="{{ treeToggleTip }}" style="display:flex"><x-import component-from-global-scope="LumanaDesignSystem_1b2e75.IconButton" iconClass="{{ treeToggleIcon }}" onClick="{{ treeToggle }}" disabled="{{ treeToggleDisabled }}" hint-size="32px,32px"></x-import></div>
 </div>
+</div>
+<div style="display:{{ bulkDisplay }};flex-direction:column;gap:12px;padding:16px;border:1px solid var(--color-border-default);border-radius:4px;background:var(--color-elevation-surface-subtlest)">
+<div style="display:flex;align-items:center;gap:8px;min-width:0"><span class="{{ bulkIcon }}" style="font-size:16px;color:var(--color-icon-default)"></span><span style="font-size:var(--ui-font-m-size);line-height:var(--ui-font-m-height);font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Apply IDs to {{ bulkScope }}</span></div>
+<div style="display:flex;align-items:flex-end;gap:16px;flex-wrap:wrap">
+<div style="display:{{ bulkAcctDisplay }};flex-direction:column;gap:4px;width:140px"><span style="font-size:var(--ui-font-s-size);line-height:var(--ui-font-s-height);font-weight:500;color:var(--color-text-subtle)">Account ID</span><x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Input" height="{{ 32 }}" value="{{ bulkAccount }}" placeholder="Up to 8" invalid="{{ bulkAcctBad }}" onChange="{{ setBulkAccount }}" hint-size="140px,32px"></x-import></div>
+<div style="display:{{ bulkSubDisplay }};flex-direction:column;gap:4px;width:100px"><span style="font-size:var(--ui-font-s-size);line-height:var(--ui-font-s-height);font-weight:500;color:var(--color-text-subtle)">Partition ID</span><x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Input" height="{{ 32 }}" value="{{ bulkPartition }}" placeholder="00" invalid="{{ bulkPartBad }}" onChange="{{ setBulkPartition }}" hint-size="100px,32px"></x-import></div>
+<div style="display:{{ bulkSubDisplay }};flex-direction:column;gap:4px;width:150px"><span style="font-size:var(--ui-font-s-size);line-height:var(--ui-font-s-height);font-weight:500;color:var(--color-text-subtle)">Number zones from</span><x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Input" height="{{ 32 }}" value="{{ bulkZone }}" placeholder="000" invalid="{{ bulkZoneBad }}" onChange="{{ setBulkZone }}" hint-size="150px,32px"></x-import></div>
+<div onClick="{{ toggleBulkOverwrite }}" style="display:flex;align-items:center;gap:8px;height:32px;cursor:pointer;font-size:var(--ui-font-xm-size);line-height:var(--ui-font-xm-height)"><x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Checkbox" checked="{{ bulkOverwrite }}" hint-size="20px,20px"></x-import><span>Overwrite existing values</span></div>
+<div style="margin-left:auto"><x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Button" text="{{ bulkBtn }}" type="primary" disabled="{{ bulkDisabled }}" onClick="{{ applyBulk }}" hint-size="140px,32px"></x-import></div>
+</div>
+<div style="font-size:var(--ui-font-xs-size);line-height:var(--ui-font-xs-height);color:{{ bulkHintColor }}">{{ bulkHint }}</div>
 </div>
 <div style="overflow-x:auto">
 <div style="display:grid;grid-template-columns:minmax(260px,1fr) 120px 140px 150px 150px 150px;min-width:970px;border:1px solid var(--color-border-default);border-radius:4px;font-size:var(--ui-font-xm-size);line-height:var(--ui-font-xm-height)">
 <div style="padding:10px 12px;background:var(--color-elevation-surface-subtlest);border-bottom:1px solid var(--color-border-default);font-size:var(--ui-font-s-size);line-height:var(--ui-font-s-height);font-weight:500;color:var(--color-text-subtle);display:flex;align-items:center;gap:6px;min-width:0">Name</div>
 <div style="padding:10px 12px;background:var(--color-elevation-surface-subtlest);border-bottom:1px solid var(--color-border-default);font-size:var(--ui-font-s-size);line-height:var(--ui-font-s-height);font-weight:500;color:var(--color-text-subtle);display:flex;align-items:center;gap:6px;min-width:0">Type</div>
 <div style="padding:10px 12px;background:var(--color-elevation-surface-subtlest);border-bottom:1px solid var(--color-border-default);font-size:var(--ui-font-s-size);line-height:var(--ui-font-s-height);font-weight:500;color:var(--color-text-subtle);display:flex;align-items:center;gap:6px;min-width:0">Lumana ID</div>
-<div style="padding:10px 12px;background:var(--color-elevation-surface-subtlest);border-bottom:1px solid var(--color-border-default);font-size:var(--ui-font-s-size);line-height:var(--ui-font-s-height);font-weight:500;color:var(--color-text-subtle);display:flex;align-items:center;gap:6px;min-width:0">Account ID (4)<span class="ui-icon-info" title="Locations can share account IDs. Sub-locations use their location's account." style="font-size:14px;cursor:help;color:var(--color-icon-default)"></span></div>
+<div style="padding:10px 12px;background:var(--color-elevation-surface-subtlest);border-bottom:1px solid var(--color-border-default);font-size:var(--ui-font-s-size);line-height:var(--ui-font-s-height);font-weight:500;color:var(--color-text-subtle);display:flex;align-items:center;gap:6px;min-width:0">Account ID (8)<span class="ui-icon-info" title="Up to 8 characters. Locations can share account IDs. Sub-locations use their location's account." style="font-size:14px;cursor:help;color:var(--color-icon-default)"></span></div>
 <div style="padding:10px 12px;background:var(--color-elevation-surface-subtlest);border-bottom:1px solid var(--color-border-default);font-size:var(--ui-font-s-size);line-height:var(--ui-font-s-height);font-weight:500;color:var(--color-text-subtle);display:flex;align-items:center;gap:6px;min-width:0">Partition ID (2)<span class="ui-icon-info" title="Locations and sub-locations can share partition IDs" style="font-size:14px;cursor:help;color:var(--color-icon-default)"></span></div>
 <div style="padding:10px 12px;background:var(--color-elevation-surface-subtlest);border-bottom:1px solid var(--color-border-default);font-size:var(--ui-font-s-size);line-height:var(--ui-font-s-height);font-weight:500;color:var(--color-text-subtle);display:flex;align-items:center;gap:6px;min-width:0">Zone ID (3)<span class="ui-icon-info" title="Each camera and device in a location needs a unique zone ID" style="font-size:14px;cursor:help;color:var(--color-icon-default)"></span></div>
 {{ mapBody }}
@@ -424,6 +467,9 @@
 
 <input type="file" accept=".csv,text/csv" ref="{{ fileRef }}" onChange="{{ onFile }}" style="display:none">
 
+<div class="{{ themeClass }}" style="position:fixed;inset:0;z-index:20;display:{{ clearDisplay }};align-items:center;justify-content:center;background:rgba(16,24,40,.6);padding:24px;font-family:var(--font-sans)">
+<x-import component-from-global-scope="LumanaDesignSystem_1b2e75.ConfirmDialog" title="Clear all IDs" confirmText="Clear all" tone="danger" onConfirm="{{ clearAllIds }}" onCancel="{{ closeClear }}" hint-size="440px,200px">Are you sure you want to clear all account, partition and zone IDs? Locations, sub-locations, cameras and devices will no longer be mapped.</x-import>
+</div>
 <div class="{{ themeClass }}" style="position:fixed;inset:0;z-index:20;display:{{ csvDisplay }};align-items:center;justify-content:center;background:rgba(16,24,40,.6);padding:24px;font-family:var(--font-sans)">
 <x-import component-from-global-scope="LumanaDesignSystem_1b2e75.Modal" title="{{ csvTitle }}" width="{{ 560 }}" compact="{{ true }}" onClose="{{ closeCsv }}" hint-size="560px,360px">
 <div style="display:flex;flex-direction:column;gap:16px">
@@ -474,7 +520,7 @@
 </sc-if>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;theme&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;dark&quot;,&quot;light&quot;],&quot;default&quot;:&quot;dark&quot;,&quot;tsType&quot;:&quot;'dark'|'light'&quot;},&quot;showPhase2&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Scope&quot;},&quot;timezones&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;multiple&quot;,&quot;single&quot;],&quot;default&quot;:&quot;multiple&quot;,&quot;tsType&quot;:&quot;'multiple'|'single'&quot;,&quot;section&quot;:&quot;Demo data&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;theme&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;dark&quot;,&quot;light&quot;],&quot;default&quot;:&quot;dark&quot;,&quot;tsType&quot;:&quot;'dark'|'light'&quot;},&quot;showPhase2&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Scope&quot;},&quot;timezones&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;multiple&quot;,&quot;single&quot;],&quot;default&quot;:&quot;multiple&quot;,&quot;tsType&quot;:&quot;'multiple'|'single'&quot;,&quot;section&quot;:&quot;Demo data&quot;},&quot;controlCenters&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;multiple&quot;,&quot;single&quot;],&quot;default&quot;:&quot;multiple&quot;,&quot;tsType&quot;:&quot;'multiple'|'single'&quot;,&quot;section&quot;:&quot;Demo data&quot;}}">
 const SCHEDULES = [
   { value: 'business', label: 'Business hours', detail: 'Mon–Fri, 08:00–18:00' },
   { value: 'after', label: 'After hours', detail: 'Mon–Fri 18:00–08:00, all day Sat–Sun' },
@@ -532,11 +578,28 @@ const DEVS = [
   { id: 'cam_b6f9382c', sub: 'sub_e61a2c78', ip: '192.168.10.21', name: 'Lobby', type: 'Camera', loc: 'Head office', zone: '001' },
   { id: 'spk_c70a493d', sub: 'sub_e61a2c78', ip: '192.168.10.80', name: 'Lobby speaker', type: 'Speaker', loc: 'Head office', zone: '' },
 ];
+{
+  const SUB_NAMES = ['Entrance', 'Parking lot', 'Back office', 'Loading dock', 'Storage', 'Sales floor', 'Perimeter', 'Server room', 'Rooftop'];
+  const CAM_NAMES = ['Entrance — Outside', 'Entrance — Inside', 'Cash desk', 'Corridor', 'Rear door', 'Parking — North', 'Parking — South', 'Aisle 1', 'Aisle 2', 'Loading bay', 'Fence line', 'Stairwell', 'Elevator lobby', 'Yard overview'];
+  const DEV_TYPES = [['Door', 'dor', 'Door'], ['Sensor', 'sen', 'Motion sensor'], ['Speaker', 'spk', 'Speaker']];
+  const hx = n => (n >>> 0).toString(16).padStart(8, '0').slice(-8);
+  let seq = 0;
+  const addCam = (l, sub, k, i) => DEVS.push({ id: 'cam_' + hx(0x5c0000 + (++seq) * 4099), sub, ip: `10.${60 + (i % 180)}.${k + 1}.${10 + seq % 200}`, name: CAM_NAMES[(k + i) % CAM_NAMES.length] + (k >= CAM_NAMES.length ? ` ${k + 1}` : ''), type: 'Camera', loc: l.name, zone: '' });
+  [['Fourth Street Industrial Park', ['Fence line', 'Parking lot']], ['Warehouse 5', ['Racking A', 'Racking B', 'Office']], ['Head office', ['Floor 2', 'Parking garage']]].forEach(([loc, names]) =>
+    names.forEach((nm, j) => { const id = 'sub_' + hx(0x7e0000 + (++seq) * 6151); SUBS.push({ id, name: nm, loc, partition: '' }); for (let k = 0; k < 3 + j; k++) addCam({ name: loc }, id, k, seq); }));
+  LOCS.slice(4).forEach((l, i) => {
+    const nSubs = i % 4 === 0 ? 0 : 1 + (i % 3), subIds = [];
+    for (let j = 0; j < nSubs; j++) { const id = 'sub_' + hx(0x9a0000 + (++seq) * 6151); subIds.push(id); SUBS.push({ id, name: SUB_NAMES[(i + j * 2) % SUB_NAMES.length], loc: l.name, partition: '' }); }
+    const nCams = 3 + (i * 7) % 9;
+    for (let k = 0; k < nCams; k++) addCam(l, subIds.length && k % 4 !== 0 ? subIds[k % subIds.length] : undefined, k, i);
+    if (i % 3 === 0) { const [type, pre, nm] = DEV_TYPES[i % 9 / 3 | 0]; DEVS.push({ id: pre + '_' + hx(0xd40000 + (++seq) * 4099), sub: subIds[0], ip: `10.${60 + (i % 180)}.9.${40 + i % 50}`, name: nm, type, loc: l.name, zone: '' }); }
+  });
+}
 const TABS = {
-  locations: { label: 'Locations', fields: [['account', 'Account ID', 4], ['partition', 'Partition ID', 2]], csv: ['lumana_id', 'type', 'name', 'location', 'account_id', 'partition_id'], key: { account_id: 'account', partition_id: 'partition' } },
+  locations: { label: 'Locations', fields: [['account', 'Account ID', 8], ['partition', 'Partition ID', 2]], csv: ['lumana_id', 'type', 'name', 'location', 'account_id', 'partition_id'], key: { account_id: 'account', partition_id: 'partition' } },
   subs: { label: 'Sub-locations', fields: [['partition', 'Partition ID', 2]], csv: ['lumana_id', 'name', 'location', 'partition_id'], key: { partition_id: 'partition' } },
   devices: { label: 'Cameras & devices', fields: [['zone', 'Zone ID', 3]], csv: ['lumana_id', 'name', 'type', 'location', 'zone_id'], key: { zone_id: 'zone' } },
-  all: { label: 'Locations, cameras & devices', fields: [['account', 'Account ID', 4], ['partition', 'Partition ID', 2], ['zone', 'Zone ID', 3]], csv: ['lumana_id', 'type', 'name', 'location', 'ip', 'account_id', 'partition_id', 'zone_id'], key: { account_id: 'account', partition_id: 'partition', zone_id: 'zone' } },
+  all: { label: 'Locations, cameras & devices', fields: [['account', 'Account ID', 8], ['partition', 'Partition ID', 2], ['zone', 'Zone ID', 3]], csv: ['lumana_id', 'type', 'name', 'location', 'ip', 'account_id', 'partition_id', 'zone_id'], key: { account_id: 'account', partition_id: 'partition', zone_id: 'zone' } },
 };
 const KINDS_OF = ['locations', 'subs', 'devices'];
 const kindOfId = id => id.startsWith('loc_') ? 'locations' : id.startsWith('sub_') ? 'subs' : 'devices';
@@ -618,32 +681,87 @@ const clone = o => JSON.parse(JSON.stringify(o));
 
 class Component extends DCLogic {
   state = {
-    page: 'arming', locQ: '',
+    page: 'arming', locQ: '', schedFilter: 'all',
     armPage: 0, mapPage: 0,
     armRows: [['loc_7f3a91c2','armed','after'],['loc_2b8e44d0','type_1','business'],['loc_45ef6a13','type_2','night'],
       ...[1,2,4,5,7,8,10,11,13,14,16,17,19,20,22,23,25,26,28,29,31,32,34,35,37].map((n, k) => [LOCS[3 + n].id, k % 3 === 1 ? 'type_1' : k % 3 === 2 ? 'type_2' : 'armed', SCHEDULES[k % SCHEDULES.length].value])]
       .map(([locId, status, schedule], k) => ({ key: k + 1, locId, status, schedule })),
     orgOpen: false, open: { 'Fourth Street Industrial Park': true, 'Warehouse 3': true, 'Head office': true }, tab: 'all', q: '', filter: 'all',
     sops: clone(SOPS), sopQ: '', sopSort: 'modified', draft: null, stepK: null,
-    flyOpen: false, flyTop: 150, treeQ: '', sel: { type: 'all' }, treeOpen: { all: true }, subOpen: true, wallQ: '', wallOn: ['w_perim', 'w_docks', 'w_lobby', 'w_gates'],
+    flyOpen: false, flyTop: 150, treeQ: '', sel: { type: 'all' }, treeOpen: { all: true }, subOpen: true, wallQ: '', wallOnBy: { cc_dallas: ['w_perim', 'w_docks', 'w_lobby', 'w_gates'], cc_backup: ['w_perim'] },
+    ccId: 'cc_dallas', camQ: '', camPage: 0, camPerm: {},
     contacts: clone(CONTACTS), ctScope: 'account', ctQ: '', ctDraft: null, ctShow: {},
     armSchedule: 'after',
     armTypes: [{ id: 1, name: 'Home', schedule: 'night' }, { id: 2, name: 'Away', schedule: 'after' }],
-    data: { locations: clone(LOCS), subs: clone(SUBS), devices: clone(DEVS) },
+    data: { locations: clone(LOCS).map(x => ({ ...x, account: '', partition: '' })), subs: clone(SUBS).map(x => ({ ...x, partition: '' })), devices: clone(DEVS).map(x => ({ ...x, zone: '' })) },
     dirty: false, csvOpen: false, csvRes: null, csvFileName: '', toast: '',
   };
   fileRef = React.createRef();
 
-  fieldValid(v, len) { return v === '' || (v.length === len && HEX.test(v)); }
+  fieldValid(v, len) { return v === '' || ((len === 8 ? v.length <= len : v.length === len) && HEX.test(v)); }
 
   zoneConflict(r, list) { return r.zone ? (list || this.state.data.devices).find(d => d.id !== r.id && d.loc === r.loc && d.zone === r.zone) : null; }
   fieldError(tab, r, k, label, len) {
-    if (!this.fieldValid(r[k], len)) return `${label} must be ${len} characters, using 0–9 and A–F`;
+    if (!this.fieldValid(r[k], len)) return `${label} must be ${len === 8 ? 'up to ' : ''}${len} characters, using 0–9 and A–F`;
     if (tab === 'devices' && k === 'zone') { const c = this.zoneConflict(r); if (c) return `Zone ${r.zone} is already used by ${c.name}. Each device in a location needs its own zone ID.`; }
     return '';
   }
   rowInvalid(tab, r) { return TABS[tab].fields.some(([k, label, len]) => !!this.fieldError(tab, r, k, label, len)); }
   rowMapped(tab, r) { return TABS[tab].fields.some(([k]) => r[k] !== ''); }
+
+  autoAssign() {
+    this.setState(s => {
+      const L = s.data.locations, hex = n => n.toString(16).toUpperCase().padStart(8, '0').slice(-8);
+      const have = L.find(l => l.account);
+      const base = have && /^[0-9A-F]+$/.test(have.account) ? parseInt(have.account, 16) : 0x10000000 + Math.floor(Math.random() * 0x6fffffff);
+      let n = 0;
+      const locs = L.map((l, i) => { const p = { ...l };
+        if (!p.account) { p.account = hex(base + Math.floor(i / 100)); n++; }
+        if (!p.partition) { p.partition = String(i % 100).padStart(2, '0'); n++; }
+        return p; });
+      const partOf = Object.fromEntries(locs.map(l => [l.name, l.partition]));
+      const subs = s.data.subs.map(x => x.partition || !partOf[x.loc] ? x : (n++, { ...x, partition: partOf[x.loc] }));
+      const used = {}; s.data.devices.forEach(d => { if (d.zone) (used[d.loc] = used[d.loc] || new Set()).add(d.zone); });
+      const next = {};
+      const devices = s.data.devices.map(d => { if (d.zone) return d;
+        const u = used[d.loc] = used[d.loc] || new Set(); let c = next[d.loc] || 0;
+        while (c < 1000 && u.has(String(c).padStart(3, '0'))) c++;
+        if (c >= 1000) return d;
+        const z = String(c).padStart(3, '0'); u.add(z); next[d.loc] = c + 1; n++; return { ...d, zone: z }; });
+      this._assigned = n;
+      return { dirty: true, mapPage: 0, data: { ...s.data, locations: locs, subs, devices } };
+    }, () => this.showToast(this._assigned ? `${this._assigned} IDs assigned` : 'All IDs are already assigned'));
+  }
+  bulkCompute(s) {
+    const si = this.selInfo(s), b = s.bulk || {};
+    if (si && si.camId) return null;
+    const isAll = !si;
+    const acct = (b.account || ''), part = isAll ? '' : (b.partition || ''), zf = isAll ? '' : (b.zone || ''), ow = !!b.overwrite;
+    const bad = { acct: acct !== '' && !/^[0-9A-F]{1,8}$/.test(acct), part: part !== '' && !/^[0-9A-F]{2}$/.test(part), zone: zf !== '' && !/^[0-9]{1,3}$/.test(zf) };
+    const isLoc = isAll || !si.subId, put = (cur, v) => v !== '' && (ow || cur === '') && cur !== v;
+    let n = 0;
+    const locations = s.data.locations.map(l => { if (!isAll && (l.id !== si.locId || !isLoc)) return l; const p = { ...l };
+      if (!bad.acct && put(l.account, acct)) { p.account = acct; n++; }
+      if (!bad.part && put(l.partition, part)) { p.partition = part; n++; } return p; });
+    const subs = isAll ? s.data.subs : s.data.subs.map(x => { if (x.loc !== si.locName || (si.subId && x.id !== si.subId)) return x;
+      if (!bad.part && put(x.partition, part)) { n++; return { ...x, partition: part }; } return x; });
+    let devices = s.data.devices;
+    if (zf !== '' && !bad.zone) {
+      const inScope = d => d.loc === si.locName && (!si.subId || d.sub === si.subId);
+      const used = new Set(s.data.devices.filter(d => d.loc === si.locName && d.zone && (!inScope(d) || !ow)).map(d => d.zone));
+      let c = +zf;
+      devices = s.data.devices.map(d => { if (!inScope(d) || (!ow && d.zone)) return d;
+        while (c < 1000 && used.has(String(c).padStart(3, '0'))) c++;
+        if (c >= 1000) return d;
+        const z = String(c++).padStart(3, '0'); used.add(z); if (z === d.zone) return d; n++; return { ...d, zone: z }; });
+    }
+    const scopeName = isAll ? 'all locations' : si.subId ? `${(s.data.subs.find(x => x.id === si.subId) || {}).name} (${si.locName})` : si.locName;
+    return { n, bad, isLoc, isAll, scopeName, data: { locations, subs, devices } };
+  }
+  clearAllIds() {
+    this.setState(s => ({ dirty: true, clearOpen: false, data: { locations: s.data.locations.map(x => ({ ...x, account: '', partition: '' })), subs: s.data.subs.map(x => ({ ...x, partition: '' })), devices: s.data.devices.map(x => ({ ...x, zone: '' })) } }));
+    this.showToast('All IDs cleared');
+  }
 
   setField(tab, id, k, len, raw) {
     const v = String(raw).toUpperCase().replace(/\s/g, '').slice(0, len);
@@ -705,13 +823,17 @@ class Component extends DCLogic {
     const used = new Set(s.armRows.map(x => x.locId).filter(Boolean));
     const q = s.locQ.toLowerCase();
     const si = this.selInfo(s);
-    const list = s.armRows.filter(x => (!si || !x.locId || x.locId === si.locId) && (!q || !x.locId || byId[x.locId].name.toLowerCase().includes(q)));
+    const armBy = Object.fromEntries(s.armRows.filter(x => x.locId).map(x => [x.locId, x]));
+    const all = s.data.locations.map(l => armBy[l.id] || { key: 'L' + l.id, locId: l.id, status: 'armed', schedule: '' });
+    const sf = s.schedFilter || 'all';
+    const list = all.filter(x => (!si || x.locId === si.locId) && (!q || byId[x.locId].name.toLowerCase().includes(q)) && (sf === 'all' || (sf === 'none' ? !x.schedule : x.schedule === sf)));
     const pages = Math.max(1, Math.ceil(list.length / PER)), pg = Math.min(s.armPage, pages - 1);
-    const upd = (key, patch) => this.setState(st => ({ dirty: true, armRows: st.armRows.map(x => x.key === key ? { ...x, ...patch } : x) }));
-    const configured = s.armRows.filter(x => x.locId).length;
+    const upd = (key, patch) => this.setState(st => { const base = all.find(x => x.key === key), has = st.armRows.some(x => x.locId === base.locId);
+      return { dirty: true, armRows: has ? st.armRows.map(x => x.locId === base.locId ? { ...x, ...patch } : x) : [...st.armRows, { ...base, ...patch }] }; });
+    const configured = all.filter(x => x.schedule).length;
     return {
-      armGridCols: ['minmax(220px,1.6fr)', '96px', multiTz ? '90px' : null, (this.props.showPhase2 ?? true) ? 'minmax(170px,1fr)' : null, 'minmax(190px,1.1fr)', '36px', '44px'].filter(Boolean).join(' '),
-      armGridMin: (560 + (multiTz ? 90 : 0) + ((this.props.showPhase2 ?? true) ? 200 : 0)) + 'px',
+      armGridCols: ['minmax(220px,1.6fr)', '96px', multiTz ? '90px' : null, (this.props.showPhase2 ?? true) ? 'minmax(170px,1fr)' : null, 'minmax(190px,1.1fr)', '44px'].filter(Boolean).join(' '),
+      armGridMin: (524 + (multiTz ? 90 : 0) + ((this.props.showPhase2 ?? true) ? 200 : 0)) + 'px',
       tzColDisplay: multiTz ? 'flex' : 'none',
       tzNote: multiTz ? 'Schedules run in each location\'s local time.' : 'All locations use Central European Time.',
       statusColDisplay: (this.props.showPhase2 ?? true) ? 'flex' : 'none',
@@ -740,7 +862,7 @@ class Component extends DCLogic {
             return sc.value === '247' ? `${armed} at all times.` : `${armed} ${sc.detail}${tzs}. Disarmed outside the schedule.`;
           })(),
           onLoc: v => upd(x.key, { locId: v }), onStatus: v => upd(x.key, { status: v }), onSchedule: v => upd(x.key, { schedule: v }),
-          onRemove: () => this.setState(st => ({ dirty: true, armRows: st.armRows.filter(y => y.key !== x.key) })) };
+          clearDisplay: x.schedule ? 'flex' : 'none', onRemove: () => upd(x.key, { schedule: '' }) };
       }),
       noLocRows: list.length === 0,
       noLocText: q ? 'Try adjusting your search.' : 'Add a location to arm it automatically on a schedule.',
@@ -841,19 +963,50 @@ class Component extends DCLogic {
     };
   }
   wallVals(s, val) {
-    const q = s.wallQ.toLowerCase(), on = new Set(s.wallOn);
+    const wallOn = s.wallOnBy[s.ccId] || [], q = s.wallQ.toLowerCase(), on = new Set(wallOn);
     const si = this.selInfo(s);
     const list = WALLS.filter(w => (!si || w.locs === 'All locations' || w.locs.split(', ').includes(si.locName)) && (!q || w.name.toLowerCase().includes(q) || w.locs.toLowerCase().includes(q)));
     const shownIn = list.filter(w => on.has(w.id)).length;
-    const set = ids => this.setState({ wallOn: ids, dirty: true });
+    const set = ids => this.setState(st => ({ wallOnBy: { ...st.wallOnBy, [st.ccId]: ids }, dirty: true }));
     return {
       wallQ: s.wallQ, setWallQ: v => this.setState({ wallQ: val(v) || '' }),
       wallCount: `${on.size} of ${WALLS.length} walls displayed in the Control Center`,
       wallAll: list.length > 0 && shownIn === list.length, wallSome: shownIn > 0 && shownIn < list.length,
-      toggleAllWalls: () => set(shownIn === list.length ? s.wallOn.filter(id => !list.some(w => w.id === id)) : [...new Set([...s.wallOn, ...list.map(w => w.id)])]),
+      toggleAllWalls: () => set(shownIn === list.length ? wallOn.filter(id => !list.some(w => w.id === id)) : [...new Set([...wallOn, ...list.map(w => w.id)])]),
       wallRows: list.map(w => ({ name: w.name, cams: w.cams, locs: w.locs, on: on.has(w.id),
-        onToggle: () => set(on.has(w.id) ? s.wallOn.filter(id => id !== w.id) : [...s.wallOn, w.id]) })),
+        onToggle: () => set(on.has(w.id) ? wallOn.filter(id => id !== w.id) : [...wallOn, w.id]) })),
       noWallRows: list.length === 0,
+    };
+  }
+  camVals(s, val) {
+    const multi = (this.props.controlCenters ?? 'multiple') === 'multiple';
+    const CCS = multi ? [{ value: 'cc_dallas', label: 'Lumana Control Center #1' }, { value: 'cc_backup', label: 'Lumana Control Center #2' }] : [{ value: 'cc_dallas', label: 'Lumana Control Center #1' }];
+    const cc = multi ? s.ccId : 'cc_dallas', si = this.selInfo(s), q = s.camQ.trim().toLowerCase(), PER = 20;
+    const subName = Object.fromEntries(s.data.subs.map(x => [x.id, x.name]));
+    const all = s.data.devices.filter(d => d.type === 'Camera');
+    const def = (d, i) => cc === 'cc_dallas' ? { live: true, play: i % 4 !== 3 } : { live: i % 3 === 0, play: false };
+    const permOf = (d, i) => ((s.camPerm[cc] || {})[d.id]) || def(d, i);
+    const idx = Object.fromEntries(all.map((d, i) => [d.id, i]));
+    const list = all.filter(d => (!si || (si.camId ? d.id === si.camId : si.subId ? d.sub === si.subId : d.loc === si.locName)) && (!q || d.name.toLowerCase().includes(q) || d.loc.toLowerCase().includes(q) || (d.ip || '').includes(q)));
+    const pages = Math.max(1, Math.ceil(list.length / PER)), pg = Math.min(s.camPage, pages - 1);
+    const setMany = (ids, k, v) => this.setState(st => { const cur = { ...(st.camPerm[cc] || {}) };
+      ids.forEach(id => { const d = all[idx[id]]; cur[id] = { ...(cur[id] || def(d, idx[id])), [k]: v }; }); return { dirty: true, camPerm: { ...st.camPerm, [cc]: cur } }; });
+    const nLive = all.filter((d, i) => permOf(d, i).live).length, nPlay = all.filter((d, i) => permOf(d, i).play).length;
+    const lOn = list.filter(d => permOf(d, idx[d.id]).live).length, pOn = list.filter(d => permOf(d, idx[d.id]).play).length;
+    return {
+      ccPickDisplay: multi ? 'flex' : 'none', ccOpts: CCS, ccId: cc, setCcId: v => this.setState({ ccId: val(v) || 'cc_dallas', camPage: 0 }),
+      camQ: s.camQ, setCamQ: v => this.setState({ camQ: val(v) || '', camPage: 0 }),
+      camCount: `${nLive} of ${all.length} cameras with live view, ${nPlay} with playback`,
+      liveAll: list.length > 0 && lOn === list.length, liveSome: lOn > 0 && lOn < list.length,
+      playAll: list.length > 0 && pOn === list.length, playSome: pOn > 0 && pOn < list.length,
+      toggleAllLive: () => setMany(list.map(d => d.id), 'live', lOn !== list.length),
+      toggleAllPlay: () => setMany(list.map(d => d.id), 'play', pOn !== list.length),
+      camRows: list.slice(pg * PER, pg * PER + PER).map(d => { const pm = permOf(d, idx[d.id]);
+        return { key: d.id, name: d.name, where: d.sub && subName[d.sub] ? `${d.loc} / ${subName[d.sub]}` : d.loc, live: pm.live, play: pm.play,
+          onLive: () => setMany([d.id], 'live', !pm.live), onPlay: () => setMany([d.id], 'play', !pm.play) }; }),
+      noCamRows: list.length === 0,
+      camPageInfo: list.length ? `${pg * PER + 1}–${Math.min(list.length, pg * PER + PER)} of ${list.length}` : '0 of 0',
+      camPrev: () => this.setState({ camPage: Math.max(0, pg - 1) }), camNext: () => this.setState({ camPage: Math.min(pages - 1, pg + 1) }),
     };
   }
   ctVals(s, val) {
@@ -939,12 +1092,25 @@ class Component extends DCLogic {
     const q = s.treeQ.trim().toLowerCase(), sl = s.sel || { type: 'all' }, open = s.treeOpen;
     const hit = n => !q || n.toLowerCase().includes(q);
     const toggle = k => ev => { ev && ev.stopPropagation && ev.stopPropagation(); this.setState(st => ({ treeOpen: { ...st.treeOpen, [k]: !st.treeOpen[k] } })); };
-    const pick = (type, id, extra) => () => this.setState(st => ({ sel: { type, id }, armPage: 0, mapPage: 0, ...(extra || {}), treeOpen: id ? { ...st.treeOpen, all: true } : st.treeOpen }));
+    const expandFor = (st, type, id) => {
+      const o = { ...st.open };
+      if (type === 'loc') { const l = st.data.locations.find(x => x.id === id); if (l) { o[l.name] = true; st.data.subs.filter(x => x.loc === l.name).forEach(x => { o['S' + x.id] = true; }); } }
+      if (type === 'sub') { const x = st.data.subs.find(y => y.id === id); if (x) { o[x.loc] = true; o['S' + x.id] = true; } }
+      if (type === 'cam') { const d = st.data.devices.find(y => y.id === id); if (d) { o[d.loc] = true; if (d.sub) o['S' + d.sub] = true; } }
+      return o; };
+    const pick = (type, id, extra) => () => this.setState(st => ({ sel: { type, id }, armPage: 0, mapPage: 0, camPage: 0, ...(extra || {}), open: expandFor(st, type, id), bulk: {}, treeOpen: id ? { ...st.treeOpen, all: true } : st.treeOpen }));
     const row = (key, type, id, name, depth, icon, kids, isOpen, extra) => { const on = sl.type === type && (type === 'all' || sl.id === id);
-      return { key, name, icon, pad: 8 + depth * 20, chev: kids ? 'visible' : 'hidden', rot: isOpen ? 'none' : 'rotate(-90deg)',
+      return { key, name, tip: name, icon, pad: 8 + depth * 20, chev: kids ? 'visible' : 'hidden', rot: isOpen ? 'none' : 'rotate(-90deg)',
         bg: on ? 'var(--color-background-selected-active)' : 'transparent', color: on ? 'var(--color-text-selected)' : 'inherit', iconColor: on ? 'var(--color-icon-selected)' : 'var(--color-icon-default)',
         onSelect: pick(type, id, extra), onToggle: kids ? toggle(key) : undefined }; };
     const rows = [], cams = s.data.devices.filter(d => d.type === 'Camera');
+    const tzOf = l => (this.props.timezones ?? 'multiple') === 'multiple' ? l.tzUS : 'Europe/Berlin';
+    const armSched = {}; s.armRows.forEach(x => { if (x.locId && x.schedule) armSched[x.locId] = x.schedule; });
+    const armNow = l => { const sc = SCHEDULES.find(v => v.value === armSched[l.id]); if (!sc) return null;
+      const tz = tzOf(l), n = localNow(tz), fn = SCHED_FN[sc.value], on = fn(n.d, n.m), left = untilChange(fn, n.d, n.m);
+      const failed = on && ['loc_45ef6a13', LOCS[8].id, LOCS[20].id].includes(l.id);
+      return { text: (failed ? 'Armed, 2 devices failed to arm' : on ? 'Armed' : 'Disarmed') + ` · now ${n.label} local` + (left == null ? '' : on ? `, disarms in ${fmtDur(left)}` : `, arms in ${fmtDur(left)}`),
+        color: failed ? 'var(--color-icon-warning)' : on ? 'var(--color-icon-alert)' : null }; };
     rows.push(row('all', 'all', null, 'All locations', 0, 'ui-icon-location', true, open.all || !!q, { ctScope: 'account' }));
     let any = false;
     if (open.all || q) s.data.locations.forEach(l => {
@@ -953,7 +1119,8 @@ class Component extends DCLogic {
       if (!hit(l.name) && !subHits.length && !camHits.length) return;
       any = true;
       const k = 'L' + l.id, isOpen = q ? (subHits.length + camHits.length > 0) : !!open[k];
-      rows.push(row(k, 'loc', l.id, l.name, 1, 'ui-icon-location', subs.length + lc.length > 0, isOpen, { ctScope: l.id }));
+      { const r = row(k, 'loc', l.id, l.name, 1, 'ui-icon-location', subs.length + lc.length > 0, isOpen, { ctScope: l.id }), a = armNow(l);
+        if (a) { r.tip = `${l.name} — ${a.text}`; if (a.color) r.iconColor = a.color; } rows.push(r); }
       if (!isOpen) return;
       const showAll = !q || hit(l.name);
       subs.forEach(x => {
@@ -1025,7 +1192,7 @@ class Component extends DCLogic {
       ...t.fields.map(([k, label, len]) => ({
         key: k, width: 170,
         label: R('span', { style: { display: 'inline-flex', alignItems: 'center', gap: 6 } }, `${label} (${len})`,
-          R('span', { className: 'ui-icon-info', title: k === 'zone' ? 'Each camera and device in a location needs a unique zone ID' : k === 'account' ? 'Locations can share account IDs. Sub-locations use their location\'s account.' : 'Locations and sub-locations can share partition IDs', style: { fontSize: 14, cursor: 'help', color: 'var(--color-icon-default)' } })),
+          R('span', { className: 'ui-icon-info', title: k === 'zone' ? 'Each camera and device in a location needs a unique zone ID' : k === 'account' ? 'Up to 8 characters. Locations can share account IDs. Sub-locations use their location\'s account.' : 'Locations and sub-locations can share partition IDs', style: { fontSize: 14, cursor: 'help', color: 'var(--color-icon-default)' } })),
         render: r => {
           const kd = kindOf(r);
           if (!TABS[kd].fields.some(fd => fd[0] === k)) return R('span', { title: k === 'account' && kd === 'subs' ? 'Uses the account ID of its location' : undefined, style: { color: 'var(--color-text-subtlest)', paddingLeft: 12 } }, '—');
@@ -1065,7 +1232,7 @@ class Component extends DCLogic {
       pageLabel: { arming: 'Arming', mapping: 'Mapping', sop: 'SOPs', contacts: 'Contacts' }[s.page], ctDisplay: s.page === 'contacts' ? 'flex' : 'none',
       armingDisplay: s.page === 'arming' ? 'flex' : 'none', mappingDisplay: s.page === 'mapping' ? 'flex' : 'none', sopDisplay: s.page === 'sop' ? 'flex' : 'none',
       headerSaveDisplay: ['sop', 'contacts'].includes(s.page) ? 'none' : 'flex',
-      ...this.wallVals(s, val),
+      ...this.wallVals(s, val), ...this.camVals(s, val),
       subOpen: s.subOpen, toggleSub: () => this.setState(st => ({ subOpen: !st.subOpen })),
       flyOpen: s.flyOpen, flyTop: s.flyTop, closeFly: () => this.setState({ flyOpen: false }),
       onNav: v => { if (v !== 'alerts') return; const el = [...document.querySelectorAll('[title="Alerts"],[aria-label="Alerts"]')][0]; const r = el && el.getBoundingClientRect(); this.setState(st => ({ flyOpen: !st.flyOpen, flyTop: r ? Math.max(8, r.top - 8) : 150 })); },
@@ -1074,10 +1241,10 @@ class Component extends DCLogic {
         onClick: () => { this.setState(on ? { flyOpen: false, subOpen: true } : { flyOpen: false }); if (i === 5) (window.parent !== window ? window.parent.postMessage({ ccView: 'reports' }, '*') : (window.location.href = 'Control Center Reports v2.dc.html')); } }; }),
       orgName: 'Lumana verification', treeQ: s.treeQ, setTreeQ: e => this.setState({ treeQ: e && e.target ? e.target.value : e }),
       ...this.treeVals(s),
-      ccTabs: [['arming', 'Arming'], ['walls', 'Walls'], ['mapping', 'Mapping']].map(([k, label]) => ({ label,
+      ccTabs: [['arming', 'Arming'], ['walls', 'Walls'], ['cameras', 'Cameras'], ['mapping', 'Mapping']].map(([k, label]) => ({ label,
         color: s.page === k ? 'var(--color-text-selected)' : 'var(--color-text-subtle)', border: s.page === k ? 'var(--color-border-selected-default)' : 'transparent',
         onClick: () => this.setState({ page: k }) })),
-      wallDisplay: s.page === 'walls' ? 'flex' : 'none',
+      wallDisplay: s.page === 'walls' ? 'flex' : 'none', camDisplay: s.page === 'cameras' ? 'flex' : 'none',
       sopNavBg: s.page === 'sop' ? 'var(--color-background-selected-active)' : 'transparent', sopNavColor: s.page === 'sop' ? 'var(--color-text-selected)' : 'inherit',
       goSop: () => this.setState({ page: 'sop' }), goContacts: () => this.setState({ page: 'contacts' }),
       ctNavBg: s.page === 'contacts' ? 'var(--color-background-selected-active)' : 'transparent', ctNavColor: s.page === 'contacts' ? 'var(--color-text-selected)' : 'inherit',
@@ -1091,6 +1258,8 @@ class Component extends DCLogic {
         ...((this.props.showPhase2 ?? true) ? s.armTypes.filter(a => a.name.trim()).map(a => ({ value: 'type_' + a.id, label: 'Armed — ' + a.name.trim() })) : [])],
       ...this.armingVals(s, val),
       armScheduleOpts: SCHEDULES.map(x => ({ value: x.value, label: x.label })),
+      schedFilterOpts: [{ value: 'all', label: 'All schedules' }, ...SCHEDULES.map(x => ({ value: x.value, label: x.label })), { value: 'none', label: 'No schedule' }],
+      schedFilter: s.schedFilter || 'all', setSchedFilter: v => this.setState({ schedFilter: val(v) || 'all', armPage: 0 }),
       armSchedule: s.armSchedule,
       setArmSchedule: v => this.setState({ armSchedule: v, dirty: true }),
       armSummary: sched ? `Armed ${sched.detail}. Disarmed outside the schedule.` : 'The account is only armed manually.',
@@ -1115,6 +1284,9 @@ class Component extends DCLogic {
       treeCtlDisplay: isTree ? 'flex' : 'none',
       allOpen: filtering || parents.every(n => s.open[n]), noneOpen: filtering || !parents.some(n => s.open[n]),
       expandAll: () => this.setState({ open: Object.fromEntries(parents.map(n => [n, true])) }), collapseAll: () => this.setState({ open: {} }),
+      ...(() => { const anyOpen = parents.some(n => s.open[n]);
+        return { treeToggleIcon: anyOpen ? 'ui-icon-all-collapsed' : 'ui-icon-all-expanded', treeToggleTip: filtering ? 'Clear the search or filter to expand or collapse' : anyOpen ? 'Collapse all' : 'Expand all',
+          treeToggleDisabled: filtering, treeToggle: () => this.setState({ open: anyOpen ? {} : Object.fromEntries(parents.map(n => [n, true])) }) }; })(),
       mappedSummary: `${s.data.locations.filter(r => this.rowMapped('locations', r)).length} of ${s.data.locations.length} locations, ${s.data.subs.filter(r => this.rowMapped('subs', r)).length} of ${s.data.subs.length} sub-locations and ${s.data.devices.filter(r => this.rowMapped('devices', r)).length} of ${s.data.devices.length} cameras and devices mapped. IDs use 0–9 and A–F. Zone IDs must be unique within a location.`,
       noRows: s.page === 'mapping' && rows.length === 0,
       mapPageInfo: gList.length ? `Locations ${mPg * MPER + 1}–${Math.min(gList.length, mPg * MPER + MPER)} of ${gList.length}` : '',
@@ -1151,6 +1323,26 @@ class Component extends DCLogic {
         const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'contact-id-mapping.csv'; a.click();
       },
       openCsv: () => this.setState({ csvOpen: true, csvRes: null }),
+      autoFull: all.filter(match).every(r => TABS[kindOf(r)].fields.every(([k]) => r[k] !== '')),
+      autoAssign: () => this.autoAssign(), clearAllIds: () => this.clearAllIds(),
+      ...(() => { const bc = this.bulkCompute(s), b = s.bulk || {}, v = e => String(e && e.target ? e.target.value : (e ?? '')).toUpperCase().replace(/\s/g, '');
+        const setB = patch => this.setState(st => ({ bulk: { ...(st.bulk || {}), ...patch } }));
+        const anyBad = bc && (bc.bad.acct || bc.bad.part || bc.bad.zone);
+        const empty = bc && bc.isAll ? !b.account : !b.account && !b.partition && !b.zone;
+        return { bulkDisplay: bc ? 'flex' : 'none', bulkScope: bc ? bc.scopeName : '', bulkIcon: bc && bc.isAll ? 'ui-icon-organization' : bc && !bc.isLoc ? 'ui-icon-locations' : 'ui-icon-location',
+          bulkAcctDisplay: bc && bc.isLoc ? 'flex' : 'none', bulkSubDisplay: bc && !bc.isAll ? 'flex' : 'none',
+          bulkAccount: b.account || '', bulkPartition: b.partition || '', bulkZone: b.zone || '', bulkOverwrite: !!b.overwrite,
+          bulkAcctBad: !!(bc && bc.bad.acct), bulkPartBad: !!(bc && bc.bad.part), bulkZoneBad: !!(bc && bc.bad.zone),
+          setBulkAccount: e => setB({ account: v(e).slice(0, 8) }), setBulkPartition: e => setB({ partition: v(e).slice(0, 2) }), setBulkZone: e => setB({ zone: v(e).slice(0, 3) }),
+          toggleBulkOverwrite: () => setB({ overwrite: !b.overwrite }),
+          bulkBtn: bc && bc.n ? `Apply to ${bc.n} ${bc.n === 1 ? 'field' : 'fields'}` : 'Apply',
+          bulkDisabled: !bc || !bc.n || !!anyBad,
+          bulkHint: anyBad ? [bc.bad.acct && 'Account ID must be up to 8 characters, using 0–9 and A–F.', bc.bad.part && 'Partition ID must be 2 characters, using 0–9 and A–F.', bc.bad.zone && 'Zones start from a number between 0 and 999.'].filter(Boolean).join(' ')
+            : empty ? (bc && bc.isAll ? 'Account ID applies to every location in the organization.' : bc && bc.isLoc ? 'Partition ID also applies to all sub-locations. Zones are numbered in order across the location, skipping zones already in use.' : 'Zones are numbered in order across this sub-location, skipping zones already in use in the location.')
+            : bc && !bc.n ? (b.overwrite ? 'All fields already have these values.' : 'All fields already have values. Select Overwrite existing values to replace them.') : '',
+          bulkHintColor: anyBad ? 'var(--color-text-alert-default)' : 'var(--color-text-subtlest)',
+          applyBulk: () => { const r = this.bulkCompute(this.state); if (!r || !r.n) return; this.setState({ dirty: true, data: r.data, bulk: {} }); this.showToast(`${r.n} IDs applied to ${r.scopeName}`); } }; })(),
+      openClear: () => this.setState({ clearOpen: true }), closeClear: () => this.setState({ clearOpen: false }), clearDisplay: s.clearOpen ? 'flex' : 'none',
       closeCsv: () => this.setState({ csvOpen: false, csvRes: null }),
       resetCsv: () => this.setState({ csvRes: null }),
       csvTitle: `Upload CSV — ${t.label}`,
